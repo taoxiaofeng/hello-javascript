@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>scope</title>
-	
+	<link rel="stylesheet" href="./index.css">
 </head>
 <body>
 <input type="button" id="test" value="test" style="color:red;">
@@ -29,15 +29,15 @@
 
 ②. 定位元素与传统层叠上下文
 对于包含有position:relative/position:absolute的定位元素，以及FireFox/IE浏览器（不包括Chrome等webkit内核浏览器）（目前，也就是2016年初是这样）下含有position:fixed声明的定位元素，当其z-index值不是auto的时候，会创建层叠上下文。 -->
-	<div style="position:relative;z-index:0;">
-		<!-- 下面 -->
+	<!-- <div style="position:relative;z-index:0;">
+	 下面 
 		<img src="./image/fs.jpg" style="position:absolute;z-index:2;width:50px;height:100px;" alt="">
 	</div>
 
 	<div style="position:relative;z-index:0;">
-			<!-- 上面 -->
+			上面 
 		<img src="./image/dk.jpg" style="position:relative;z-index:1;width:100px;height:50px;" alt=""> 
-	</div> 
+	</div>  -->
 	<!-- 差别就在于，z-index:0所在的<div>元素是层叠上下文元素，而z-index:auto所在的<div>元素是一个普通的元素，于是，里面的两个<img>img的层叠比较就不受父级的影响，两者直接套用层叠黄金准则，这里，两者有着明显不一的z-index值，因此，遵循“谁大谁上”的准则，于是，z-index为2的那个横img，就趴在了z-index为1的竖img身上。
 
 		而z-index一旦变成数值，哪怕是0，都会创建一个层叠上下文。此时，层叠规则就发生了变化。层叠上下文的特性里面最后一条——自成体系。两个<img>img的层叠顺序比较变成了优先比较其父级层叠上下文元素的层叠顺序。这里，由于两者都是z-index:0，层叠顺序这一块两者一样大，此时，遵循层叠黄金准则的另外一个准则“后来居上”，根据在DOM流中的位置决定谁在上面，于是，位于后面的竖着的img就自然而然趴在了横着的img身上。对，没错，<img>元素上的z-index打酱油了！
@@ -55,5 +55,13 @@
 		元素的isolation值是isolate.
 		will-change指定的属性值为上面任意一个。
 		元素的-webkit-overflow-scrolling设为touch. -->
+
+		<div class="box">
+			<div>
+				<img src="./image/dk.jpg" alt="">
+			</div>
+		</div>
+
+		<!-- 要满足两个条件才能形成层叠上下文：条件1是父级需要是display:flex或者display:inline-flex水平，条件2是子元素的z-index不是auto，必须是数值。此时，这个子元素为层叠上下文元素，没错，注意了，是子元素，不是flex父级元素。 -->
 </body>
 </html>

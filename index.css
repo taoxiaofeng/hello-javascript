@@ -1,0 +1,15 @@
+.box {}
+.box>div {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    z-index: 1;
+}
+
+.box>div>img {
+    width:100px;
+    height: 100px;
+    position: relative;
+    z-index: -1;
+    right:-150px;
+}
