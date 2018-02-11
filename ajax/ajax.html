@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 工作原理</title>
+</head>
+<body>
+    <script type="text/javascript">
+        /**
+            1、Ajax 是什么？
+            Ajax 即“Asynchronous Javascript And XML”（异步 JavaScript 和 XML）
+            2、Ajax的特点
+            网页的某部分进行更新
+            3、Ajax的工作原理
+            view 中间层 - （ajax 引擎） - 服务器
+            应用的基础： javascript XMLHttpRequest DOM 对象
+
+            Ajax核心 ： XMLHttpReauest对象（方法，属性）；
+
+            常用的方法：
+            open("method","url","async");
+                method:通过什么方式访问 get post 
+                url: 访问服务器的地址
+                async: 是否异步 true false
+            send(content); //向服务器发送请求
+
+            常用的属性：
+            向服务器请求状态的阶段：
+            onreadystatechange ：请求状态改变的触发器 存储函数（或函数名），每当 readyState 属性改变时，就会调用该函数。
+                0 ： 未初始化
+                1 ： 正在加载
+                2 ： 已加载
+                3 ： 交互中
+                4 ： 已完成 
+
+            status = 200: "OK"
+            status = 404:  未找到页面 HTTP请求返回的状态码 
+        */
+    </script>   
+</body>
+</html>
