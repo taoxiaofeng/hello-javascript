@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ajax 工作原理</title>
 </head>
+
 <body>
     <script type="text/javascript">
         /**
@@ -29,6 +31,7 @@
             常用的属性：
             向服务器请求状态的阶段：
             onreadystatechange ：请求状态改变的触发器 存储函数（或函数名），每当 readyState 属性改变时，就会调用该函数。
+                readyState(请求状态)
                 0 ： 未初始化
                 1 ： 正在加载
                 2 ： 已加载
@@ -37,7 +40,23 @@
 
             status = 200: "OK"
             status = 404:  未找到页面 HTTP请求返回的状态码 
+            服务器返回的内容(数据)：responseText
         */
-    </script>   
+        /**直接请求本地文件路径报错:ajax.html:50 Failed to load file:///D:/test-demo/javascript/data/text.txt: Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https
+           ajax只能访问同源接口  同源：指域名，端口，协议相同  浏览器的同源策略问题 */
+
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("get","../data/text.txt",true);
+        xhr.send(null);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    console.log(xhr.responseText);
+                }
+            }
+        }
+    </script>
 </body>
+
 </html>
