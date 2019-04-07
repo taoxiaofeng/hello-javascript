@@ -92,15 +92,32 @@
         // let p = $.ajax({url:'../data/json.txt', dataType:'json'});
         // console.log(p);
 
-        Promise.all([
-            $.ajax({url:'../data/array.txt',dataType:'json'}),
-            $.ajax({url:'../data/json.txt',dataType:'json'})
-        ]).then(function(result){
-            let [arr,json] = result;
-            console.log('成功了', arr, json);
-        },function(){
-            console.log('失败了')
-        });
+        // Promise.all([
+        //     $.ajax({url:'../data/array.txt',dataType:'json'}),
+        //     $.ajax({url:'../data/json.txt',dataType:'json'})
+        // ]).then(function(result){
+        //     let [arr,json] = result;
+        //     console.log('成功了', arr, json);
+        // },function(){
+        //     console.log('失败了')
+        // });
+
+
+        // Promise.race() //竞速 
+        //多次发送多个请求，那个快用哪个
+
+        //Promise.all() 复习
+        Promise.all([$.ajax({url:'../data/array.txt', dataType:'json'}),$.ajax({url:'../data/json.txt', dataType:'json'}),$.ajax({url:'../data/text.txt', dataType:'json'})]).then(
+            result => {
+                let [arr,json,num] = result;
+                console.log('成功了',arr,json,num);
+            }
+        ),err => {
+            console.log('失败了');
+        };
+
+
+
     </script>
 
 </body>
