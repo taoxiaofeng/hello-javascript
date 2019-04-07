@@ -6,9 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>es6</title>
+    <script src="../util/react.development.js"></script>
+    <script src="../util/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/6.1.9/browser.js"></script>
+
 </head>
 
 <body>
+    <div id="div1"></div>
+    <script type="text/babel">
+        /**
+         * 面向对象应用 -- React
+         * React：
+         * 1、组件化--class
+         * 2、JSX JSX==bable==browser.js
+         * 
+         */
+
+        class Item extends React.Component{
+            constructor(...args) {
+                super(...args);
+            }
+
+            render() {
+                return <li>{{this.props.str}}</li>;
+            }
+        }
+
+        class List extends React.Component {
+            constructor(...args) {
+                super(...args);
+            }
+
+            render() {
+                // let aItems = [];
+                // for (let i = 0; i < this.props.arr.length; i++) {
+                //     aItems.push(<Item str={this.props.arr[i]}></Item>)
+                // }
+                //使用映射写法
+                let aItems = this.props.arr.map(a => <Item str={a}><Item>);
+
+                return
+                <ul>
+                   {aItems}
+                </ul>;
+            }
+        }
+
+        window.onload = function() {
+            let oDiv = document.getElementById('div1');
+            ReactDOM.render(
+                <list arr={['aaa','bbb','ccc','ddd','eee']}></list>
+                oDiv
+            );
+        }
+    </script>
     <script>
         /**
          * var   => 只有函数才能限制它的作用域
@@ -233,8 +285,8 @@
         //     console.log('其他');
         // }
 
-        let title = '标题';
-        let content = '内容';
+        // let title = '标题';
+        // let content = '内容';
         // let str = 'div\
         // <h1>' + title + '</h1>\
         // <p>' + content + '</p>\
@@ -242,13 +294,14 @@
         // console.log(str);
 
         //模板字符串
-        let str = `<div>
-            <h1>${title}</h1>
-            <p>${content}</p>
-            </div>
-        `;
-        console.log(str);
+        // let str = `<div>
+        //     <h1>${title}</h1>
+        //     <p>${content}</p>
+        //     </div>
+        // `;
+        // console.log(str);
     </script>
+    <script src="./es6.js"></script>
     <!-- <input type="button" value="按鈕1">
     <input type="button" value="按钮2">
     <input type="button" value="按钮3"> -->

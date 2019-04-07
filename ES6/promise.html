@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise</title>
+    <script src="../util/jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <script>
+        /**
+         * Promise ---承诺
+         * 
+         * 
+         * 异步：操作之间没啥关系，同时进行多个操作  代码复杂
+         * 同步：同事只能做一件事  代码简单
+         * promise --- 消除异步操作
+         * *用同步一样的操作，来书写异步代码
+         * 
+         */
+
+        // let p = new Promise(function (resolve, reject) {
+        //     //异步代码
+        //     //resole -- 成功了
+        //     //reject -- 失败了
+        //     $.ajax({
+        //         url: '../data/array.txt',
+        //         dataType: 'json',
+        //         success(arr) {
+        //             resolve(arr)
+        //         },
+        //         error(err) {
+        //             reject(err)
+        //         }
+        //     });
+        // });
+
+        // let p2 = new Promise(function (resolve, reject) {
+        //     //异步代码
+        //     //resole -- 成功了
+        //     //reject -- 失败了
+        //     $.ajax({
+        //         url: '../data/json.txt',
+        //         dataType: 'json',
+        //         success(arr) {
+        //             resolve(arr)
+        //         },
+        //         error(err) {
+        //             reject(err)
+        //         }
+        //     });
+        // });
+
+        //精简代码
+        // function createPromise(url) {
+        //     return new Promise(function (resolve, reject) {
+        //         //异步代码
+        //         //resole -- 成功了
+        //         //reject -- 失败了
+        //         $.ajax({
+        //             // url: url, json 遇到名字和值一样的留一个就行
+        //             url,
+        //             dataType: 'json',
+        //             success(arr) {
+        //                 resolve(arr)
+        //             },
+        //             error(err) {
+        //                 reject(err)
+        //             }
+        //         });
+        //     });
+        // }
+
+        // // Promise.all([p, p2]).then(function (arr) {
+        // Promise.all([createPromise('../data/array.txt'), createPromise('../data/json.txt')]).then(function (arr) {
+        //     //结构赋值
+        //     let [res1, res2] = arr;
+        //     console.log('全部成功', res1, res2);
+        // }, function () {
+        //     console.log('至少有一个失败了');
+        // })
+
+        // p.then(function () {
+        //     console.log('成功了')
+        // }, function () {
+        //     console.log('失败了')
+        // })
+
+        // let p = $.ajax({url:'../data/json.txt', dataType:'json'});
+        // console.log(p);
+
+        Promise.all([
+            $.ajax({url:'../data/array.txt',dataType:'json'}),
+            $.ajax({url:'../data/json.txt',dataType:'json'})
+        ]).then(function(result){
+            let [arr,json] = result;
+            console.log('成功了', arr, json);
+        },function(){
+            console.log('失败了')
+        });
+    </script>
+
+</body>
+
+</html>
