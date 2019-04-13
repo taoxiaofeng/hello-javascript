@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>generator 生成器</title>
+    <script src="./runner.js"></script>
+    <script src="../jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+    <script>
+        /**
+         * generator 生成器 
+         * generat 生成
+         * 普通函数 --- 一路到底
+         * generator 函数 --- 中间能停
+         *  
+         * yield 放在哪 在哪停
+         * 执行 next() 一下 走一步
+         */
+
+        //普通函数
+        //  function show(a,b) {
+        //      console.log(a);
+        //      console.log(b);
+        //  }
+
+        //generator 函数 *号可以贴着方法名称写 也可以贴着function写 但是不能谁都不贴放中间
+        // function *show(a,b) {
+        //     console.log(a);
+        //     yield; //放弃执行
+        //     console.log(b);
+        // }
+
+        //  let generatorObj =  show(1,2);
+        //  generatorObj.next();
+        //  generatorObj.next();
+        //  console.log(generatorObj);
+
+        /** yield  传参、返回**/
+        // function* show() {
+        //     alert(`${num1}, ${num2}`)
+        //     alert('a');
+        //     let a = yield;
+
+        //     alert('b');
+        //     alert(a);
+        // }
+
+        // let gen = show(99, 88);
+
+        // gen.next(12); //没法给yield 传参
+        // gen.next(5)
+
+        // function *show() {
+        //     alert('a');
+        //     yield 12;
+        //     alert('b');
+        // }
+        // let gen = show();
+        // let res1 = gen.next();
+        // console.log(res1);
+
+        // let res2 = gen.next();
+        // console.log(res2)
+
+        //generator 实例 解决异步操作
+        //generator 的好处在于让你可以像再写同步操作一样写异步操作
+        // runner(function* () {
+        //     let data1 = yield $.ajax({
+        //         url: '../data/json.txt',
+        //         dataType: 'json'
+        //     });
+        //     let data2 = yield $.ajax({
+        //         url: '../data/array.txt',
+        //         dataType: 'json'
+        //     })
+        //     let data3 = yield $.ajax({
+        //         url: '../data/text.txt',
+        //         dataType: 'json'
+        //     });
+        //     console.log(data1, data2, data3);
+        // });
+        //异步操作：
+        /**
+         * 1、回调
+         * 2、Promise
+         * 3、generator
+         */
+
+        //回调写法
+        // $.ajax({
+        //     url: xxx,
+        //     dataType: 'json',
+        //     success(data1) {
+        //         $.ajax({
+        //             url: xxx,
+        //             dataType: 'json',
+        //             success(data2) {
+        //                 $.ajax({
+        //                     url: xxx,
+        //                     dataType: 'json',
+        //                     success(data3) {
+        //                         //完事儿
+        //                     },
+        //                     error() {
+        //                         console.log('错了')
+        //                     }
+        //                 });
+        //             },
+        //             error() {
+        //                 console.log('错了')
+        //             }
+        //         });
+        //     },
+        //     error() {
+        //         console.log('错了')
+        //     }
+        // });
+
+        //promise 写法
+        // Promise.all([
+        //     $.ajax({
+        //         url: xxx,
+        //         dataType: 'json'
+        //     }),
+        //     $.ajax({
+        //         url: xxx,
+        //         dataType: 'json'
+        //     }),
+        //     $.ajax({
+        //         url: xxx,
+        //         dataType: 'json'
+        //     })
+        // ]).then(result => {
+        //     console.log('成功');
+        // }, err => {
+        //     console.log('错误');
+        // });
+
+        // generator 写法
+        // 需要封装一个runner 库
+        // runner(function* () {
+        //     let data1 = yield $.ajax({
+        //         url: xxx,
+        //         dataType: 'json'
+        //     });
+        //     let data2 = yield $.ajax({
+        //         url: xxx,
+        //         dataType: 'json'
+        //     });
+        //     let data3 = yield $.ajax({
+        //         url: xxx,
+        //         dataType: 'json'
+        //     });
+        //     //完事儿
+        // })
+        //带逻辑 -- 普通回调
+        // $.ajax({
+        //     url: 'getUserData',
+        //     dataType: 'json',
+        //     success(userData) {
+        //         if (userData.type == 'VIP') {
+        //             $.ajax({
+        //                 url: 'getVIPItems',
+        //                 dataType: 'json',
+        //                 success(items) {
+        //                     //成功回调后的逻辑处理...
+        //                 },
+        //                 error(err) {
+        //                     console.log('错了');
+        //                 }
+        //             })
+        //         } else {
+        //             $.ajax({
+        //                 url: 'getItems',
+        //                 dataType: 'json',
+        //                 success(items) {
+        //                     //成功回调后的逻辑处理...
+        //                 },
+        //                 error(err) {
+        //                     console.log('错了');
+        //                 }
+        //             })
+        //         }
+        //     }
+        // });
+
+        //带逻辑 -- Promise 示例
+        // Promise.all([
+        //     $.ajax({
+        //         url: 'getUserData',
+        //         dataType: 'json'
+        //     })
+        // ]).then(result => {
+        //     let userData = result[0];
+        //     if (userData.type == 'VIP') {
+        //         Promise.all([
+        //             $.ajax({
+        //                 url: 'getVIPItems',
+        //                 dataType: 'json'
+        //             })
+        //         ]).then(result => {
+        //             let item = results[0];
+
+        //             // 成功后的逻辑处理 ...
+        //         }, err => {
+        //             console.log('失败');
+        //         });
+        //     } else {
+        //         Promise.all([
+        //             $.ajax({
+        //                 url: 'getItems',
+        //                 dataType: 'json'
+        //             })
+        //         ]).then(result => {
+        //             let item = results[0];
+
+        //             // 成功后的逻辑处理 ...
+        //         }, err => {
+        //             console.log('失败');
+        //         });
+        //     }
+        // }, err => {
+        //     console.log('失败');
+        // });
+
+        //带逻辑的 - generator  
+        //gererator 函数不能写成 => 函数
+        // runner(function* () {
+        //     let userData = yield $.ajax({
+        //         url: 'getUserData',
+        //         dataType: 'json'
+        //     });
+
+        //     if (userData.type == 'VIP') {
+        //         let items = yield $.ajax({
+        //             url: 'getVIPItems',
+        //             dataType: 'json'
+        //         });
+        //     } else {
+        //         let items = yield $.ajax({
+        //             url: 'getItems',
+        //             dataType: 'json'
+        //         });
+        //     }
+
+        //     //获取到异步数据后的其他处理逻辑...
+        // });
+
+        // Promise ===> 适合一次读一堆数据
+        // genertor ===> 逻辑性比较强 适合用 genertor
+
+        // genertor --- KOA
+        // *nodejs
+    </script>
+
+</body>
+
+</html>
