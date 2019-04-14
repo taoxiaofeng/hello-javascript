@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>效果</title>
+    <!-- <link id="l1" rel="stylesheet" href="./css1.css"> -->
+    <style>
+        /* #div1 {
+            width: 100px;
+            height: 100px;
+            background-color: orange;
+            display: none;
+        } */
+        /* #div1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- <input type="button" value="皮肤1" onclick="skin1()">
+    <input type="button" value="皮肤2" onclick="skin2()"> -->
+    <input type="text" id="txt1">
+    <input type="button" value="改文字" onclick="setTest();">
+    <script>
+        function setTest() {
+            var oTxt = document.getElementById('txt1');
+            oTxt.value = 'abcd'
+        }
+        // var ol = document.getElementById('l1');
+        // function skin1() {
+        //     ol.href = './css1.css';
+        // }
+
+        // function skin2() {
+        //     ol.href = './css2.css';
+        // }
+    </script>
+    <!-- <input type="checkbox" onmouseover="document.getElementById('div1').style.display='block'" onmouseout="document.getElementById('div1').style.display='none'">
+    <div id="div1">
+        安全提示信息。。。
+    </div> -->
+    <!-- <div id="div1" onmouseover="toGreen();" onmouseout="toRed();">
+
+    </div>
+    <script>
+        var divDom = document.getElementById('div1');
+
+        function toGreen() {
+            divDom.style.cssText = "width:200px;height:200px;background-color:green;"
+        }
+
+        function toRed() {
+            divDom.style.cssText = "width:100px;height:100px;background-color:red;"
+        }
+    </script> -->
+</body>
+
+</html>
