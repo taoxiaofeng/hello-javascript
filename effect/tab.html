@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tab选项卡</title>
+    <style>
+        #div1 .active {
+            background-color: yellow;
+        }
+
+        #div1 .box {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #D9D9D9;
+            background-color: aliceblue;
+            display: none;
+        }
+    </style>
+    <script>
+        /**
+         * 选项卡思路：先让所有的都隐藏，然后根据下标做展示
+         */
+        window.onload = function () {
+            var oDiv = document.getElementById('div1');
+            var aBtn = oDiv.getElementsByTagName('input');
+            var aDiv = oDiv.getElementsByTagName('div');
+            for (var i = 0; i < aBtn.length; i++) {
+                aBtn[i].index = i;
+                aBtn[i].onclick = function () {
+                    for (let i = 0; i < aBtn.length; i++) {
+                        aBtn[i].className = '';
+                        aDiv[i].style.display = 'none';
+                    }
+                    this.className = 'active'; //this指向的当前元素
+                    aDiv[this.index].style.display = 'block';
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="div1">
+        <input type="button" class="active" value="tab1">
+        <input type="button" value="tab2">
+        <input type="button" value="tab3">
+        <input type="button" value="tab4">
+        <div class="box" style="display:block;">内容111111111111</div>
+        <div class="box">内容222222222</div>
+        <div class="box">内容333333333</div>
+        <div class="box">内容4444444444</div>
+    </div>
+</body>
+
+</html>
