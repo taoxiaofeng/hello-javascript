@@ -1,4 +1,5 @@
 .box {}
+
 .box>div {
     width: 200px;
     height: 200px;
@@ -7,9 +8,45 @@
 }
 
 .box>div>img {
-    width:100px;
+    width: 100px;
     height: 100px;
     position: relative;
     z-index: -1;
-    right:-150px;
+    right: -150px;
+}
+
+/* fr单位四个自适应单位，fr单位被用于在一系列长度值中分配剩余空间 */
+/* 如果多个已指定了多个部分，则剩下的空间根据各自的数字按比例分配。 */
+.grid-container {
+    /* padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 100px);
+    grid-template-rows: repeat(3, 100px);
+    grid-column-gap: 50px;
+    grid-row-gap: 15px;
+    background: pink; */
+    padding: 20px;
+    display: grid;
+    grid-template-rows: minmax(100px,200px) minmax(50px,200px);
+    grid-template-columns: 1fr 1fr 2fr;
+    background: pink;
+    height: 300px;
+}
+
+.item {
+    border: 2px solid blue;
+    color: #fff;
+    /* text-align: center;
+    font-size: 20px; */
+}
+
+.item1 {
+    /* grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3; */
+    /* grid-row: 2;
+    grid-column: 3 / 4;
+    background: #fffa90;
+    color: #000; */
 }

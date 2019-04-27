@@ -7,6 +7,14 @@
         <script src="./jquery-3.3.1.min.js"></script>
     </head>
     <body>
+        <div class="grid-container">
+            <div class="item item1"></div>
+            <div class="item item1"></div>
+            <div class="item item1"></div>
+            <div class="item item1"></div>
+            <div class="item item1"></div>
+            <div class="item item1"></div>
+        </div>
         <!-- <div
             #droptarget
             style="width:300px;height:300px;background-color:blue;display: flex;justify-content: center;"
@@ -14,7 +22,7 @@
             拖动
         </div> -->
         <!-- <script src="./drag/EventUtil.js"></script> -->
-        <script src="./dataType/data-type.js"></script>
+        <!-- <script src="./dataType/data-type.js"></script> -->
         <!-- <script src="./drag/drag.js"></script> -->
 
         <!-- <script src="./math/math.js"></script> -->
@@ -30,12 +38,12 @@
 	其他当官途径：其他CSS3属性。 -->
         <!-- <div style="position:relative;z-index:auto;">
 		上面
-		<img src="./image/fs.jpg" style="position:absolute;z-index:2;width:50px;height:100px;" alt="">
+		<img src="./images/fs.jpg" style="position:absolute;z-index:2;width:50px;height:100px;" alt="">
 	</div>
 
 	<div style="position:relative;z-index:auto;">
 		下面
-		<img src="./image/dk.jpg" style="position:relative;z-index:1;width:100px;height:50px;" alt="">
+		<img src="./images/dk.jpg" style="position:relative;z-index:1;width:100px;height:50px;" alt="">
 	</div> -->
 
         <!-- ①. 根层叠上下文
@@ -45,12 +53,12 @@
 对于包含有position:relative/position:absolute的定位元素，以及FireFox/IE浏览器（不包括Chrome等webkit内核浏览器）（目前，也就是2016年初是这样）下含有position:fixed声明的定位元素，当其z-index值不是auto的时候，会创建层叠上下文。 -->
         <!-- <div style="position:relative;z-index:0;">
 	 下面 
-		<img src="./image/fs.jpg" style="position:absolute;z-index:2;width:50px;height:100px;" alt="">
+		<img src="./images/fs.jpg" style="position:absolute;z-index:2;width:50px;height:100px;" alt="">
 	</div>
 
 	<div style="position:relative;z-index:0;">
 			上面 
-		<img src="./image/dk.jpg" style="position:relative;z-index:1;width:100px;height:50px;" alt=""> 
+		<img src="./images/dk.jpg" style="position:relative;z-index:1;width:100px;height:50px;" alt=""> 
 	</div>  -->
         <!-- 差别就在于，z-index:0所在的<div>元素是层叠上下文元素，而z-index:auto所在的<div>元素是一个普通的元素，于是，里面的两个<img>img的层叠比较就不受父级的影响，两者直接套用层叠黄金准则，这里，两者有着明显不一的z-index值，因此，遵循“谁大谁上”的准则，于是，z-index为2的那个横img，就趴在了z-index为1的竖img身上。
 
@@ -72,7 +80,7 @@
 
         <!-- <div class="box">
 			<div>
-				<img src="./image/dk.jpg" alt="">
+				<img src="./images/dk.jpg" alt="">
 			</div>
 		</div> -->
 
