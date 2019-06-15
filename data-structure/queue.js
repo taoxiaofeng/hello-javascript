@@ -43,21 +43,21 @@ function Queue() {
     }
 
     //使用Queue类
-    let queue = new Queue();
-    console.log(queue.isEmpty()); //输出true;
+    // let queue = new Queue();
+    // console.log(queue.isEmpty()); //输出true;
 
-    //向队列中添加元素
-    queue.enqueue("A");
-    queue.enqueue("B");
-    queue.enqueue("C");
-    queue.enqueue("D");
+    // //向队列中添加元素
+    // queue.enqueue("A");
+    // queue.enqueue("B");
+    // queue.enqueue("C");
+    // queue.enqueue("D");
 
-    //删除队列中的元素
-    queue.dequeue();
+    // //删除队列中的元素
+    // queue.dequeue();
 
-    //打印
-    queue.print();
+    // //打印
+    // queue.print();
 
-    //队列大小
-    queue.size();
+    // //队列大小
+    // queue.size();
 }
