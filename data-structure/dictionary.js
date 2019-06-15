@@ -76,20 +76,20 @@ function Dictionary() {
  * 使用 Dictionary 类
  */
 
-var dictionary = new Dictionary();
-dictionary.set('Gandalf', 'gandalf@email.com');
-dictionary.set('John', 'johnsnow@email.com');
-dictionary.set('Tyrion', 'tyrion@email.com');
+// var dictionary = new Dictionary();
+// dictionary.set('Gandalf', 'gandalf@email.com');
+// dictionary.set('John', 'johnsnow@email.com');
+// dictionary.set('Tyrion', 'tyrion@email.com');
 
-//  has(key):如果某个键值存在于这个字典中，则返回true,反之则返回false.
-console.log(dictionary.has('Gandalf'));
+// //  has(key):如果某个键值存在于这个字典中，则返回true,反之则返回false.
+// console.log(dictionary.has('Gandalf'));
 
-// 返回字典多包涵元素的数量
-console.log(dictionary.size());
+// // 返回字典多包涵元素的数量
+// console.log(dictionary.size());
 
-console.log(dictionary.keys());
-console.log(dictionary.values());
-console.log(dictionary.get('Tyrion'));
+// console.log(dictionary.keys());
+// console.log(dictionary.values());
+// console.log(dictionary.get('Tyrion'));
 
 
 
