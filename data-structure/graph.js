@@ -156,6 +156,54 @@ function Graph() {
         };
     };
 
+    /**
+     * 实现深度优先搜搜
+     * 深度优先搜索算法将会从第一个指定的顶点开始遍历图，
+     * 沿着路径直到这条路径最后一个顶点被访问了，
+     * 接着原路回退并探索下一条路径。
+     * 深度优先搜索的步骤是递归的
+     */
+    this.dfs = function(callback) {
+        // 创建颜色数组并用值white为图中的每个顶点对其做初始化
+        var color =  initializeColor();
+        // 对于图实例中每一个未被访问过的顶点，
+        // 调用私有的递归函数dfsVisit，传递的参数为顶点、颜色数组以及回调函数
+        for (let i = 0; i < vertices.length; i++) {
+           if (color[vertices[i]] === 'white') {
+               dfsVisit(vertices[i], color, callback);
+           }
+        }
+    };
+
+    var dfsVisit = function(u, color, callback) {
+        // 当访问u顶点时，我们标注其为被发现的（grey）
+        color[u] = 'grey';
+
+        // 如果有callback函数的话，则执行该函数输出已访问过的顶点
+        if(callback) {
+            callback(u);
+        }
+
+        // 取得包含顶点u所有邻点的列表
+        var neighbors = adjList.get(u);
+
+        // 对于顶点u的每一个未被访问过（颜色为white）的邻点w，
+        // 我们将调用dfsVisit函数，传递w和其他参数（添加顶点w入栈，
+        // 这样接下来就能访问它）
+        for (let i = 0; i < neighbors.length; i++) {
+            var w = neighbors[i];
+            if (color[w] === 'white') {
+                dfsVisit(w, color, callback);
+            }
+        }
+
+        // 最后，在该顶点和邻点按深度访问之后，
+        // 我们回退，意思是该顶点已被完全探索，
+        // 并将其标注为black
+        color[u] = 'black';
+    }
+
+
 }
 
 // 测试 Graph 类
@@ -218,6 +266,35 @@ console.log(shortestPathA);
 // predecessors: [A: null, B: "A", C: "A", D: "A", E: "B", F: "B", G: "C", H: "D", I: "E"]
 
 //这意味着顶点A与顶点B、C和D的距离为1；与顶点E、F、G和H的距离为2；与顶点I的距离为3。
+
+
+//这段代码来构建从顶点A到其他顶点的路径
+var fromVertex = myVertices[0];
+// 对于每个其他顶点（除了顶点A），我们会计算顶点A到它的路径
+for (let i = 1; i < myVertices.length; i++) {
+    // 从顶点数组得到toVertex
+    var toVertex = myVertices[i],
+    // 然后会创建一个栈来存储路径值
+    path = new Stack();
+    // 接着，我们追溯toVertex到fromVertex的路径
+    for (var v = toVertex; v !== fromVertex; v = shortestPathA.predecessors[v]) {
+        // 变量v被赋值为其前溯点的值，这样我们能够反向追溯这条路径。将变量v添加到栈中
+        path._push(v);
+    }
+    // 最后，源顶点也会被添加到栈中，以得到完整路径。
+    path._push(fromVertex);
+    // 我们创建了一个s字符串，并将源顶点赋值给它（它是最后一个加入栈中的，所以它是第一个被弹出的项 ）。
+    var s = path._pop();
+    while (!path.isEmpty()) {
+        // 当栈是非空的，我们就从栈中移出一个项并将其拼接到字符串s的后面
+        s += ' _ ' + path._pop();
+    }
+    // 在控制台上输出路径
+    console.log(s);
+}
+
+// 测试深度优选搜索
+graph.dfs(printNode);
 
 
 

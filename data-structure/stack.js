@@ -56,24 +56,24 @@ function Stack() {
 }
 
 //使用 stack 类
-let stack = new Stack();
-console.log(stack.isEmpty());
+// let stack = new Stack();
+// console.log(stack.isEmpty());
 
-// 添加元素
-stack._push(5);
-stack._push(8);
+// // 添加元素
+// stack._push(5);
+// stack._push(8);
 
-console.log(stack._peek());
+// console.log(stack._peek());
 
-stack._push(11);
-console.log(stack._size()); 
-console.log(stack.isEmpty());
+// stack._push(11);
+// console.log(stack._size()); 
+// console.log(stack.isEmpty());
 
-stack._push(15);
+// stack._push(15);
 
-stack._pop();
-stack._pop();
+// stack._pop();
+// stack._pop();
 
-console.log(stack._size());
+// console.log(stack._size());
 
-stack._print();
+// stack._print();
