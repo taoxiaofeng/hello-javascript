@@ -54,7 +54,7 @@ function Graph() {
      * 为此，我们将使用一个辅助数组color。由于当算法开始执行时，
      * 所有的顶点颜色都设置为white(白色)，所以我们可以创建一个辅助函数initializeColor，
      * 为这两个算法执行此初始化操作。
-     */ 
+     */
     var initializeColor = function () {
         var color = [];
         for (let i = 0; i < vertices.length; i++) {
@@ -69,8 +69,8 @@ function Graph() {
         var color = initializeColor(),
             // 声明创建 queue 实例，用于存储待访问 和 待探索的顶点。
             queue = new Queue();
-            // bfs 方法接受一个顶点作为算法的起始点。起始点是必要的，将此顶点入队列。
-            queue.enqueue(v);
+        // bfs 方法接受一个顶点作为算法的起始点。起始点是必要的，将此顶点入队列。
+        queue.enqueue(v);
 
         // 如果队列非空
         while (!queue.isEmpty()) {
@@ -79,10 +79,10 @@ function Graph() {
                 // 并取得一个包含其所有邻点的邻接表
                 neighbors = adjList.get(u);
 
-                // 该顶点将被标注为grey，表示我们发现了它（但还未完成对其的探索）。
-                color[u] = 'grey';
+            // 该顶点将被标注为grey，表示我们发现了它（但还未完成对其的探索）。
+            color[u] = 'grey';
 
-                // 遍历 u (邻接列表) 的每个邻点
+            // 遍历 u (邻接列表) 的每个邻点
             for (let i = 0; i < neighbors.length; i++) {
                 // 取的其值 (该顶点的名字)
                 var w = neighbors[i];
@@ -104,7 +104,7 @@ function Graph() {
         }
     }
 
-    
+
     /**
      * 使用BFS寻找最短路径
      * 到目前为止，我们只展示了BFS算法的工作原理。我们可以用该算法做更多事情，
@@ -115,15 +115,15 @@ function Graph() {
      *  从v到u的距离d[u]；
      *  前溯点pred[u]，用来推导出从v到其他每个顶点u的最短路径。
      */
-    
+
     //改进版的 BFS 算法 解决以上问题
-    this.BFS = function(v) {
+    this.BFS = function (v) {
         var color = initializeColor(),
-        queue = new Queue(),
-        // 声明数组 d (distance) 表示距离
-        d = [],
-        // 声明 pred 数组来表示前溯点
-        pred = [];
+            queue = new Queue(),
+            // 声明数组 d (distance) 表示距离
+            d = [],
+            // 声明 pred 数组来表示前溯点
+            pred = [];
         queue.enqueue(v);
 
         // 是对图中的每一个顶点，用 0 来初始化数组 d ，用 null 来初始化数组 pred 。
@@ -134,11 +134,11 @@ function Graph() {
 
         while (!queue.isEmpty()) {
             var u = queue.dequeue(),
-            neighbors = adjList.get(u);
+                neighbors = adjList.get(u);
             color[u] = 'grey';
             for (let i = 0; i < neighbors.length; i++) {
                 var w = neighbors[i];
-                if(color[w] === 'white') {
+                if (color[w] === 'white') {
                     color[w] = 'grey';
                     // 发现顶点u的邻点w时，则设置w的前溯点值为u。我们还通过给d[u]加1来
                     // 设置v和w之间的距离（u是w的前溯点，d[u]的值已经有了）。
@@ -163,24 +163,24 @@ function Graph() {
      * 接着原路回退并探索下一条路径。
      * 深度优先搜索的步骤是递归的
      */
-    this.dfs = function(callback) {
+    this.dfs = function (callback) {
         // 创建颜色数组并用值white为图中的每个顶点对其做初始化
-        var color =  initializeColor();
+        var color = initializeColor();
         // 对于图实例中每一个未被访问过的顶点，
         // 调用私有的递归函数dfsVisit，传递的参数为顶点、颜色数组以及回调函数
         for (let i = 0; i < vertices.length; i++) {
-           if (color[vertices[i]] === 'white') {
-               dfsVisit(vertices[i], color, callback);
-           }
+            if (color[vertices[i]] === 'white') {
+                dfsVisit(vertices[i], color, callback);
+            }
         }
     };
 
-    var dfsVisit = function(u, color, callback) {
+    var dfsVisit = function (u, color, callback) {
         // 当访问u顶点时，我们标注其为被发现的（grey）
         color[u] = 'grey';
 
         // 如果有callback函数的话，则执行该函数输出已访问过的顶点
-        if(callback) {
+        if (callback) {
             callback(u);
         }
 
@@ -203,6 +203,64 @@ function Graph() {
         color[u] = 'black';
     }
 
+    /**
+     * 探索深度优先算法
+     * 到目前为止，我们只是展示了深度优先搜索算法的工作原理。
+     * 我们可以用该算法做更多的事情，而不只是输出被访问顶点的顺序。
+     * 对于给定的图G，我们希望深度优先搜索算法遍历图G的所有节点，
+     * 构建“森林”（有根树的一个集合）以及一组源顶点（根），
+     * 并输出两个数组：发现时间和完成探索时间。我们可以修改dfs方法来返回给我们一些信息：
+     *  顶点u的发现时间d[u]；
+     *  当顶点u被标注为黑色时，u的完成探索时间f[u]；
+     *  顶点u的前溯点p[u]。
+     */
+
+    // 改进版的 DFS 方法的实现
+
+    // 声明一个变量来要追踪发现时间和完成探索时间
+    var time = 0;
+    this.DFS = function () {
+        var color = initializeColor(),
+            d = [],
+            f = [],
+            p = [];
+        time = 0;
+        for (let i = 0; i < vertices.length; i++) {
+            d[vertices[i]] = 0;
+            f[vertices[i]] = 0;
+            p[vertices[i]] = null;
+        }
+        for (let i = 0; i < vertices.length; i++) {
+            if (color[vertices[i]] === 'white') {
+                dfsVisit(vertices[i], color, d, f, p);
+            }
+        }
+        return {
+            discovery: d,
+            finished: f,
+            predecessors: p
+        }
+    }
+
+    var DFSVisit = function (u, color, d, f, p) {
+        console.log('discovered ' + u);
+        color[u] = 'grey';
+        d[u] = ++time;
+        var neighbors = adjList.get(u);
+        for (let i = 0; i < neighbors.length; i++) {
+            var w = neighbors[i];
+            if (color[w] === 'white') {
+                p[w] = u;
+                DFSVisit(w, color, d, f, p);
+            }
+            color[u] = 'black';
+            f[u] = ++time;
+            console.log('explored ' + u);
+        }
+
+
+    }
+
 
 }
 
@@ -215,16 +273,16 @@ for (let i = 0; i < myVertices.length; i++) {
     graph.addVertex(myVertices[i]);
 }
 // 添加边
-graph.addEdge('A' , 'B');
-graph.addEdge('A' , 'C');
-graph.addEdge('A' , 'D');
-graph.addEdge('C' , 'D');
-graph.addEdge('C' , 'G');
-graph.addEdge('D' , 'G');
-graph.addEdge('D' , 'H');
-graph.addEdge('B' , 'E');
-graph.addEdge('B' , 'F');
-graph.addEdge('E' , 'I');
+graph.addEdge('A', 'B');
+graph.addEdge('A', 'C');
+graph.addEdge('A', 'D');
+graph.addEdge('C', 'D');
+graph.addEdge('C', 'G');
+graph.addEdge('D', 'G');
+graph.addEdge('D', 'H');
+graph.addEdge('B', 'E');
+graph.addEdge('B', 'F');
+graph.addEdge('E', 'I');
 
 // 控制台中打印 Graph 类测试结果
 // console.log (graph._toString());
@@ -243,13 +301,13 @@ graph.addEdge('E' , 'I');
     一个漂亮的邻接表！从该输出中，我们知道顶点A有这几个相邻顶点：B、C和D。
  */
 
- /**
-  * 测试 bfs 算法
-  * 声明一个回调函数在浏览器控制台上输出已经被完全探索过的顶点的名字
-  * 然后调用bfs方法，给它传递第一个顶点
-  * @param {*} value 
-  * 
-  */
+/**
+ * 测试 bfs 算法
+ * 声明一个回调函数在浏览器控制台上输出已经被完全探索过的顶点的名字
+ * 然后调用bfs方法，给它传递第一个顶点
+ * @param {*} value 
+ * 
+ */
 function printNode(value) {
     console.log('Visited vertex: ' + value);
 }
@@ -274,8 +332,8 @@ var fromVertex = myVertices[0];
 for (let i = 1; i < myVertices.length; i++) {
     // 从顶点数组得到toVertex
     var toVertex = myVertices[i],
-    // 然后会创建一个栈来存储路径值
-    path = new Stack();
+        // 然后会创建一个栈来存储路径值
+        path = new Stack();
     // 接着，我们追溯toVertex到fromVertex的路径
     for (var v = toVertex; v !== fromVertex; v = shortestPathA.predecessors[v]) {
         // 变量v被赋值为其前溯点的值，这样我们能够反向追溯这条路径。将变量v添加到栈中
