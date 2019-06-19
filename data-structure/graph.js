@@ -49,6 +49,17 @@ function Graph() {
      * 通过将顶点存入栈中,顶点是沿着路径被探索的，存在新的相邻顶点就去访问
      */
 
+
+    /**
+     * (1) 创建一个队列Q。
+     * (2) 将v标注为被发现的（灰色），并将v入队列Q。
+     * (3) 如果Q非空，则运行以下步骤：
+     *     (a) 将u从Q中出队列；
+     *     (b) 将标注u为被发现的（灰色）；
+     *     (c) 将u所有未被访问过的邻点（白色）入队列；
+     *     (d) 将u标注为已被探索的（黑色）。
+     */
+
     /**
      * 广度优先搜索和深度优先搜索都需要标注被访问过的顶点。
      * 为此，我们将使用一个辅助数组color。由于当算法开始执行时，
@@ -157,7 +168,7 @@ function Graph() {
     };
 
     /**
-     * 实现深度优先搜搜
+     * 实现深度优先搜索
      * 深度优先搜索算法将会从第一个指定的顶点开始遍历图，
      * 沿着路径直到这条路径最后一个顶点被访问了，
      * 接着原路回退并探索下一条路径。
@@ -203,6 +214,13 @@ function Graph() {
         color[u] = 'black';
     }
 
+
+    /**
+     *  探索深度优先算法步骤：
+     *  (1) 标注v为被发现的（灰色）。
+     *  (2) 对于v的所有未访问的邻点w，访问顶点w，标注v为已被探索的（黑色）。
+     */
+
     /**
      * 探索深度优先算法
      * 到目前为止，我们只是展示了深度优先搜索算法的工作原理。
@@ -225,6 +243,8 @@ function Graph() {
             f = [],
             p = [];
         time = 0;
+
+        // 为图的每一个顶点来初始化这些数组
         for (let i = 0; i < vertices.length; i++) {
             d[vertices[i]] = 0;
             f[vertices[i]] = 0;
@@ -232,34 +252,45 @@ function Graph() {
         }
         for (let i = 0; i < vertices.length; i++) {
             if (color[vertices[i]] === 'white') {
-                dfsVisit(vertices[i], color, d, f, p);
+                DFSVisit(vertices[i], color, d, f, p);
             }
         }
+        //方法结尾处返回这些值
         return {
             discovery: d,
             finished: f,
             predecessors: p
-        }
-    }
+        };
+    };
 
     var DFSVisit = function (u, color, d, f, p) {
         console.log('discovered ' + u);
         color[u] = 'grey';
-        d[u] = ++time;
+        d[u] = ++time; //当一个顶点第一次被发现时，我们追踪其发现时间
         var neighbors = adjList.get(u);
         for (let i = 0; i < neighbors.length; i++) {
             var w = neighbors[i];
             if (color[w] === 'white') {
+                //当它是由引自顶点u的边而被发现的，我们追踪它的前溯点
                 p[w] = u;
                 DFSVisit(w, color, d, f, p);
             }
             color[u] = 'black';
+            // 最后，当这个顶点被完全探索后，我们追踪其完成时间
             f[u] = ++time;
             console.log('explored ' + u);
         }
-
-
     }
+
+    /**
+     * 深度优先算法背后的思想是什么？
+     * 边是从最近发现的顶点u处被向外探索的。
+     * 只有连接到未发现的顶点的边被探索了。当u所有的边都被探索了，
+     * 该算法回退到u被发现的地方去探索其他的边。
+     * 这个过程持续到我们发现了所有从原始顶点能够触及的顶点。
+     * 如果还留有任何其他未被发现的顶点，我们对新源顶点重复这个过程。
+     * 重复该算法，直到图中所有的顶点都被探索了。
+     */
 
 
 }
@@ -353,6 +384,20 @@ for (let i = 1; i < myVertices.length; i++) {
 
 // 测试深度优选搜索
 graph.dfs(printNode);
+
+//拓扑排序——使用深度优先搜索
+graph = new Graph();
+myVertices = ['A', 'B', 'C', 'D', 'E', 'F'];
+for (i = 0; i < myVertices.length; i++) {
+    graph.addVertex(myVertices[i]);
+}
+graph.addEdge('A', 'C');
+graph.addEdge('A', 'D');
+graph.addEdge('B', 'D');
+graph.addEdge('B', 'E');
+graph.addEdge('C', 'F');
+graph.addEdge('F', 'E');
+var result = graph.DFS();
 
 
 
