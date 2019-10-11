@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>寄生工厂模式</title>
+</head>
+<body>
+    <script>
+        /*每一个构造函数都有他独特的适用场景*/
+        // 比如你想给某一类对象添加方法但又不影响原类
+        function People(name, age, sex) {
+            this.name = name;
+            this.age = age;
+            this.sex = sex;
+            // this.sayWords = function (words) { // sayWords() 方法写在 People() 方法中时，实例调用时，不同的实例上的sayWords()方法是绑定在当前实例上的。
+            //     console.log(words)              // 所以他们的地址是不一样的。
+            // }
+        }
+
+        People.prototype.sayWords = function (words) {
+            console.log(words);
+        }
+
+        // 实例化一个对象
+        var p = new People('小明', 22, '男');
+        p.sayWords('我是小明');
+
+        var p1 = new People('小红', 18, '女');
+        p1.sayWords('我是小红');
+        // console.log(p.sayWords === p1.sayWords);  
+
+        // 我们希望从 People中出来的实例，有一部分有独特的方法，同时，不影响原类
+        // 因为不可以直接将属性和方法添加到原类上，需要定义一个新的工厂，对People的实例进行改造。
+
+    </script>
+    
+</body>
+</html>
