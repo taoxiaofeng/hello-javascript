@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表单</title>
+    <script>
+        // const $ = function(...args) {
+        //     return document.querySelectorAll(...args);
+        // }
+
+        const $=document.querySelectorAll.bind(document); //绑定this
+
+        window.onload =function() {
+            let oForm = $('#form1')[0];
+            let oUser = document.getElementsByName('user')[0];
+
+            oForm.onsubmit = function () {
+                if(oUser.value == '') {
+                    alert('用户名不能为空');
+                    return;
+                }
+            }
+
+            console.log(oForm)
+        }
+
+      
+    </script>
+</head>
+<body>
+    <form action="http://localhost/a.php" method="GET" id="form1">
+        用户名：<input type="text" name="user" value="">
+        密码： <input type="text" name="password">
+        <input type="submit" value="提交">
+    
+    </form>
+    
+</body>
+</html>
