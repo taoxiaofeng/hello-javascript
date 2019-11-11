@@ -11,9 +11,14 @@
         $(function () {
             $('#btn1').click(function () {
                 $.ajax({
-                    url: '1.php',
-                    data: { a: 12, b: 5 },
-                    type: 'get',
+                    // url: 'get.php',
+                    url: 'post.php',
+                    data: {
+                        a: 12,
+                        b: 5
+                    },
+                    // type: 'get',
+                    type: 'post',
                     dataType: 'text', // 声明后端返回的数据类型
                     success(str) {
                         alert(str);
