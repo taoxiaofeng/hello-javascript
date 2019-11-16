@@ -1,31 +1,28 @@
-function ajax(url, type = "get", data = {}, success, error) {
+function ajax(options) {
 
-    // var xhr = null;
-    // if (window.XMLHttpRequest) {
-    //     // 不兼容IE6 
-    //     xhr = new XMLHttpRequest();
-    // } else {
-    //     // 兼容 IE6
-    //     xhr = new ActiveXObject('Microsoft.XMLHttp');
-    // }
+
+    options = options || {};
+    options.type = options.type || 'get';
+    options.data = options.data || {};
+    options.dataType = options.dataType || 'text';
+
+
 
     let xhr = new XMLHttpRequest();
 
     //数据组装
     let arr = [];
-    for (const key in data) {
-        if (object.hasOwnProperty(key)) {
-            arr.push(`${name}=${data[name]}`);
-        }
+    for (const key in options.data) {
+        arr.push(`${name}=${options.data[key]}`);
     }
     let strData = arr.join('&');
-    if (type == 'post') {
-        xhr.open('POST', url, true);
+    if (options.type == 'post') {
+        xhr.open('POST', options.url, true);
         xhr.setRequestHeader('content-type', 'application/json');
         xhr.send(strData);
-    } else if (type == 'get') {
+    } else if (options.type == 'get') {
         // 连接  true  同步    false 异步
-        xhr.open('GET', `${url}?${strData}`, true);
+        xhr.open('GET', `${options.url}?${strData}`, true);
         // 发送
         xhr.send();
     }
@@ -40,12 +37,30 @@ function ajax(url, type = "get", data = {}, success, error) {
     // 接收
     xhr.onreadystatechange = function () {
         // 4 完成
-        if (xhr.readystate === 4) {
+        if (xhr.readyState === 4) {
             // 成功 -2xx 、304
             if (xhr.status >= 200 && xhr.status <= 300 || xhr.status === 304) {
-                success(xhr.responseText);
+                let data = xhr.responseText;
+                switch (option.dataType) {
+                    case "json":
+                        if(window.JSON && window.JSON.parse) {
+                            data = JSON.parse(data);
+                        } else {
+                            data = eval(data);
+                        }
+                        
+                        break;
+                    case "xml":
+                        data = this.responseXML;
+                        break;
+
+                    default:
+                        data = xhr.responseText;
+                        break;
+                }
+                options.success && options.success(data);
             } else {
-                error && error()
+                options.error && options.error()
             }
         }
     };
