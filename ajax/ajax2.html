@@ -24,6 +24,8 @@
                 // 连接  true  同步    false 异步
                 xhr.open('GET', 'get.php?a=12&b=5', true);
 
+                // 请求头修改：
+                xhr.setRequestHeader('content-type','application/json');
                 // 发送
                 xhr.send();
 
