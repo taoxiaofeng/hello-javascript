@@ -10,19 +10,34 @@
     <script>
         window.onload = function () {
             let oBtn = document.getElementById('btn1');
-            oBtn.onclick =function() {
-                ajax('../demo/get.php', {a:12, b:5}, function(str) {
-                    alert(str)
-                },function() {
-                    alert("失败")
-                });
+            oBtn.onclick = function () {
+                // ajax('../demo/get.php', {a:12, b:5}, function(str) {
+                //     alert(str)
+                // },function() {
+                //     alert("失败")
+                // });
+
+                ajax({
+                    url: './get.php',
+                    data: {
+                        a: 99,
+                        b: 77
+                    },
+                    dataType:'json',
+                    success(data) {
+                        alert(data);
+                    },
+                    error(){
+                        alert('失败');
+                    }
+                })
             }
         }
-    
     </script>
 </head>
+
 <body>
-<input type="button" value="按钮1" id="btn1">
+    <input type="button" value="按钮1" id="btn1">
 </body>
 
 </html>
