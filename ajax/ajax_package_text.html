@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>封装的ajax测试</title>
+    <script src="./ajax_package.js"></script>
+    <script>
+        window.onload = function () {
+            let oBtn = document.getElementById('btn1');
+            oBtn.onclick =function() {
+                ajax('../demo/get.php', {a:12, b:5}, function(str) {
+                    alert(str)
+                },function() {
+                    alert("失败")
+                });
+            }
+        }
+    
+    </script>
+</head>
+<body>
+<input type="button" value="按钮1" id="btn1">
+</body>
+
+</html>
