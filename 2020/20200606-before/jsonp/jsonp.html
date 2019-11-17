@@ -9,15 +9,44 @@
     <script>
         function show(json) {
             console.log(json.g)
+            let oUl = document.getElementById('ul1');
+
+            oUl.innerHTML = '';
+            if (Object.prototype.toString.call(json.g) === "[object Array]") {
+                json.g.forEach(el => {
+                    let oLi = document.createElement('li');
+                    oLi.innerHTML = el.q;
+                    oUl.appendChild(oLi);
+                });
+            }
+
         }
+
+        window.onload = function () {
+            // let oS = document.getElementById('s1');
+            let oUl = document.getElementById('ul1');
+            let oTxt = document.getElementById('txt1');
+
+            oTxt.oninput = function () {
+                let oS = document.createElement('script');
+                oS.src = `https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&wd=${encodeURIComponent(oTxt.value)}&req=2&csor=1&cb=show`;
+                document.head.appendChild(oS);
+            }
+        }
+
     </script>
+
+
     <!-- 引用本地文件 -->
     <!-- <script src="./bd_data.js"></script> -->
     <!-- 引用远程文件 -->
     <!-- <script src="https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&sugsid=1425,21113,29920,20882,29567,29220,26350&wd=y&req=2&csor=1&cb=show"></script> -->
+    <script id="s1" charset="utf-8"></script>
 </head>
 
 <body>
+    <input type="text" id="txt1">
+    <ul class="" id="ul1"></ul>
 
 </body>
 
