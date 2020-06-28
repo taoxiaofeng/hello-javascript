@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            margin: 10px;
+            height: 34px;
+            color: #fff;
+            background-color: #108ee9;
+            border-color: #108ee9;
+            min-width: 68px;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            font-size: .8125rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+    </style>
+    <script>
+        // position: fixed; /*固定位置*/
+        // z-index: 99; /*设置优先级显示，保证不会被覆盖*/
+        // right: 0 px;
+        // bottom: 0 px;
+
+        // function createDiv() {
+        //     var containerEl = document.createElement('div');
+        //     containerEl.style.width = '200px';
+        //     containerEl.style.height = '200px';
+        //     containerEl.style.backgroundColor = 'red';
+        //     containerEl.style.position = 'fixed';
+        //     containerEl.style.right = '0px';
+        //     containerEl.style.bottom = '0px';
+        //     // document.body.appendChild(containerEl);
+        //     window.parent.document.body.appendChild(containerEl);
+        //     // console.dir(containerEl)
+        //     console.log(window.parent.document);
+        //     console.log(window.frameElement);
+        //     console.log(window.top);
+        // }
+
+        // 事件兼容写法 示例：
+        // if (window.attachEvent) {
+        //     window.attachEvent("onload", show);
+        // } else if (window.addEventListener) {
+        //     window.addEventListener("load", show, false);
+        // }
+        window.onload = function () {
+
+            console.log('domain:', document.domain);
+
+            var bodyNodes = nodeListToArr(document.body.childNodes || []);
+
+            var shadeBtn = document.getElementById('create-shade');
+            var notificationBtn = document.getElementById('create-notification');
+            var shadeIndex = 0;
+            var notificationIndex = 0;
+
+            // 创建遮罩
+            if (window.attachEvent) {
+                shadeBtn.attachEvent('onclick', createShade);
+            } else if (window.addEventListener) {
+                shadeBtn.addEventListener('click', createShade);
+            }
+
+            function createShade() {
+                removeAppointNode(bodyNodes, 'shade-node');
+
+                var shadeDiv = document.createElement('div');
+                var modelDiv = document.createElement('div');
+                var headerDiv = document.createElement('div');
+                var iframeNode = document.createElement('iframe');
+                var closeNode = document.createElement('div');
+
+
+                iframeNode.setAttribute('src',
+                    'http://10.1.1.120:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1'
+                );
+                iframeNode.setAttribute('frameborder', '0');
+
+                shadeDiv.setAttribute('shade-index', shadeIndex++);
+                shadeDiv.setAttribute('id', 'shade-node')
+                shadeDiv.style.cssText =
+                    'position: fixed;top: 0;right: 0;bottom: 0;left: 0;background: rgba(0,0,0,.3);';
+                modelDiv.style.cssText =
+                    'width:800px;height:500px;position:absolute;top:50%;left:50%;margin-top:-250px;margin-left:-400px;border0radius:4px;background-color:#fff;display:block;';
+                headerDiv.style.cssText = 'width:100%;height:40px;border-bottom:1px solid #d9d9d9;'
+                iframeNode.style.cssText = 'width:100%;';
+                iframeNode.style.height = '460px'; // IE 9 以下浏览器不支持 通过css calc()去计算高度
+                closeNode.style.cssText =
+                    'width:40px;height:40px;font-size:18px;color:red;font-weight:600;text-align: center;line-height: 40px;float: right;cursor: pointer;';
+                closeNode.innerHTML = 'X';
+
+
+                modelDiv.appendChild(headerDiv);
+                headerDiv.appendChild(closeNode);
+                modelDiv.appendChild(iframeNode);
+                shadeDiv.appendChild(modelDiv);
+                document.body.appendChild(shadeDiv);
+
+                // 关闭 model 事件
+                closeNode.onclick = function () {
+                    // shadeDiv.style.display = 'none';
+                    document.body.removeChild(shadeDiv);
+                    shadeIndex--;
+                    bodyNodes = nodeListToArr(document.body.childNodes || []);
+                }
+                bodyNodes = nodeListToArr(document.body.childNodes || []);
+
+                console.log(bodyNodes);
+            }
+
+            // 创建通知
+            if (window.attachEvent) {
+                notificationBtn.attachEvent('onclick', createNotification);
+            } else if (window.addEventListener) {
+                notificationBtn.addEventListener('click', createNotification);
+            }
+
+            function createNotification() {
+                removeAppointNode(bodyNodes, 'notification-node');
+
+                var notificationEl = document.createElement('div');
+
+                notificationEl.style.cssText =
+                    'width: 360px;height: 120px;line-height:120px;color:#333333;font-size:14px;padding：10px;text-align:center;background: #48dbfb;box-shadow: 0 0 8px 0 rgba(200,212,226,.5);position: fixed;right: 10px;bottom: 10px;z-index: 10;cursor: pointer;';
+                notificationEl.innerHTML = '您有一条新的消息，请注意查收。';
+                notificationEl.setAttribute('id', 'notification-node');
+                notificationEl.setAttribute('notification-index', notificationIndex++);
+                document.body.appendChild(notificationEl);
+
+
+                notificationEl.onclick = function () {
+                    createShade();
+                    document.body.removeChild(notificationEl);
+                    notificationIndex--;
+                    bodyNodes = nodeListToArr(document.body.childNodes || []);
+                }
+                bodyNodes = nodeListToArr(document.body.childNodes || []);
+                console.log(bodyNodes);
+            }
+
+            // 删除 body 中指定的dom 节点
+            function removeAppointNode(nodeList, id) {
+                for (var i = 0, len = nodeList.length; i < len; i++) {
+                    if (nodeList[i].id == id) {
+                        document.body.removeChild(nodeList[i]);
+                    };
+                }
+            }
+
+            // nodelist 转 Array  => 兼容低版本 IE 写法
+            function nodeListToArr(data) {
+                var arr = [];
+                try {
+                    //ie8及以下不支持
+                    arr = Array.prototype.slice.call(data);
+                } catch (e) {
+                    //兼容写法
+                    var len = data.length;
+                    for (var i = 0; i < len; i++) {
+                        arr.push(data[i]);
+                    }
+                };
+                return arr;
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <button id="create-shade">打开审方客户端</button>
+    <button id="create-notification">创建通知</button>
+</body>
+
+</html>
