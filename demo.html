@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' http://10.1.1.120:9999"> -->
     <title>Document</title>
     <style>
         * {
@@ -91,9 +92,25 @@
 
 
                 iframeNode.setAttribute('src',
-                    'http://10.1.1.120:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1'
+                    'http://10.1.1.71:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1'
                 );
                 iframeNode.setAttribute('frameborder', '0');
+                // sandbox="allow-forms allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                // allow-same-origin、allow-top-navigation、 allow-forms、allow-scripts
+                // IE 6 ~ 9 不兼容
+                // iframeNode.setAttribute('sandbox','allow-same-origin allow-top-navigation allow-forms allow-scripts');
+                // iframeNode.onload = function() {
+                //     console.log(iframeNode.contentDocument || iframeNode.contentWindow.document);
+                // }
+                // postMessage 支持 IE8+ 及所有现代浏览器
+                // iframeNode.addEventListener('load', function () {
+                //     iframeNode.contentWindow.postMessage({
+                //         data: 1
+                //     }, '*')
+                // })
+
+                // showModalDialog 
+
 
                 shadeDiv.setAttribute('shade-index', shadeIndex++);
                 shadeDiv.setAttribute('id', 'shade-node')
@@ -148,10 +165,11 @@
 
 
                 notificationEl.onclick = function () {
-                    createShade();
-                    document.body.removeChild(notificationEl);
-                    notificationIndex--;
-                    bodyNodes = nodeListToArr(document.body.childNodes || []);
+                    _showModalDialog();
+                    // createShade();
+                    // document.body.removeChild(notificationEl);
+                    // notificationIndex--;
+                    // bodyNodes = nodeListToArr(document.body.childNodes || []);
                 }
                 bodyNodes = nodeListToArr(document.body.childNodes || []);
                 console.log(bodyNodes);
@@ -181,6 +199,17 @@
                 };
                 return arr;
             };
+
+            function _showModalDialog() {
+                var width = 800;
+                var height = 300;
+                var url =
+                    "http://10.1.1.71:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1";
+
+                var winOption = "height=" + height + ",width=" + width +
+                    ",top=50,left=50,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,fullscreen=0";
+                window.open(url, window, winOption);
+            }
         }
     </script>
 </head>
