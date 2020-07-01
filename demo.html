@@ -12,6 +12,12 @@
             padding: 0;
         }
 
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
         button {
             margin: 10px;
             height: 34px;
@@ -65,7 +71,7 @@
         // }
         window.onload = function () {
 
-            console.log('domain:', document.domain);
+            // console.log('domain:', document.domain);
 
             var bodyNodes = nodeListToArr(document.body.childNodes || []);
 
@@ -91,10 +97,10 @@
                 var closeNode = document.createElement('div');
 
 
-                iframeNode.setAttribute('src',
-                    'http://10.1.1.71:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1'
-                );
-                iframeNode.setAttribute('frameborder', '0');
+                // iframeNode.setAttribute('src',
+                //     'http://10.1.1.71:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1'
+                // );
+                // iframeNode.setAttribute('frameborder', '0');
                 // sandbox="allow-forms allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
                 // allow-same-origin、allow-top-navigation、 allow-forms、allow-scripts
                 // IE 6 ~ 9 不兼容
@@ -110,6 +116,8 @@
                 // })
 
                 // showModalDialog 
+                _showModalDialog();
+                return;
 
 
                 shadeDiv.setAttribute('shade-index', shadeIndex++);
@@ -141,7 +149,7 @@
                 }
                 bodyNodes = nodeListToArr(document.body.childNodes || []);
 
-                console.log(bodyNodes);
+                // console.log(bodyNodes);
             }
 
             // 创建通知
@@ -172,8 +180,8 @@
                     // bodyNodes = nodeListToArr(document.body.childNodes || []);
                 }
                 bodyNodes = nodeListToArr(document.body.childNodes || []);
-                console.log(bodyNodes);
-            }
+                // console.log(bodyNodes);
+            };
 
             // 删除 body 中指定的dom 节点
             function removeAppointNode(nodeList, id) {
@@ -182,7 +190,7 @@
                         document.body.removeChild(nodeList[i]);
                     };
                 }
-            }
+            };
 
             // nodelist 转 Array  => 兼容低版本 IE 写法
             function nodeListToArr(data) {
@@ -201,15 +209,24 @@
             };
 
             function _showModalDialog() {
-                var width = 800;
-                var height = 300;
-                var url =
-                    "http://10.1.1.71:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1";
+                var iWidth = 800;
+                var iHeight = 600;
+                var url ="http://10.1.1.120:9999/client/index.html?userId=09&userName=王萌萌3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1";
+                // 以浏览器窗口来计算
+                // 获得窗口的垂直位置 
+                var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+                // 获得窗口的水平位置 
+                var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
 
-                var winOption = "height=" + height + ",width=" + width +
-                    ",top=50,left=50,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,fullscreen=0";
-                window.open(url, window, winOption);
-            }
+                var winOption = "height=" + iHeight + ",width=" + iWidth +
+                    ",top=" + iTop + ",left=" + iLeft +
+                    ",toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,fullscreen=0";
+                if (window.showModalDialog) {
+                    window.showModalDialog(url, '审方消息客户端', winOption);
+                } else {
+                    window.open(url, '审方消息客户端', winOption);
+                }
+            };
         }
     </script>
 </head>

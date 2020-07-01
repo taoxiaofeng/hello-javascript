@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' http://10.1.1.120:9999"> -->
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        button {
+            margin: 10px;
+            height: 34px;
+            color: #fff;
+            background-color: #108ee9;
+            border-color: #108ee9;
+            min-width: 68px;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            font-size: .8125rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+    </style>
+    <!--[if IE 6]>
+        <style type="text/css">
+            html{
+                overflow:hidden;
+            }
+            body{
+                height:100%;
+                overflow:auto;
+            }
+            #notification-node {
+                position:absolute;
+            }
+        </style>
+    <![endif]-->
+    <script>
+        window.onload = function () {
+
+            var bodyNodes = nodeListToArr(document.body.childNodes || []);
+            var shadeBtn = document.getElementById('create-shade');
+            var notificationBtn = document.getElementById('create-notification');
+            var shadeIndex = 0;
+            var notificationIndex = 0;
+
+            debugger
+            // 封装一个 showModalDialog
+            var has_showModalDialog = !!window.showModalDialog; //定义一个全局变量判定是否有原生showModalDialog方法
+            if (!has_showModalDialog && !!(window.opener)) {
+                window.onbeforeunload = function () {
+                    window.opener.hasOpenWindow = false; //弹窗关闭时告诉opener：它子窗口已经关闭
+                }
+            }
+            //定义window.showModalDialog如果它不存在
+            if (window.showModalDialog == undefined) {
+                window.showModalDialog = function (url, mixedVar, features) {
+                    // if (window.hasOpenWindow) {
+                    //     alert("您已经打开了一个窗口！请先处理它"); //避免多次点击会弹出多个窗口
+                    //     window.myNewWindow.focus();
+                    //     return false;
+                    // }
+                    window.hasOpenWindow = true;
+                    if (mixedVar) var mixedVar = mixedVar;
+                    //因window.showmodaldialog 与 window.open 参数不一样，所以封装的时候用正则去格式化一下参数
+                    if (features) var features = features.replace(/(dialog)|(px)/ig, "").replace(/;/g, ',')
+                        .replace(/\:/g, "=");
+                    //window.open("Sample.htm",null,"height=200,width=400,status=yes,toolbar=no,menubar=no");
+                    //window.showModalDialog("modal.htm",obj,"dialogWidth=200px;dialogHeight=100px"); 
+                    var left = (window.screen.width - parseInt(features.match(/width[\s]*=[\s]*([\d]+)/i)[1])) /
+                        2;
+                    var top = (window.screen.height - parseInt(features.match(/height[\s]*=[\s]*([\d]+)/i)[
+                        1])) / 2;
+                    window.myNewWindow = window.open(url, mixedVar, features);
+                }
+            }
+
+            // 创建遮罩
+            if (window.attachEvent) {
+                shadeBtn.attachEvent('onclick', createShade);
+            } else if (window.addEventListener) {
+                shadeBtn.addEventListener('click', createShade);
+            }
+
+            function createShade() {
+                removeAppointNode(bodyNodes, 'shade-node');
+                var shadeDiv = document.createElement('div');
+                shadeDiv.setAttribute('shade-index', shadeIndex++);
+                shadeDiv.setAttribute('id', 'shade-node')
+                // shadeDiv.style.cssText =
+                //     'position: absolute;' +
+                //     'top: 0;' +
+                //     'right: 0;' +
+                //     'bottom: 0;' +
+                //     'left: 0;' +
+                //     'background: rgba(0,0,0,.3)';
+                document.body.appendChild(shadeDiv);
+                bodyNodes = nodeListToArr(document.body.childNodes || []);
+                _showModalDialog();
+            }
+
+            // 创建通知
+            if (window.attachEvent) {
+                notificationBtn.attachEvent('onclick', createNotification);
+            } else if (window.addEventListener) {
+                notificationBtn.addEventListener('click', createNotification);
+            }
+
+            function createNotification() {
+                removeAppointNode(bodyNodes, 'notification-node');
+                var notificationEl = document.createElement('div');
+                notificationEl.style.cssText =
+                    'width: 360px;' +
+                    'height: 120px;' +
+                    'line-height:120px;' +
+                    'color:#333333;' +
+                    'font-size:14px;' +
+                    'padding：10px;' +
+                    'text-align:center;' +
+                    'background: #48dbfb;' +
+                    'position: absolute;' +
+                    'right: 10px;' +
+                    'bottom: 10px;' +
+                    'z-index: 10;' +
+                    'cursor: pointer;';
+                notificationEl.innerHTML = '您有一条新的消息，请注意查收。';
+                notificationEl.setAttribute('id', 'notification-node');
+                notificationEl.setAttribute('notification-index', notificationIndex++);
+                document.body.appendChild(notificationEl);
+
+
+                notificationEl.onclick = function () {
+                    document.body.removeChild(notificationEl);
+                    notificationIndex--;
+                    bodyNodes = nodeListToArr(document.body.childNodes || []);
+                    createShade();
+                }
+                bodyNodes = nodeListToArr(document.body.childNodes || []);
+            };
+
+            // 删除 body 中指定的dom 节点
+            function removeAppointNode(nodeList, id) {
+                for (var i = 0, len = nodeList.length; i < len; i++) {
+                    if (nodeList[i].id == id) {
+                        document.body.removeChild(nodeList[i]);
+                    };
+                }
+            };
+
+            // nodelist 转 Array  => 兼容低版本 IE 写法
+            function nodeListToArr(data) {
+                var arr = [];
+                try {
+                    //ie8及以下不支持
+                    arr = Array.prototype.slice.call(data);
+                } catch (e) {
+                    //兼容写法
+                    var len = data.length;
+                    for (var i = 0; i < len; i++) {
+                        arr.push(data[i]);
+                    }
+                };
+                return arr;
+            };
+
+            function _showModalDialog() {
+                var iWidth = 800;
+                var iHeight = 600;
+                var url =
+                    "http://10.1.1.71:9999/client/index.html?userId=09&userName=王萌萌3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1";
+                // 以浏览器窗口来计算
+                // 获得窗口的垂直位置 
+                var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
+                // 获得窗口的水平位置 
+                var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
+
+                var winOption = "dialogWidth:800px;dialogHeight:600px;dialogTop:"+ iTop +";dialogLeft:"+ iLeft +";center:yes;resizable:yes;scroll:yes;status=0;"
+
+                window.showModalDialog(url, '审方消息客户端', winOption);
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <button id="create-shade">打开审方客户端</button>
+    <button id="create-notification">创建通知</button>
+</body>
+
+</html>
