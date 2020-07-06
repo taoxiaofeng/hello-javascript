@@ -11,13 +11,13 @@
             margin: 0;
             padding: 0;
         }
-
+        
         html,
         body {
             width: 100%;
             height: 100%;
         }
-
+        
         button {
             margin: 10px;
             height: 34px;
@@ -56,7 +56,7 @@
         </style>
     <![endif]-->
     <script>
-        window.onload = function () {
+        window.onload = function() {
 
             var bodyNodes = nodeListToArr(document.body.childNodes || []);
             var shadeBtn = document.getElementById('create-shade');
@@ -67,13 +67,13 @@
             // 封装一个 showModalDialog
             var has_showModalDialog = !!window.showModalDialog; //定义一个全局变量判定是否有原生showModalDialog方法
             if (!has_showModalDialog && !!(window.opener)) {
-                window.onbeforeunload = function () {
+                window.onbeforeunload = function() {
                     window.opener.hasOpenWindow = false; //弹窗关闭时告诉opener：它子窗口已经关闭
                 }
             }
             //定义window.showModalDialog如果它不存在
             if (window.showModalDialog == undefined) {
-                window.showModalDialog = function (url, mixedVar, features) {
+                window.showModalDialog = function(url, mixedVar, features) {
                     // if (window.hasOpenWindow) {
                     //     alert("您已经打开了一个窗口！请先处理它"); //避免多次点击会弹出多个窗口
                     //     window.myNewWindow.focus();
@@ -106,13 +106,13 @@
                 var shadeDiv = document.createElement('div');
                 shadeDiv.setAttribute('shade-index', shadeIndex++);
                 shadeDiv.setAttribute('id', 'shade-node')
-                // shadeDiv.style.cssText =
-                //     'position: absolute;' +
-                //     'top: 0;' +
-                //     'right: 0;' +
-                //     'bottom: 0;' +
-                //     'left: 0;' +
-                //     'background: rgba(0,0,0,.3)';
+                    // shadeDiv.style.cssText =
+                    //     'position: absolute;' +
+                    //     'top: 0;' +
+                    //     'right: 0;' +
+                    //     'bottom: 0;' +
+                    //     'left: 0;' +
+                    //     'background: rgba(0,0,0,.3)';
                 document.body.appendChild(shadeDiv);
                 bodyNodes = nodeListToArr(document.body.childNodes || []);
                 _showModalDialog();
@@ -125,7 +125,9 @@
                 notificationBtn.addEventListener('click', createNotification);
             }
 
+            // 创建消息通知
             function createNotification() {
+
                 removeAppointNode(bodyNodes, 'notification-node');
                 var notificationEl = document.createElement('div');
                 notificationEl.style.cssText =
@@ -147,8 +149,7 @@
                 notificationEl.setAttribute('notification-index', notificationIndex++);
                 document.body.appendChild(notificationEl);
 
-
-                notificationEl.onclick = function () {
+                notificationEl.onclick = function() {
                     document.body.removeChild(notificationEl);
                     notificationIndex--;
                     bodyNodes = nodeListToArr(document.body.childNodes || []);
@@ -182,6 +183,7 @@
                 return arr;
             };
 
+            // 显示 showModalDialog
             function _showModalDialog() {
                 var iWidth = 800;
                 var iHeight = 600;
@@ -193,10 +195,51 @@
                 // 获得窗口的水平位置 
                 var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
 
-                var winOption = "dialogWidth:800px;dialogHeight:600px;dialogTop:"+ iTop +";dialogLeft:"+ iLeft +";center:yes;resizable:yes;scroll:yes;status=0;"
+                var winOption = "dialogWidth:800px;dialogHeight:600px;dialogTop:" + iTop + ";dialogLeft:" + iLeft + ";center:yes;resizable:yes;scroll:yes;status=0;"
 
                 window.showModalDialog(url, '审方消息客户端', winOption);
             };
+
+            // 获取消息
+            // TODO 获取消息时存在跨域问题 ，带解决
+            function accessToTask() {
+                var xmlhttp;
+                var tempUrl = 'http://10.1.1.71:9999/auditcenter/api/v1/reject/backTaskCount?&t=1594040126107';
+                var tempParams = {
+                    deptId: "1900000",
+                    groupId: "1、",
+                    inPatientArea: "1900001",
+                    nameOrBedno: null,
+                    organizationCode: "H0003",
+                    status: 0,
+                    userId: "09",
+                    userName: "王萌萌3",
+                }
+                if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+                    xmlhttp = new XMLHttpRequest();
+                } else { // code for IE6, IE5
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                xmlhttp.onreadystatechange = function() {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        console.log('xmlhttp:', xmlhttp)
+                        createNotification()
+                    }
+                    console.log(xmlhttp.readyState, xmlhttp)
+                    if (xmlhttp.readyState == 1) {
+                        clearInterval(taskInterval);
+                    }
+                }
+
+                xmlhttp.open('POST', tempUrl, true);
+                xmlhttp.setRequestHeader('Content-type', 'application/json;charset-UTF-8');
+                xmlhttp.send(JSON.stringify(tempParams));
+            }
+
+            // 轮询获取消息
+            var taskInterval = setInterval(function() {
+                accessToTask();
+            }, 2000)
         }
     </script>
 </head>
