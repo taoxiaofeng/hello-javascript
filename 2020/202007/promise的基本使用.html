@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise的基本使用</title>
+</head>
+<script>
+    /*
+     * 1. 创建一个新的promise 对象
+     * 2. 执行异步操作任务
+     * 3.1 如果成功了，调用 resolve(value) 函数
+     * 3.2 如果失败了，调用 reject(reason) 函数
+     */
+
+    // 1. 创建一个新的promise 对象
+    const p = new Promise((resolve, reject) => { // 执行器函数 同步回调
+        // 2. 执行异步操作任务
+        setTimeout(() => {
+            const time = Date.now(); // 如果当前时间是偶数就代表成功，否则代表失败。
+            // 3.1 如果成功了，调用 resolve(value) 函数
+            if (time % 2 === 0) {
+                resolve('成功的数据, time=' + time);
+            } else {
+                // 3.2 如果失败了，调用 reject(reason) 函数
+                reject('失败的数据, time=' + time);
+            }
+        }, 1000);
+    });
+
+    p.then(
+        value => {
+            console.log('成功的回调', value); // onResolved
+        },
+        reason => {
+            console.log('失败的回调', reason); // onRejected
+        }
+    );
+</script>
+
+<body>
+
+</body>
+
+</html>
