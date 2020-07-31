@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作用域</title>
+</head>
+
+<body>
+    <script>
+        // function foo() {
+        //     function bar(a) {
+        //         // i = 3; // 修改 for 循环所属作用域中的 i 
+        //         // 采用遮蔽变量 避免修改 for 循环所属作用域中的 i 造成无限循环的问题
+        //         var i = 3;
+        //         console.log(a + i);
+        //     }
+        //     for (var i = 0; i < 10; i++) {
+        //         bar(i * 2); // 糟糕，无限循环了！ 
+        //     }
+        // }
+        // foo();
+
+        // var a = 2;
+
+        // function foo() { // <-- 添加这一行
+        //     var a = 3;
+        //     console.log(a); // 3 
+        // } // <-- 以及这一行
+        // foo(); // <-- 以及这一行 
+        // console.log(a); // 2
+
+        // 自执行函数
+        var a = 2;
+        (function foo() { // <-- 添加这一行
+            var a = 3;
+            console.log(a); // 3 
+        })(); // <-- 以及这一行 
+        console.log(a); // 2
+    </script>
+</body>
+
+</html>
