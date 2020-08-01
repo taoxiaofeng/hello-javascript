@@ -32,12 +32,45 @@
         // console.log(a); // 2
 
         // 自执行函数
+        // var a = 2;
+        // (function foo() { // <-- 添加这一行
+        //     var a = 3;
+        //     console.log(a); // 3 
+        // })(); // <-- 以及这一行 
+        // console.log(a); // 2
+        // var a = 2;
+        // var tempObj = {
+        //     a: '1',
+        //     b: '2'
+        // };
+        // (function IIFE(global, tempObj) {
+        //     var a = 3;
+        //     console.log(a); // 3 
+        //     console.log(global.a); // 2
+        //     console.log(arguments)
+        // })(window, tempObj);
+
+        // console.log(a); // 2
+
+        // undefined = true; // 给其他代码挖了一个大坑！绝对不要这样做！ 
+        // (function IIFE(undefined) {
+        //     var a;
+        //     console.log('undefined:' + undefined, 'a:' + a);
+        //     if (a === undefined) {
+        //         console.log("Undefined is safe here!");
+        //     }
+        // })();
+        // console.log(undefined);
+
+        // UMD（Universal Module Definition）模式
         var a = 2;
-        (function foo() { // <-- 添加这一行
+        (function IIFE(def) {
+            def(window);
+        })(function def(global) {
             var a = 3;
             console.log(a); // 3 
-        })(); // <-- 以及这一行 
-        console.log(a); // 2
+            console.log(global.a); // 2 
+        });
     </script>
 </body>
 
