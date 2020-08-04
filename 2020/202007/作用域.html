@@ -5,9 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>作用域</title>
+    <style>
+        #my_button {
+            color: #fff;
+            background-color: #108EE9;
+            border-color: #108EE9;
+            min-width: 68px;
+            height: 30px;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.225rem 0.625rem;
+            font-size: 0.8125rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+    </style>
 </head>
 
 <body>
+    <button id="my_button">点击我</button>
     <script>
         // function foo() {
         //     function bar(a) {
@@ -63,14 +88,43 @@
         // console.log(undefined);
 
         // UMD（Universal Module Definition）模式
-        var a = 2;
-        (function IIFE(def) {
-            def(window);
-        })(function def(global) {
-            var a = 3;
-            console.log(a); // 3 
-            console.log(global.a); // 2 
-        });
+        // var a = 2;
+        // (function IIFE(def) {
+        //     def(window);
+        // })(function def(global) {
+        //     var a = 3;
+        //     console.log(a); // 3 
+        //     console.log(global.a); // 2 
+        // });
+        // try {
+        //     undefined(); // 执行一个非法操作来强制制造一个异常
+        // } catch (err) {
+        //     console.log(err); // 能够正常执行！
+        // }
+        // console.log(err); // ReferenceError: err not found
+
+        // function process(data) { // 在这里做点有趣的事情 
+        // }
+        // var someReallyBigData = {
+        //     test: 'test'
+        // };
+        // process(someReallyBigData);
+        // var btn = document.getElementById("my_button");
+        // btn.addEventListener("click", function click(evt) {
+        //     console.log("button clicked");
+        // }, /*capturingPhase=*/ false);
+        function process(data) { // 在这里做点有趣的事情 
+        } // 在这个块中定义的内容可以销毁了！ 
+        {
+            let someReallyBigData = {
+                test: 'test'
+            };
+            process(someReallyBigData);
+        }
+        var btn = document.getElementById("my_button");
+        btn.addEventListener("click", function click(evt) {
+            console.log("button clicked");
+        }, /*capturingPhase=*/ false);
     </script>
 </body>
 

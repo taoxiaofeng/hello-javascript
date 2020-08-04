@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>变量提升</title>
+</head>
+
+<body>
+    <script>
+        // a = 2;
+        // var a;
+        // console.log(a); // 2
+
+        /*
+         * JavaScript 实际上会将其看成两个 声明：var a; 和 a = 2;。
+         * 第一个定义声明是在编译阶段进行的。
+         * 第二个赋值声明会被留在 原地等待执行阶段。
+         */
+        // 编译器解析为： => 变量提升
+        // var a;
+        // a = 2;
+        // console.log(a); // 2
+
+        /**=======================================================*/
+        // console.log(a); // undefined
+        // var a = 2;
+
+        // 编译器解析为： => 变量提升
+        // var a;
+        // console.log(a); // undefined
+        // a = 2;
+
+        /**=======================================================*/
+        // foo();
+
+        // 每个作用域都会进行提升操作
+        // function foo() {
+        //     console.log(a); // undefined
+        //     var a = 2;
+        // }
+
+        // 上述代码被解析为为 ：
+        // 变量 a 会在 foo() 函数内部被提升到该函数内部的作用域顶端
+        // function foo() {
+        //     var a;
+        //     console.log(a); // undefined a = 2;
+        // }
+        // foo();
+
+        /**=======================================================*/
+        // 函数声明会被提升 ，但 函数表达式不会被提升
+        // foo(); // 不是 ReferenceError, 而是 TypeError!
+        // var foo = function bar() { // 
+        // }; //  Uncaught TypeError: foo is not a function
+
+
+        // 具名 函数表达式 名称标识符在赋值之前也无法在所在作用域中使用
+        // foo(); // TypeError 
+        // bar(); // ReferenceError
+        // var foo = function bar() { // 
+        // };
+
+        // 这个代码片段经过提升后，实际上会被理解为以下形式：
+        // var foo;
+        // foo(); // TypeError 
+        // bar(); // ReferenceError 
+        // foo = function() {
+        //     var bar = self; //
+        // }
+
+
+        /**=======================函数优先================================*/
+        /*
+         *函数声明和变量声明都会被提升。
+         *但是一个值得注意的细节（这个细节可以出现在有多个
+         * “重复”声明的代码中）是函数会首先被提升，然后才是变量。
+         */
+        // foo(); // 1
+        // var foo;
+
+        // function foo() {
+        //     console.log(1);
+        // }
+        // foo = function() {
+        //     console.log(2);
+        // };
+
+        // 会输出 1 而不是 2 ！这个代码片段会被引擎理解为如下形式：
+        // function foo() {
+        //     console.log(1);
+        // }
+        // foo(); // 1
+        // foo = function() {
+        //     console.log(2);
+        // };
+        /* 注意，var foo 尽管出现在 function foo()... 的声明之前，
+         *但它是重复的声明（因此被忽 略了），
+         *因为函数声明会被提升到普通变量之前。
+         */
+
+        // 管重复的 var 声明会被忽略掉，但出现在后面的函数声明还是可以覆盖前面的。
+        // foo(); // 3
+        // function foo() {
+        //     console.log(1);
+        // }
+        // var foo = function() {
+        //     console.log(2);
+        // };
+
+        // function foo() {
+        //     console.log(3);
+        // }
+
+        // foo(); // "b"
+
+        /*
+         *一个普通块内部的函数声明通常会被提升到所在作用域的顶部，
+         *这个过程不会像下面的代 码暗示的那样可以被条件判断所控制：
+         */
+        // var a = true;
+        // if (a) {
+        //     function foo() {
+        //         console.log("a");
+        //     }
+        // } else {
+        //     function foo() {
+        //         console.log("b");
+        //     }
+        // }
+    </script>
+
+</body>
+
+</html>
