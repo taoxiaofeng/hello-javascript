@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模块</title>
+</head>
+<script>
+    // function foo() {
+    //     var something = "cool";
+    //     var another = [1, 2, 3];
+
+    //     function doSomething() {
+    //         console.log(something);
+    //     }
+
+    //     function doAnother() {
+    //         console.log(another.join(" ! "));
+    //     }
+    // }
+
+    function CoolModule() {
+        var something = "cool";
+        var another = [1, 2, 3];
+
+        function doSomething() {
+            console.log(something);
+        }
+
+        function doAnother() {
+            console.log(another.join(" ! "));
+        }
+
+        return {
+            doSomething: doSomething,
+            doAnother: doAnother
+        }
+    }
+
+    var foo = CoolModule();
+    foo.doSomething(); // cool
+    foo.doAnother(); // 1 ! 2 ! 3
+    // 这个模式在 JavaScript 中被称为模块。
+    // 最常见的实现模块模式的方法通常被称为模块暴露， 这里展示的是其变体。
+</script>
+
+<body>
+
+</body>
+
+</html>

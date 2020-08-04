@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闭包</title>
+</head>
+
+<body>
+    <script>
+        /*
+         * 清晰地展示了闭包
+         * 函数 bar() 的词法作用域能够访问 foo() 的内部作用域。
+         * bar() 依然持有对该作用域的引用，而这个引用就叫作闭包。
+         */
+        // function foo() {
+        //     var a = 2;
+
+        //     function bar() {
+        //         console.log(a);
+        //     }
+        //     return bar;
+        // }
+
+        // var baz = foo();
+        // baz(); // 
+        // 这个函数在定义时的词法作用域以外的地方被调用。
+        // 闭包使得函数可以继续访问定义时的 词法作用域。
+
+        /************ 闭包的第二种呈现 **************************/
+        /*
+         * 把内部函数 baz 传递给 bar，
+         * 当调用这个内部函数时（现在叫作 fn），
+         * 它涵盖的 foo() 内部 作用域的闭包就可以观察到了，因为它能够访问 a。
+         */
+        // function foo() {
+        //     var a = 2;
+
+        //     function baz() {
+        //         console.log(a);
+        //     }
+
+        //     bar(baz);
+        // }
+
+        // function bar(fn) {
+        //     fn(); // 这就是闭包;
+        // }
+
+        /************ 闭包的第三种呈现 **************************/
+        var fn;
+
+        function foo() {
+            var a = 2;
+
+            function baz() {
+                console.log(a);
+            }
+            fn = baz;
+        }
+
+        function bar() {
+            fn(); //  这就是闭包
+        }
+
+        foo();
+
+        bar(); // 2
+
+        // 无论通过何种手段将内部函数传递到所在的词法作用域以外，
+        // 它都会持有对原始定义作用 域的引用，无论在何处执行这个函数都会使用闭包。
+
+        /*
+         * 本质上无论何时何地，如果将函数（访问它们各自的词法作用域）
+         * 当作第一 级的值类型并到处传递，你就会看到闭包在这些函数中的应用。
+         * 在定时器、事件监听器、 Ajax 请求、跨窗口通信、Web Workers 
+         * 或者任何其他的异步（或者同步）任务中，只要使 用了回调函数，实际上就是在使用闭包！
+         */
+
+        /**************************解决 所有函数共享一个 i 的引用，导致每次输入的i的值一样的问题****************************/
+        /*
+         * IIFE 会通过声明并立即执行一个函数来创建作用域。
+         */
+        for (var i = 1; i <= 5; i++) {
+            (function(j) {
+                setTimeout(function timer() {
+                    console.log(j);
+                }, j * 1000);
+            })(i);
+        }
+
+        /*
+         * 块级作用域 
+         */
+        for (let i = 1; i <= 5; i++) {
+            setTimeout(function timer() {
+                console.log(i);
+            }, i * 1000);
+        }
+    </script>
+</body>
+
+</html>
