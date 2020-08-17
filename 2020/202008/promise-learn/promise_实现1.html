@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise 实现1</title>
+
+</head>
+
+<body>
+    <script>
+        class MyPromise {
+            // 构造方法接受一个回调
+            constructor(executor) {
+                this._resolveQueue = []; // then 收集的执行成功的回调队列
+                this._rejectQueue = []; // then 收集的执行失败的回调队列
+
+                // 由于resolve/reject 是在 executor 内部被调用，
+                // 因此需要使用箭头函数固定this指向，
+                // 否则找不到 this._resolveQueue
+                let _resolve = (val) => {
+                    // 从成功的回调中取出回调依次执行
+                    while (this._resolveQueue.length) {
+                        let callback = this._resolveQueue.shift();
+                        callback(val);
+                    }
+                }
+
+                // 实现同 resolve
+                let _reject = (val) => {
+                    while (this._rejectQueue.length) {
+                        let callback = this._rejectQueue.shift();
+                        callback(val);
+                    }
+                }
+
+                // new Promise 时立即执行 executor，并传入 _resolve 和 _reject
+                executor(_resolve, _reject);
+            }
+
+            // then 方法接受一个成功的回调，接受一个失败的回调，并push进相应队列。
+            then(resolveFn, rejectFn) {
+                this._resolveQueue.push(resolveFn);
+                this._rejectQueue.push(rejectFn);
+            }
+        }
+
+        // 测试
+        const p1 = new MyPromise((resolve, reject) => {
+            setTimeout(() => {
+                reject('result');
+            }, 1000)
+        })
+
+        p1.then(value => {
+            console.log('value:' + value);
+        }, reason => {
+            console.log('reason:' + reason);
+        })
+    </script>
+
+</body>
+
+</html>
