@@ -247,6 +247,7 @@
                     if (xmlhttp.readyState == 4) {
                         if (xmlhttp.status == 200) {
                             if (xmlhttp.response) {
+                                console.log(xmlhttp.response);
                                 result = JSON.parse(xmlhttp.response);
                                 msgCount = result.data.unCount;
                             }
