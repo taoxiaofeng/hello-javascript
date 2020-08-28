@@ -1,7 +1,9 @@
-// $(function() {
 var shadeIndex = 0;
 var notificationIndex = 0;
 var msgCount = 0;
+var _deptId = '',
+    _userId = '',
+    _userName = '';
 
 // 浏览器监听关闭
 window.onbeforeunload = function(e) {
@@ -47,8 +49,6 @@ if (window.showModalDialog == undefined) {
     }
 }
 
-
-
 function createShade() {
     // removeAppointNode(nodeListToArr(document.body.childNodes || []), 'shade-node');
     $('#shade-node').remove();
@@ -63,7 +63,7 @@ function createShade() {
         //     'left: 0;' +
         //     'background: rgba(0,0,0,.3)';
     document.body.appendChild(shadeDiv);
-    _showModalDialog();
+    _showModalDialog(deptId, userId, userName);
 
     // 打开 showModalDialog 后关闭， 关闭获取消息的定时器
     // clearInterval(taskInterval);
@@ -71,67 +71,33 @@ function createShade() {
 
 // 创建消息通知
 function createNotification() {
-
     // removeAppointNode(nodeListToArr(document.body.childNodes || []), 'notification-node');
-    // if ($('#notification-node').length > 1) {
     $('#notification-node').remove();
-    // }
-    var notificationEl = document.createElement('iframe');
-    // var notificationEl = document.createElement('div');
-    // notificationEl.style.cssText =
-    //     'width: 360px;' +
-    //     'height: 120px;' +
-    //     'line-height:120px;' +
-    //     'color:#333333;' +
-    //     'font-size:14px;' +
-    //     'padding:10px;' +
-    //     'text-align:center;' +
-    //     'background: #48dbfb;' +
-    //     'position: absolute;' +
-    //     'right: 10px;' +
-    //     'bottom: 10px;' +
-    //     'z-index: 9999;' +
-    //     'cursor: pointer;';
-    // notificationEl.innerHTML = '您有<b>' + msgCount + '</b>条新的消息，请点击查看。';
+    var notificationEl = document.createElement('div');
+    notificationEl.style.cssText =
+        'width: 360px;' +
+        'height: 120px;' +
+        'line-height:120px;' +
+        'color:#333333;' +
+        'font-size:14px;' +
+        'padding：10px;' +
+        'text-align:center;' +
+        'background: #48dbfb;' +
+        'position: absolute;' +
+        'right: 10px;' +
+        'bottom: 10px;' +
+        'z-index: 10;' +
+        'cursor: pointer;';
+    notificationEl.innerHTML = '您有<b>' + msgCount + '</b>条新的消息，请点击查看。';
     notificationEl.setAttribute('id', 'notification-node');
-    notificationEl.setAttribute('src', 'dialog.html');
-    notificationEl.setAttribute('width', '360px');
-    notificationEl.setAttribute('height', '140px');
-    notificationEl.setAttribute('align', 'right');
-    notificationEl.setAttribute('frameborder', '0');
-    notificationEl.setAttribute('style', 'position: fixed;bottom: 10px;right: 10px;');
-    notificationEl.setAttribute('name', 'iframeChild');
     notificationEl.setAttribute('notification-index', notificationIndex++);
     document.body.appendChild(notificationEl);
 
-
-    setTimeout(function() {
-        var childWindow = document.getElementById("notification-node").contentWindow;
-        if (childWindow.document.readyState == "complete") {
-            childWindow.document.body.innerHTML = '<div class="dialog-box"> 您有<b> ' + msgCount + '</b>条新的消息，请点击查看。</div>'
-        }
-
-        // childWindow.onclick = function() {
-        //     document.body.removeChild(notificationEl);
-        //     notificationIndex--;
-        //     createShade();
-        // }
-
-        $(childWindow).bind("click", function(e) {
-            document.body.removeChild(notificationEl);
-            notificationIndex--;
-            createShade();
-        })
-
-    }, 100);
-
-
-
-    // notificationEl.onclick = function() {
-    //     document.body.removeChild(notificationEl);
-    //     notificationIndex--;
-    //     createShade();
-    // }
+    notificationEl.onclick = function() {
+        document.body.removeChild(notificationEl);
+        notificationIndex--;
+        createShade();
+    }
 };
 
 // 删除 body 中指定的dom 节点
@@ -164,7 +130,7 @@ function _showModalDialog() {
     var iWidth = 800;
     var iHeight = 600;
     var url =
-        "http://10.1.1.71:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1";
+        "http://192.168.191.47:9999/client/index.html?userId=" + _userId + "&userName=" + _userName + "&organizationCode=12370600493502999Y&deptId=" + _deptId + "&inPatientArea=&groupId=";
     // 以浏览器窗口来计算
     // 获得窗口的垂直位置 
     var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
@@ -180,24 +146,28 @@ function _showModalDialog() {
 };
 
 // 获取消息
-function accessToTask() {
-    var xmlhttp;
-    var result;
-    var nowDate = new Date().getTime();
-    var tempUrl = 'auditcenter/api/v1/reject/backTaskCount?&t=' + nowDate;
+var _count = 0;
+
+function accessToTask(deptId, userId, userName) {
+    // console.log(_count++, 'deptId:', deptId, 'userId:', userId, 'userName:', userName);
+    // alert(deptId + "," + userId + "," + userName + "");
+    if (deptId) { _deptId = deptId };
+    if (userId) { _userId = userId };
+    if (userName) { _userName = userName };
+    var tempUrl = 'http://192.168.191.47:9999/auditcenter/api/v1/reject/backTaskCount';
     var tempParams = {
-        deptId: "1900000",
-        "groupId": "1",
-        "inPatientArea": "1900001",
-        "nameOrBedno": null,
-        "organizationCode": "H0003",
+        "deptId": _deptId,
+        "groupId": "",
+        "inPatientArea": "",
+        "nameOrBedno": "",
+        "organizationCode": "12370600493502999Y",
         "status": 0,
-        "userId": "09",
-        "userName": "王萌萌3"
+        "userId": _userId,
+        "userName": _userName
     }
 
     $.ajax({
-            url: tempUrl,
+            url: tempUrl + '?t=' + new Date().getTime(),
             type: "POST",
             data: JSON.stringify(tempParams),
             dataType: 'json',
@@ -209,11 +179,12 @@ function accessToTask() {
                         createNotification();
                     }
                 } else {
-
+                    alert('接口调用异常');
+                    clearInterval(taskInterval);
                 }
             },
             error: function(res) {
-
+                clearInterval(taskInterval);
             }
         })
         // if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -241,43 +212,37 @@ function accessToTask() {
     // xmlhttp.open('POST', tempUrl, true);
     // xmlhttp.setRequestHeader('Content-type', 'application/json;charset-UTF-8');
     // xmlhttp.send(JSON.stringify(tempParams));
-    // setInterval(function() {
-    //     arguments.callee();
-    // }, 2000)
 }
-// accessToTask();
-taskPolling();
+accessToTask();
 
 // 轮询获取消息
-// var taskInterval = null;
-
-function taskPolling() {
-    taskInterval = setInterval(function() {
-        accessToTask();
-    }, 5000);
-}
+var taskInterval = null;
+taskInterval = setInterval(function() {
+    accessToTask();
+}, 2000);
 
 // 实时监听 showModalDialog 是否关闭
-var taskIntervalCount = 0;
-var dialogStatusMonitor = setInterval(function() {
-    if (window.myNewWindow) {
-        if (window.myNewWindow.closed) {
-            taskPolling();
-        }
-    }
-}, 1000);
+// var taskIntervalCount = 0;
+// var dialogStatusMonitor = setInterval(function() {
+//     if (window.myNewWindow) {
+//         // if (window.myNewWindow.closed && taskIntervalCount == 0) {
+//         //     taskInterval = setInterval(function() {
+//         //         accessToTask();
+//         //     }, 2000);
+//         // }
+//     }
+// }, 1000);
+// var _opener = function (child) {
+// }
 
 $(function() {
-        // 创建遮罩
-        $('#create-shade').click(function() {
-            createShade();
-        });
+    // 创建遮罩
+    $('#create-shade').click(function() {
+        createShade();
+    });
 
-        // 创建通知
-        $('#create-notification').click(function() {
-            createNotification();
-        });
-    })
-    // var _opener = function (child) {
-    // }
-    // })
+    // 创建通知
+    $('#create-notification').click(function() {
+        createNotification();
+    });
+})
