@@ -1,39 +1,41 @@
-// $(function() {
 var shadeIndex = 0;
 var notificationIndex = 0;
 var msgCount = 0;
+var _deptId = '',
+    _userId = '',
+    _userName = '';
 
-// æµè§ˆå™¨ç›‘å¬å…³é—­
+// ä¯ÀÀÆ÷¼àÌı¹Ø±Õ
 window.onbeforeunload = function(e) {
     e = e || window.event;
 
-    // å…¼å®¹IE8å’ŒFirefox 4ä¹‹å‰çš„ç‰ˆæœ¬
+    // ¼æÈİIE8ºÍFirefox 4Ö®Ç°µÄ°æ±¾
     if (e) {
-        e.returnValue = 'å…³é—­æç¤º';
+        e.returnValue = '¹Ø±ÕÌáÊ¾';
     }
 
     // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
-    return 'å…³é—­æç¤º';
+    return '¹Ø±ÕÌáÊ¾';
 };
 
-// å°è£…ä¸€ä¸ª showModalDialog
-var has_showModalDialog = !!window.showModalDialog; //å®šä¹‰ä¸€ä¸ªå…¨å±€å˜é‡åˆ¤å®šæ˜¯å¦æœ‰åŸç”ŸshowModalDialogæ–¹æ³•
+// ·â×°Ò»¸ö showModalDialog
+var has_showModalDialog = !!window.showModalDialog; //¶¨ÒåÒ»¸öÈ«¾Ö±äÁ¿ÅĞ¶¨ÊÇ·ñÓĞÔ­ÉúshowModalDialog·½·¨
 if (!has_showModalDialog && !!(window.opener)) {
     window.onbeforeunload = function() {
-        window.opener.hasOpenWindow = false; //å¼¹çª—å…³é—­æ—¶å‘Šè¯‰openerï¼šå®ƒå­çª—å£å·²ç»å…³é—­
+        window.opener.hasOpenWindow = false; //µ¯´°¹Ø±ÕÊ±¸æËßopener£ºËü×Ó´°¿ÚÒÑ¾­¹Ø±Õ
     }
 }
-//å®šä¹‰window.showModalDialogå¦‚æœå®ƒä¸å­˜åœ¨
+//¶¨Òåwindow.showModalDialogÈç¹ûËü²»´æÔÚ
 if (window.showModalDialog == undefined) {
     window.showModalDialog = function(url, mixedVar, features) {
         // if (window.hasOpenWindow) {
-        //     alert("æ‚¨å·²ç»æ‰“å¼€äº†ä¸€ä¸ªçª—å£ï¼è¯·å…ˆå¤„ç†å®ƒ"); //é¿å…å¤šæ¬¡ç‚¹å‡»ä¼šå¼¹å‡ºå¤šä¸ªçª—å£
+        //     alert("ÄúÒÑ¾­´ò¿ªÁËÒ»¸ö´°¿Ú£¡ÇëÏÈ´¦ÀíËü"); //±ÜÃâ¶à´Îµã»÷»áµ¯³ö¶à¸ö´°¿Ú
         //     window.myNewWindow.focus();
         //     return false;
         // }
         window.hasOpenWindow = true;
         if (mixedVar) var mixedVar = mixedVar;
-        //å› window.showmodaldialog ä¸ window.open å‚æ•°ä¸ä¸€æ ·ï¼Œæ‰€ä»¥å°è£…çš„æ—¶å€™ç”¨æ­£åˆ™å»æ ¼å¼åŒ–ä¸€ä¸‹å‚æ•°
+        //Òòwindow.showmodaldialog Óë window.open ²ÎÊı²»Ò»Ñù£¬ËùÒÔ·â×°µÄÊ±ºòÓÃÕıÔòÈ¥¸ñÊ½»¯Ò»ÏÂ²ÎÊı
         if (features) var features = features.replace(/(dialog)|(px)/ig, "").replace(/;/g, ',')
             .replace(/\:/g, "=");
         //window.open("Sample.htm",null,"height=200,width=400,status=yes,toolbar=no,menubar=no");
@@ -46,8 +48,6 @@ if (window.showModalDialog == undefined) {
         window.myNewWindow = window.open(url, mixedVar, features);
     }
 }
-
-
 
 function createShade() {
     // removeAppointNode(nodeListToArr(document.body.childNodes || []), 'shade-node');
@@ -65,76 +65,42 @@ function createShade() {
     document.body.appendChild(shadeDiv);
     _showModalDialog();
 
-    // æ‰“å¼€ showModalDialog åå…³é—­ï¼Œ å…³é—­è·å–æ¶ˆæ¯çš„å®šæ—¶å™¨
+    // ´ò¿ª showModalDialog ºó¹Ø±Õ£¬ ¹Ø±Õ»ñÈ¡ÏûÏ¢µÄ¶¨Ê±Æ÷
     // clearInterval(taskInterval);
 }
 
-// åˆ›å»ºæ¶ˆæ¯é€šçŸ¥
+// ´´½¨ÏûÏ¢Í¨Öª
 function createNotification() {
-
     // removeAppointNode(nodeListToArr(document.body.childNodes || []), 'notification-node');
-    // if ($('#notification-node').length > 1) {
     $('#notification-node').remove();
-    // }
-    var notificationEl = document.createElement('iframe');
-    // var notificationEl = document.createElement('div');
-    // notificationEl.style.cssText =
-    //     'width: 360px;' +
-    //     'height: 120px;' +
-    //     'line-height:120px;' +
-    //     'color:#333333;' +
-    //     'font-size:14px;' +
-    //     'padding:10px;' +
-    //     'text-align:center;' +
-    //     'background: #48dbfb;' +
-    //     'position: absolute;' +
-    //     'right: 10px;' +
-    //     'bottom: 10px;' +
-    //     'z-index: 9999;' +
-    //     'cursor: pointer;';
-    // notificationEl.innerHTML = 'æ‚¨æœ‰<b>' + msgCount + '</b>æ¡æ–°çš„æ¶ˆæ¯ï¼Œè¯·ç‚¹å‡»æŸ¥çœ‹ã€‚';
+    var notificationEl = document.createElement('div');
+    notificationEl.style.cssText =
+        'width: 360px;' +
+        'height: 120px;' +
+        'line-height:120px;' +
+        'color:#333333;' +
+        'font-size:14px;' +
+        'padding£º10px;' +
+        'text-align:center;' +
+        'background: #48dbfb;' +
+        'position: absolute;' +
+        'right: 10px;' +
+        'bottom: 10px;' +
+        'z-index: 10;' +
+        'cursor: pointer;';
+    notificationEl.innerHTML = 'ÄúÓĞ<b>' + msgCount + '</b>ÌõĞÂµÄÏûÏ¢£¬Çëµã»÷²é¿´¡£';
     notificationEl.setAttribute('id', 'notification-node');
-    notificationEl.setAttribute('src', 'dialog.html');
-    notificationEl.setAttribute('width', '360px');
-    notificationEl.setAttribute('height', '140px');
-    notificationEl.setAttribute('align', 'right');
-    notificationEl.setAttribute('frameborder', '0');
-    notificationEl.setAttribute('style', 'position: fixed;bottom: 10px;right: 10px;');
-    notificationEl.setAttribute('name', 'iframeChild');
     notificationEl.setAttribute('notification-index', notificationIndex++);
     document.body.appendChild(notificationEl);
 
-
-    setTimeout(function() {
-        var childWindow = document.getElementById("notification-node").contentWindow;
-        if (childWindow.document.readyState == "complete") {
-            childWindow.document.body.innerHTML = '<div class="dialog-box"> æ‚¨æœ‰<b> ' + msgCount + '</b>æ¡æ–°çš„æ¶ˆæ¯ï¼Œè¯·ç‚¹å‡»æŸ¥çœ‹ã€‚</div>'
-        }
-
-        // childWindow.onclick = function() {
-        //     document.body.removeChild(notificationEl);
-        //     notificationIndex--;
-        //     createShade();
-        // }
-
-        $(childWindow).bind("click", function(e) {
-            document.body.removeChild(notificationEl);
-            notificationIndex--;
-            createShade();
-        })
-
-    }, 100);
-
-
-
-    // notificationEl.onclick = function() {
-    //     document.body.removeChild(notificationEl);
-    //     notificationIndex--;
-    //     createShade();
-    // }
+    notificationEl.onclick = function() {
+        document.body.removeChild(notificationEl);
+        notificationIndex--;
+        createShade();
+    }
 };
 
-// åˆ é™¤ body ä¸­æŒ‡å®šçš„dom èŠ‚ç‚¹
+// É¾³ı body ÖĞÖ¸¶¨µÄdom ½Úµã
 function removeAppointNode(nodeList, id) {
     for (var i = 0, len = nodeList.length; i < len; i++) {
         if (nodeList[i].id == id) {
@@ -143,14 +109,14 @@ function removeAppointNode(nodeList, id) {
     }
 };
 
-// nodelist è½¬ Array  => å…¼å®¹ä½ç‰ˆæœ¬ IE å†™æ³•
+// nodelist ×ª Array  => ¼æÈİµÍ°æ±¾ IE Ğ´·¨
 function nodeListToArr(data) {
     var arr = [];
     try {
-        //ie8åŠä»¥ä¸‹ä¸æ”¯æŒ
+        //ie8¼°ÒÔÏÂ²»Ö§³Ö
         arr = Array.prototype.slice.call(data);
     } catch (e) {
-        //å…¼å®¹å†™æ³•
+        //¼æÈİĞ´·¨
         var len = data.length;
         for (var i = 0; i < len; i++) {
             arr.push(data[i]);
@@ -159,45 +125,49 @@ function nodeListToArr(data) {
     return arr;
 };
 
-// æ˜¾ç¤º showModalDialog
+// ÏÔÊ¾ showModalDialog
 function _showModalDialog() {
     var iWidth = 800;
     var iHeight = 600;
     var url =
-        "http://10.1.1.71:9999/client/index.html?userId=09&userName=%E7%8E%8B%E8%90%8C%E8%90%8C3&organizationCode=H0003&deptId=1900000&inPatientArea=1900001&groupId=1";
-    // ä»¥æµè§ˆå™¨çª—å£æ¥è®¡ç®—
-    // è·å¾—çª—å£çš„å‚ç›´ä½ç½® 
+        "http://192.168.191.47:9999/client/index.html?userId=" + _userId + "&userName=" + _userName + "&organizationCode=12370600493502999Y&deptId=" + _deptId + "&inPatientArea=&groupId=";
+    // ÒÔä¯ÀÀÆ÷´°¿ÚÀ´¼ÆËã
+    // »ñµÃ´°¿ÚµÄ´¹Ö±Î»ÖÃ 
     var iTop = (window.screen.availHeight - 30 - iHeight) / 2;
-    // è·å¾—çª—å£çš„æ°´å¹³ä½ç½® 
+    // »ñµÃ´°¿ÚµÄË®Æ½Î»ÖÃ 
     var iLeft = (window.screen.availWidth - 10 - iWidth) / 2;
 
     var winOption = "dialogWidth:800px;dialogHeight:600px;dialogTop:" + iTop + ";dialogLeft:" +
         iLeft +
         ";center:yes;resizable:yes;scroll:yes;status=0;"
 
-    window.showModalDialog(url, 'å®¡æ–¹æ¶ˆæ¯å®¢æˆ·ç«¯', winOption);
+    window.showModalDialog(url, 'Éó·½ÏûÏ¢¿Í»§¶Ë', winOption);
 
 };
 
-// è·å–æ¶ˆæ¯
-function accessToTask() {
-    var xmlhttp;
-    var result;
-    var nowDate = new Date().getTime();
-    var tempUrl = 'auditcenter/api/v1/reject/backTaskCount?&t=' + nowDate;
+// »ñÈ¡ÏûÏ¢
+var _count = 0;
+
+function accessToTask(deptId, userId, userName) {
+    // console.log(_count++, 'deptId:', deptId, 'userId:', userId, 'userName:', userName);
+    // alert(deptId + "," + userId + "," + userName + "");
+    if (deptId) { _deptId = deptId };
+    if (userId) { _userId = userId };
+    if (userName) { _userName = userName };
+    var tempUrl = 'http://192.168.191.47:9999/auditcenter/api/v1/reject/backTaskCount';
     var tempParams = {
-        deptId: "1900000",
-        "groupId": "1",
-        "inPatientArea": "1900001",
-        "nameOrBedno": null,
-        "organizationCode": "H0003",
+        "deptId": _deptId,
+        "groupId": "",
+        "inPatientArea": "",
+        "nameOrBedno": "",
+        "organizationCode": "12370600493502999Y",
         "status": 0,
-        "userId": "09",
-        "userName": "ç‹èŒèŒ3"
+        "userId": _userId,
+        "userName": _userName
     }
 
     $.ajax({
-            url: tempUrl,
+            url: tempUrl + '?t=' + new Date().getTime(),
             type: "POST",
             data: JSON.stringify(tempParams),
             dataType: 'json',
@@ -209,11 +179,12 @@ function accessToTask() {
                         createNotification();
                     }
                 } else {
-
+                    alert('½Ó¿Úµ÷ÓÃÒì³£');
+                    clearInterval(taskInterval);
                 }
             },
             error: function(res) {
-
+                clearInterval(taskInterval);
             }
         })
         // if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -241,43 +212,37 @@ function accessToTask() {
     // xmlhttp.open('POST', tempUrl, true);
     // xmlhttp.setRequestHeader('Content-type', 'application/json;charset-UTF-8');
     // xmlhttp.send(JSON.stringify(tempParams));
-    // setInterval(function() {
-    //     arguments.callee();
-    // }, 2000)
 }
-// accessToTask();
-taskPolling();
+accessToTask();
 
-// è½®è¯¢è·å–æ¶ˆæ¯
-// var taskInterval = null;
+// ÂÖÑ¯»ñÈ¡ÏûÏ¢
+var taskInterval = null;
+taskInterval = setInterval(function() {
+    accessToTask();
+}, 2000);
 
-function taskPolling() {
-    taskInterval = setInterval(function() {
-        accessToTask();
-    }, 5000);
-}
-
-// å®æ—¶ç›‘å¬ showModalDialog æ˜¯å¦å…³é—­
-var taskIntervalCount = 0;
-var dialogStatusMonitor = setInterval(function() {
-    if (window.myNewWindow) {
-        if (window.myNewWindow.closed) {
-            taskPolling();
-        }
-    }
-}, 1000);
+// ÊµÊ±¼àÌı showModalDialog ÊÇ·ñ¹Ø±Õ
+// var taskIntervalCount = 0;
+// var dialogStatusMonitor = setInterval(function() {
+//     if (window.myNewWindow) {
+//         // if (window.myNewWindow.closed && taskIntervalCount == 0) {
+//         //     taskInterval = setInterval(function() {
+//         //         accessToTask();
+//         //     }, 2000);
+//         // }
+//     }
+// }, 1000);
+// var _opener = function (child) {
+// }
 
 $(function() {
-        // åˆ›å»ºé®ç½©
-        $('#create-shade').click(function() {
-            createShade();
-        });
+    // ´´½¨ÕÚÕÖ
+    $('#create-shade').click(function() {
+        createShade();
+    });
 
-        // åˆ›å»ºé€šçŸ¥
-        $('#create-notification').click(function() {
-            createNotification();
-        });
-    })
-    // var _opener = function (child) {
-    // }
-    // })
+    // ´´½¨Í¨Öª
+    $('#create-notification').click(function() {
+        createNotification();
+    });
+})
