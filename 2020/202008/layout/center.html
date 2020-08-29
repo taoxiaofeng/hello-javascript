@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>居中的几种实现</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .box {
+            box-sizing: border-box;
+            width: 100px;
+            height: 50px;
+            line-height: 48px;
+            text-align: center;
+            font-size: 16px;
+            border: 1px solid lightblue;
+            background-color: lightblue;
+        }
+
+        /* 三种定位实现居中 */
+        /* 定位方式 1*/
+        /* body {
+            position: relative;
+        } */
+
+        /* 已知宽高的情况 */
+        /* 高的一半 */
+        /* 宽的一半 */
+        /* .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -25px;
+            margin-left: -50px;
+        } */
+
+        /* 有宽高不需要去考虑 */
+        /* .box {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+        } */
+
+        /* .box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        } */
+
+        /* 通过flex 实现居中 */
+        /* body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        } */
+
+    body {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+
+        /* 固定宽高 */
+        width: 500px;
+        height: 500px;
+        border: 1px solid #d9d9d9;
+    }
+
+    .box {
+        display: inline-block;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- id可以直接作为dom元素对象使用 -->
+    <div class="box" id="box">
+        测试居中
+    </div>
+    <!-- 通过js实现元素居中 -->
+    <script>
+        // let HTML = document.documentElement,
+        // winW = HTML.clientWidth,
+        // winH = HTML.clientHeight,
+        // boxW = box.offsetWidth,
+        // boxH = box.offsetHeight;
+
+        // box.style.position = "absolute";
+        // box.style.top = (winH - boxH) / 2 + 'px';
+        // box.style.left =  (winW - boxW) / 2 + 'px';
+
+    </script>
+
+</body>
+
+</html>

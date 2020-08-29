@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex布局</title>
+</head>
+<style>
+    .box {
+        width: 600px;
+        height: 600px;
+        margin: 0 auto;
+        background: #e67e22;
+        display: flex;
+        /* justify-content: space-around; */
+        /* align-items: baseline; */
+        /* flex-wrap: wrap-reverse; */
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        align-content: center;
+    }
+    
+    .box>div {
+        width: 120px;
+        height: 120px;
+        color: #fff;
+        /* line-height: 120px; */
+        text-align: center;
+    }
+    
+    .item1 {
+        background: #e74c3c;
+        /* height: 60px; */
+    }
+    
+    .item2 {
+        background: #2ecc71;
+        /* height: 150px; */
+    }
+    
+    .item3 {
+        background: #2980b9;
+        /* height: 120px; */
+    }
+</style>
+
+<body>
+    <div class="box">
+        <div class="item1">item1</div>
+        <div class="item2">item2</div>
+        <div class="item3">item3</div>
+        <div class="item1">item1</div>
+        <div class="item2">item2</div>
+        <div class="item3">item3</div>
+        <div class="item1">item1</div>
+        <div class="item2">item2</div>
+        <div class="item3">item3</div>
+    </div>
+
+</body>
+
+</html>
