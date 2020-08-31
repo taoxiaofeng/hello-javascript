@@ -94,10 +94,10 @@ function createNotification() {
     //     '</html>';
     // var notificationEl = document.createElement('iframe');
     var notificationEl = document.createElement('div');
-    notificationEl.style.cssText = 'width:360px;height:120px;line-height:120px;color:#333333;font-size:14px;padding:10px;text-align:center;background: #48dbfb;' +
-        'position:absolute;right:10px;bottom:10px;z-index:9999;cursor:pointer;';
-    notificationEl.innerHTML = '您有<b>' + msgCount + '</b>条新的消息，请点击查看。<iframe id="iframe1" src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0"' +
-        'style="position:absolute; visibility:inherit; top:0px;left:0px;width:360px;height:120px;z-index:-1; filter:alpha(opacity=0);"></iframe>';
+    notificationEl.style.cssText = 'width:350px;height:96px;color:#333333;font-size:14px;padding:10px;text-align:center;background: #48dbfb;' +
+        'position:absolute;right:10px;bottom:10px;z-index:9999;cursor:pointer;border-radius:4px;';
+    notificationEl.innerHTML = '<div style="color:#333333;font-weight:600;position:absolute;top:10px;left:10px;">审方消息提醒：</div><div style="line-height:96px;">您有<b>' + msgCount + '</b>条新的消息，请点击查看。</div><iframe id="iframe1" src="about:blank" frameBorder="0" marginHeight="0" marginWidth="0"' +
+        'style="position:absolute; visibility:inherit; top:0px;left:0px;width:350px;height:96px;z-index:-1; filter:alpha(opacity=0);"></iframe>';
     // notificationEl.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(html);
     notificationEl.setAttribute('id', 'notification-node');
     // notificationEl.setAttribute('src', 'dialog.html');
