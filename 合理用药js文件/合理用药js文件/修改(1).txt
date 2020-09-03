@@ -1,0 +1,28 @@
+1.json_hlyy.js文件：放到dws.war根路径下。（与dwsHtml.html文件同一路径）
+2.dwsHtml.html文件：在<script type="text/javascript" src="json2.js"></script> 下添加：<script type="text/javascript" src="json_hlyy.js"></script>  
+3.DeptEditMtain_script.as文件：在
+将：
+				if(isFilter){
+					//调用逸曜审方exe
+					var exeParams:String = "hospitalCode="+GlobalVar.sysParam.yhdGrgCode+" "+
+						"userId="+GlobalVar.currentUser.employeeId+" " + "userName="+GlobalVar.currentUser.employee.legalName+" "+
+        				"deptId="+GlobalVar.currentUser.inOrgId+" "+ "patientArea= groupId=";
+		 			ExternalInterface.call('openSfExe',exeParams);
+//					var ipAddress:String = ExternalInterface.call("getIpFromCommonJs");//客户端IP地址
+//					//医院代码，医生工号，医生姓名，科室编码，病区编码，医疗组
+//					encMgr.callYyExe(ipAddress+"" , GlobalVar.sysParam.yhdGrgCode+"",GlobalVar.currentUser.employeeId+"",
+//					GlobalVar.currentUser.employee.legalName+"",GlobalVar.currentUser.inOrgId+"",
+//					GlobalVar.currentUser.inOrgName+"","group");
+				}
+
+改为：
+				if(isFilter){
+					//调用逸曜审方
+					ExternalInterface.call('accessToTask',GlobalVar.currentUser.inOrgId,GlobalVar.currentUser.employeeId,GlobalVar.currentUser.employee.legalName);
+					//调用逸曜审方exe
+//					var exeParams:String = "hospitalCode="+GlobalVar.sysParam.yhdGrgCode+" "+
+//						"userId="+GlobalVar.currentUser.employeeId+" " + "userName="+GlobalVar.currentUser.employee.legalName+" "+
+//        				"deptId="+GlobalVar.currentUser.inOrgId+" "+ "patientArea= groupId=";
+//		 			ExternalInterface.call('openSfExe',exeParams);
+				}
+
