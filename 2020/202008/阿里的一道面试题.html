@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>阿里的一道面试题</title>
 </head>
+
 <body>
     <script>
         /*
@@ -14,39 +16,138 @@
         * 声明 => 相当于创建一个东西;  定义 => 相当于赋值
         * 带 var 的提前声明 ； 带 function 的能够提前声明 + 定义
         **/
-        function Foo() {
-            getName=function() {
-                console.log(1);
-            }
-            return this;
-        }
+        // function Foo() {
+        //     getName=function() {
+        //         console.log(1);
+        //     }
+        //     return this;
+        // }
 
-        Foo.getName = function() {
-            console.log(2);
-        }
+        // Foo.getName = function() {
+        //     console.log(2);
+        // }
 
-        Foo.prototype.getName = function() {
-            console.log(3);
-        }
+        // Foo.prototype.getName = function() {
+        //     console.log(3);
+        // }
 
-        var getName = function() {
-            console.log(4);
-        }
+        // var getName = function() {
+        //     console.log(4);
+        // }
 
-        function getName() {
-            console.log(5);
-        }
+        // function getName() {
+        //     console.log(5);
+        // }
 
-        Foo.getName();  // 2
-        getName();  // 4
-        Foo().getName();    // 1
-        getName();  // 1
-        new Foo.getName(); // 2
-        new Foo().getName(); // 3
-        new new Foo().getName(); // 3
+        // Foo.getName();  // 2
+        // getName();  // 4
+        // Foo().getName();    // 1
+        // getName();  // 1
+        // new Foo.getName(); // 2
+        // new Foo().getName(); // 3
+        // new new Foo().getName(); // 3
+
+        /*******************************************************************/
+        // function A() {
+        //     alert(1);
+        // }
+        // function Func() {
+        //     A = function () {
+        //         alert(2);
+        //     };
+        //     return this;
+        // }
+        // Func.A = A;
+        // Func.prototype = {
+        //     A: () => {
+        //         alert(3);
+        //     }
+        // };
+        // A(); // '1'
+        // Func.A(); // '1'
+        // Func().A(); // '2'
+        // new Func.A(); // '1'
+        // new Func().A(); // '3'
+        // new new Func().A(); // 阿里的一道面试题.html:71 Uncaught TypeError: (intermediate value).A is not a constructor
+
+        /*************************************************************/
+        // var x = 2;
+        // var y = {
+        //     x: 3,
+        //     z: (function (x) {
+        //         this.x *= x; 
+        //         x += 2;
+        //         return function (n) {
+        //             this.x *= n;
+        //             x += 3;
+        //             console.log(x);  // 7   , 10  
+        //         }
+        //     })(x)
+        // };
+        // var m = y.z;
+        // m(4);
+        // y.z(5);
+        // console.log(x, y.x); // 16 , 15
+
+        /*************************************************************/
+        // 1、问 a = 什么的时候 ，下面判断条件成立？
+
+        // 利用数据类型转换
+        // var a = {
+        //     i: 0,
+        //     toString() {
+        //         return ++this.i;
+        //     }
+        // };
+        // if (a == 1 && a == 2 && a == 3) {
+        //     console.log('条件成立');
+        // }
+
+        // let obj = {
+        //     name: ''
+        // };
+
+        // 利用数据劫持
+        // Object.defineProperty(obj, 'name', {
+        //     get() {
+        //         console.log('获取');
+        //     },
+        //     set() {
+        //         console.log('设置');
+        //     }
+        // })
+
+        // var i = 0;
+        // Object.defineProperty(window, 'a', {
+        //     get() {
+        //         return ++i;
+        //     }
+        // });
+
+        // if (a == 1 && a == 2 && a == 3) {
+        //     console.log('条件成立');
+        // }
+
+        // var a = 0;
+        // Object.defineProperty(window, 'a', {
+        //     get() {
+        //         // Uncaught TypeError: Cannot redefine property: a
+        //         // at Function.defineProperty (<anonymous>)
+        //         return ++a;
+        //     }
+        // });
+
+        // console.log(a);
+
+        var a = [1,2,3];
+        a.toString = a.shift;
+        if(a == 1 && a == 2 && a == 3) {
+            console.log('条件成立');
+        }
 
 
     </script>
-    
+
 </body>
+
 </html>
