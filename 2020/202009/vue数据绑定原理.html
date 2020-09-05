@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 数据绑定原理</title>
+</head>
+
+<body>
+    姓名：<span id="spanName"></span>
+    <br>
+    <input type="text" id="inpName">
+    <script>
+        let obj = {
+            name: ''
+        };
+
+        let newObj = JSON.parse(JSON.stringify(obj));
+
+        Object.defineProperty(obj, 'name', {
+            get() {
+                return newObj.name;
+            },
+            set(val) {
+                if (val === newObj.name) {
+                    return;
+                }
+                newObj.name = val;
+                observer();
+            }
+        })
+
+        function observer() {
+            spanName.innerHTML = obj.name;
+            inpName.value = obj.name;
+        }
+
+        observer();
+
+        setTimeout(() => {
+            obj.name = "测试数据改变";
+        }, 1000);
+
+        inpName.oninput  = function() {   // vue  v-model 的实现
+            // obj.name = inpName.value;
+            obj.name = this.value;
+        }
+
+    </script>
+</body>
+
+</html>
