@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B/S架构消息客户端对接</title>
+    <script src="./json2.js"></script>
+    <script src="./jquery.min-1.10.1.js"></script>
+    <script src="./hzyy_sdk_20200911.js"></script>
+    <style>
+        .demo-box {
+            width: 820px;
+            padding: 10px;
+            margin: 0 auto;
+            border: 1px solid #d9d9d9;
+        }
+        
+        .demo-box h2 {
+            margin: 5px 0;
+        }
+        
+        .demo-box h2>b {
+            color: red;
+            font-size: 13px;
+            vertical-align: 4px;
+            margin-left: 5px;
+        }
+        
+        .demo-box pre {
+            padding: 10px 0;
+        }
+        
+        .demo-box b {
+            color: red;
+        }
+        
+        .system-box {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .system-box img {
+            max-width: 800px;
+        }
+        
+        .system-box span {
+            background-color: yellow;
+        }
+        
+        .system-box>div {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo-box">
+        <h2>与医院(his)对接的内容<b>(以下内容仅供简单参考，具体细节请查看逸曜审方客户端B/S架构SDK整合方案文档)</b></h2>
+        <span><em>步骤一：</em> 在html的head标签中依次引入<b>json2.js,jquery.min-1.10.1.js,hzyy_sdk_20200911.js</b>这三个文件</span>
+        <div>
+            <pre align="left" style="background-color: antiquewhite;">
+            &lt;head&gt;
+                &lt;meta charset="UTF-8"&gt;
+                &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                &lt;title&gt;某某医院信息系统&lt;/title&gt;
+                &lt;script src="./json2.js"&gt;&lt;/script&gt;
+                &lt;script src="./jquery.min-1.10.1.js"&gt;&lt;/script&gt;
+                &lt;script src="./hzyy_sdk_20200911.js"&gt;&lt;/script&gt;
+            &lt;/head&gt;
+
+            &lt;body&gt;
+                &lt;script&gt;
+                    // 调用 hzyy_sdk_20200911.js 中的accessToTask()方法把 deptId, userId, userName,
+                    // 轮序获取消息的url，等参数传入此方法；
+                    // 示例：
+                    accessToTask(deptId, userId, userName, url);
+                &lt;/script&gt;
+            &lt;/body&gt;
+            </pre>
+        </div>
+        <span><em>步骤二：</em> 打开登录医院(his)系统</span>
+        <span>医院系统消息展示示例：</span>
+        <div class="system-box">
+            <div>
+                <span>1、登录医院系统，如果存在审方消息，则页面右下角会出现审方消息提醒弹框，如下图所示：</span>
+                <img src="./example03.png" alt="" srcset="">
+            </div>
+            <div>
+                <span>2、点击右下角的系统消息，弹出审方消息客户端dialog，如下图所示：</span>
+                <img src="./example05.png" alt="" srcset="">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 调用 accessToTask方法
+        accessToTask(1900000, '09', '王萌萌3', 'http://10.1.1.120:9999');
+    </script>
+</body>
+
+</html>
