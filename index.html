@@ -6,14 +6,22 @@
     <title>Demo</title>
     <link rel="stylesheet" href="./index.css" />
     <!-- <script src="./jquery-3.3.1.min.js"></script> -->
+
     <style>
         * {
             padding: 0;
             margin: 0;
         }
+
+
+        li {
+            padding: 10px;
+            border: 1px solid #D9D9D9;
+            margin: 0 -1px -1px 0;
+        }
     </style>
-    <script src="./jquery.min-1.10.1.js"></script>
-    <script src="./modal-dialog.js" defer></script>
+    <!-- <script src="./jquery.min-1.10.1.js"></script>
+    <script src="./modal-dialog.js" defer></script> -->
 </head>
 
 <body>
@@ -122,6 +130,110 @@
     </small> -->
 
     <!-- <iframe src="./demo.html" frameborder="0"  width="400" height="300"></iframe> -->
+    <!-- <div>
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul> -->
+    </div>
 
     <script>
         // oDiv = document.getElementById('div2');
@@ -134,6 +246,38 @@
         // })
 
         // demo();
+
+        // var o = {
+        //     a:{b:1,o:o},
+        //     x:1,
+        //     y:1
+        // }
+        // console.log(JSON.parse(JSON.stringify(o)));
+        // let oDiv = document.querySelector('div');
+        // oDiv.onscroll = function(e) {
+        //     console.log(e);
+        // }
+
+        // window.onscroll = function(e){
+        // if(document.documentElement.scrollTop + document.documentElement.clientHeight == document.documentElement.scrollHeight) {
+        //     alert('滚动到页面底部了')
+        // }
+        //  }
+
+        // // 什么情况下    以下判断条件成立
+        if (a == 1 & a == 2 && a == 3) {
+            console.log("条件成立");
+        }
+
+        var a = 0;
+        Object.defineProperty(window, 'a', {
+            get() {
+                // Uncaught TypeError: Cannot redefine property: a
+                // defineProperty GETER拦截器中不能再次获取当前属性
+                return ++a;
+            }
+        });
+        console.log(a); 
     </script>
     <!-- <script src="./2020/202007/object-oriented.js"></script> -->
 
