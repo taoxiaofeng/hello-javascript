@@ -12,40 +12,111 @@
     <br>
     <input type="text" id="inpName">
     <script>
-        let obj = {
-            name: ''
-        };
+        // let obj = {
+        //     name: ''
+        // };
 
-        let newObj = JSON.parse(JSON.stringify(obj));
+        // let newObj = JSON.parse(JSON.stringify(obj));
 
-        Object.defineProperty(obj, 'name', {
-            get() {
-                return newObj.name;
+        // Object.defineProperty(obj, 'name', {
+        //     get() {
+        //         return newObj.name;
+        //     },
+        //     set(val) {
+        //         if (val === newObj.name) {
+        //             return;
+        //         }
+        //         newObj.name = val;
+        //         observer();
+        //     }
+        // })
+
+        // function observer() {
+        //     spanName.innerHTML = obj.name;
+        //     inpName.value = obj.name;
+        // }
+
+        // observer();
+
+        // setTimeout(() => {
+        //     obj.name = "测试数据改变";
+        // }, 1000);
+
+        // inpName.oninput  = function() {   // vue  v-model 的实现
+        //     // obj.name = inpName.value;
+        //     obj.name = this.value;
+        // }
+
+        // let obj = {
+        //     name: ''
+        // };
+        // let newObj = JSON.parse(JSON.stringify(obj));
+        // Object.defineProperty(obj, 'name', {
+        //     get() {
+        //         return newObj.name;
+        //     },
+
+        //     set(val) {
+        //         if (val === newObj.name) {
+        //             return;
+        //         }
+        //         newObj.name = val;
+        //         observer();
+        //     }
+        // });
+
+        // function observer() {
+        //     spanName.innerHTML = obj.name;
+        //     inpName.value = obj.name;
+        // }
+
+        // observer();
+
+        // setTimeout(() => {
+        //     obj.name = '出发数据变更';
+        // }, 1000);
+
+        // // 监听input 内容改变事件
+        // inpName.oninput = function () {
+        //     obj.name = this.value;
+        // }
+
+        /*
+        *  1、对原始数据克隆
+        *  2、需要分别给对象中的每一个属性设置监听
+        */
+
+
+        // /**====================  Proxy 实现数据双向绑定 =========================================*/
+        let obj = {};
+        obj = new Proxy(obj, {
+            get(target, prop) {
+                console.log('A');
+                return target[prop];
             },
-            set(val) {
-                if (val === newObj.name) {
-                    return;
-                }
-                newObj.name = val;
+            set(target, prop, value) {
+                console.log('B');
+                target[prop] = value;
                 observer();
             }
-        })
+        });
 
         function observer() {
             spanName.innerHTML = obj.name;
             inpName.value = obj.name;
         }
 
-        observer();
+       
 
         setTimeout(() => {
-            obj.name = "测试数据改变";
+            obj.name = '出发数据变更';
         }, 1000);
 
-        inpName.oninput  = function() {   // vue  v-model 的实现
-            // obj.name = inpName.value;
+        // 监听input 内容改变事件
+        inpName.oninput = function () {
             obj.name = this.value;
         }
+
 
     </script>
 </body>
