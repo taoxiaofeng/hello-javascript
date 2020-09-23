@@ -13,20 +13,29 @@
  * 斐波那契数列
  */
 
+// function fibonacci(n) {
+//     if (n <= 1) {
+//         return 1;
+//     }
+//     let arr = [1, 1];
+//     // => 即将要创建多少个
+//     let i = n + 1 -2;
+//     while(i >0) {
+//         let a = arr[arr.length - 2],
+//             b = arr[arr.length - 1];
+//             arr.push(a + b);
+//             i--;
+//     }
+//     return arr[arr.length-1];
+// }
+
+// 另外一种实现方式
 function fibonacci(n) {
-    if (n <= 1) {
+    if (n - 2 >= 0) {
+        return fibonacci(n - 2) + fibonacci(n - 1);
+    } else {
         return 1;
     }
-    let arr = [1, 1];
-    // => 即将要创建多少个
-    let i = n + 1 -2;
-    while(i >0) {
-        let a = arr[arr.length - 2],
-            b = arr[arr.length - 1];
-            arr.push(a + b);
-            i--;
-    }
-    return arr[arr.length-1];
 }
 
 // 测试
