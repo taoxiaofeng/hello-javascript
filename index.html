@@ -130,7 +130,9 @@
     </small> -->
 
     <!-- <iframe src="./demo.html" frameborder="0"  width="400" height="300"></iframe> -->
-    <!-- <div>
+    <!-- 测试节流函数 -->
+    <script src="./2020/202009/_js防抖节流.js"></script>
+    <div>
         <ul>
             <li></li>
             <li></li>
@@ -232,7 +234,7 @@
             <li></li>
             <li></li>
             <li></li>
-        </ul> -->
+        </ul>
     </div>
 
     <script>
@@ -265,19 +267,19 @@
         //  }
 
         // // 什么情况下    以下判断条件成立
-        if (a == 1 & a == 2 && a == 3) {
-            console.log("条件成立");
-        }
+        // if (a == 1 & a == 2 && a == 3) {
+        //     console.log("条件成立");
+        // }
 
-        var a = 0;
-        Object.defineProperty(window, 'a', {
-            get() {
-                // Uncaught TypeError: Cannot redefine property: a
-                // defineProperty GETER拦截器中不能再次获取当前属性
-                return ++a;
-            }
-        });
-        console.log(a); 
+        // var a = 0;
+        // Object.defineProperty(window, 'a', {
+        //     get() {
+        //         // Uncaught TypeError: Cannot redefine property: a
+        //         // defineProperty GETER拦截器中不能再次获取当前属性
+        //         return ++a;
+        //     }
+        // });
+        // console.log(a); 
     </script>
     <!-- <script src="./2020/202007/object-oriented.js"></script> -->
 
