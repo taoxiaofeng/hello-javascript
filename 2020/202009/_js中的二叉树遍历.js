@@ -53,7 +53,9 @@ var levelOrderTraversal = function (node) {
         if (node.right) {
             que.push(node.right);
         }
+        console.log(que);
     }
+   
 }
 
 console.log(levelOrderTraversal(tree));
