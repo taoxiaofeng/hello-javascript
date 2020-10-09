@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绍兴市人民医院</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .wrap {
+            height: 100%;
+            background: linear-gradient(#fafcfe, #edf3fc);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .login {
+            width: 300px;
+            padding: 20px;
+            opacity: .9;
+            margin: auto;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .login img {
+            width: 260px;
+        }
+        
+        .login .success-masking,
+        .login .fail-masking {
+            width: 260px;
+            height: 260px;
+            position: absolute;
+            top: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            opacity: 0.9;
+            background-color: #fff;
+            visibility: hidden;
+            transition: all .3s ease-in-out;
+        }
+        
+        .login-button:not(:disabled):not(.disabled) {
+            cursor: pointer;
+        }
+        
+        .login-button.disabled,
+        .login-button:disabled {
+            color: rgba(255, 255, 255, .8);
+            background-color: #108ee9;
+            border-color: #108ee9;
+            opacity: .65;
+            cursor: not-allowed;
+        }
+        
+        .login-button {
+            width: 100%;
+            height: 34px;
+            min-width: 70px;
+            color: #fff;
+            padding: 0 10px;
+            background-color: #108ee9;
+            border-color: #108ee9;
+            min-width: 68px;
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            font-size: .8125rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+        
+        .test {
+            width: 100px;
+            height: 50px;
+            margin: 20px;
+        }
+        
+        .test button {
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+        <div class="test">
+            <button class="login-button" onclick="successTest()">模拟扫码成功</button>
+            <button class="login-button" onclick="failTest()">模拟扫码失败</button>
+        </div>
+        <div class="login">
+            <span>二维码2分钟内有效</span>
+            <div class="qrcode">
+                <img src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsAQAAAABRBrPYAAADhklEQVR42u2aWW4bQQxEeQPe/5a8AdP1qgXINgwE+VDlYxRbtmbeBL1wKbJd+zevqQd7sAd7sN+wqartbX2dt+XRma4ubkUxXbxf23pCj7XA4W4SG33c8hSEnMHrx7nuW1nsjF+LecASOczrXP4fML1pXUe73az5WeDOY2z9mYOwY5QMvHnwp4V8Gjv7PL+8vnnWxzFedTe7z0ofqzwmeW71j4j0aexcOT/PP8WZ48qFG8uxx7EniZ0LMkiZYsmh5dbDBGScWczj3pcz4zj6WCaTmN5HwydCz/VmhUGeyWLyCyNa3MY6C5M4UXuymGyP5TyOgq9cG2AGHcUUUhyenWz1m/zFQmHCWMuVb/6wDyttMIXtKCZ/bnSAr58Z2QL0H7xtfQRTPClPRXsvd8Fj8KKKYkpg0nQITlnmogo0E13NYggAPijaIPeIi4uRZrG1IxMGm613CCwbaxSTDCBIt7Tokt50hyyXxspqYJzWJDz9gaQXxbTZRSlhHyH5WiEQD6MYdVextMhRfPsm45ksRmW4kMg9Wem46nnPgBHMuUKDbwLiWN0NqXey2CII5vYByvGFytatgCA2kijSUQrQ7QIIP6LiqShmAyyN1zpFsdCSb99CdAbzirqFs9T8Zb3Hr1mM6p84XVeAIo0dbiaLWQr0XmVQ1sZuU0wWG4S7VtfyGBe+JrpvUiqCbblRUo7ReM3iN7WTxRguulgxhznQm2i7SxZzIit3w5AD6+zWvV9aOp/HuEvV48pMGq9cBnEjio07ct58CjInNcrYimJrCeV1ZuSEbAqf6TA2NObKjS916rgrkOIsi23f2pDDB1VhbVFVqJUgRgv4Fv44zaDuJAfkSFFMpofGm9sIwIslB+ZbKyyCKbaMa2onDoRC036KYldyupNDT5NNR0+9t14z2Pg8CQEPURwr6YhkJopRP9gKX/NBJhChN4wVvQiaJO5ROJ8gQ9/NMoGNu6/DNxmOE00k1nsLMYK50V806Mqh2Z2w6i8lz+exVxVLx6ksAm4XQOE6jDUxeayTi3H73OSLdE9grxVm++d1IuGQM53F3Mah2UrVOLU32tgYotg9Ba6yBKVUdPjZ2c1i4xNgok3dUpEm2A2Nacx+QpPCTTBP4N16Y5glAVU23Zx+VbJhzAbpc2r1nHyGg5P/+MuET2NoPB+Q0CR+SSlJ+K4o9vzx2IM92IP9K/YHCp5EF4on7I8AAAAASUVORK5CYII="
+                    alt="登录AC认证">
+            </div>
+            <div class="btn-box">
+                <button class="login-button">登 录</button>
+            </div>
+            <div class="success-masking" id="success-masking">
+                <svg t="1602236782182" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3156" width="88" height="88">
+                    <path
+                        d="M512 1024a512 512 0 1 1 0-1024 512 512 0 0 1 0 1024z m-71.318588-361.411765a29.334588 29.334588 0 0 0 20.48-8.252235L774.625882 349.364706a27.708235 27.708235 0 0 0 0-39.936 29.575529 29.575529 0 0 0-41.08047 0l-292.74353 284.912941L290.454588 448.150588a29.575529 29.575529 0 0 0-41.08047 0 27.708235 27.708235 0 0 0 0 39.996236l170.706823 166.128941a29.274353 29.274353 0 0 0 20.540235 8.252235z"
+                        fill="#33A954" p-id="3157"></path>
+                </svg>
+                <span>认证成功</span>
+            </div>
+            <div class="fail-masking" id="fail-masking">
+                <svg t="1602236813309" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3421" width="88" height="88">
+                    <path
+                        d="M549.044706 512l166.189176-166.249412a26.383059 26.383059 0 0 0 0-36.98447 26.383059 26.383059 0 0 0-37.044706 0L512 475.015529l-166.249412-166.249411a26.383059 26.383059 0 0 0-36.98447 0 26.383059 26.383059 0 0 0 0 37.044706L475.015529 512l-166.249411 166.249412a26.383059 26.383059 0 0 0 0 36.98447 26.383059 26.383059 0 0 0 37.044706 0L512 548.984471l166.249412 166.249411a26.383059 26.383059 0 0 0 36.98447 0 26.383059 26.383059 0 0 0 0-37.044706L548.984471 512zM512 1024a512 512 0 1 1 0-1024 512 512 0 0 1 0 1024z"
+                        fill="#E84335" p-id="3422"></path>
+                </svg>
+                <span>认证失败</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            var xmlhttp;
+            if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else { // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    xmlDoc = xmlhttp.responseXML;
+                    debugger
+                }
+            }
+
+            xmlhttp.open("GET",
+                "https://test.51trust.com/gateway/oauth/authorize?responseType=code&clientId=2017070411003376" +
+                Math.random(), true);
+            xmlhttp.send();
+        })();
+
+
+        function successTest() {
+            var failMasking = document.getElementById('fail-masking');
+            var successMasking = document.getElementById('success-masking');
+            failMasking.style.visibility = 'hidden';
+            successMasking.style.visibility = 'visible';
+
+            setTimeout(() => {
+                successMasking.style.visibility = 'hidden';
+            }, 3000);
+        }
+
+        function failTest() {
+            var successMasking = document.getElementById('success-masking');
+            var failMasking = document.getElementById('fail-masking');
+            successMasking.style.visibility = 'hidden';
+            failMasking.style.visibility = 'visible';
+
+            setTimeout(() => {
+                failMasking.style.visibility = 'hidden';
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
