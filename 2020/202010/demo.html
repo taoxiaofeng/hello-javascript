@@ -76,6 +76,7 @@
         .evaluation-complete {
             display: flex;
             flex-direction: column;
+            display: none;
         }
         
         .evaluation-complete>div {
@@ -106,30 +107,55 @@
         var evaluateSampleDataCounObj;
         /*抽取中...  接口状态*/
         function extractionOf() {
-            $.ajax({
-                type: 'POST',
-                url: "/review/module/cydp/evaluateSampleDataCoun",
-                data: $("#cf_dp_sample_form").serializeArray(),
-                dataType: "json",
-                cache: false,
-                success: function(takeResult) {
-                    if (takeResult.statusCode == 200) {
-                        // 接口请求成功后 拿到数据 给evaluateSampleDataCounObj 赋值，页面的一些展示状态，
-                        // 根据evaluateSampleDataCounObj 返回的值做相应的逻辑判断
-                    }
-                },
-                error: DWZ.ajaxError
-            });
+            // $.ajax({
+            //     type: 'POST',
+            //     url: "/review/module/cydp/evaluateSampleDataCoun",
+            //     data: $("#cf_dp_sample_form").serializeArray(),
+            //     dataType: "json",
+            //     cache: false,
+            //     success: function(takeResult) {
+            //         if (takeResult.statusCode == 200) {
+            //             // 接口请求成功后 拿到数据 给evaluateSampleDataCounObj 赋值，页面的一些展示状态，
+            //             // 根据evaluateSampleDataCounObj 返回的值做相应的逻辑判断
+            //         }
+            //     },
+            //     error: DWZ.ajaxError
+            // });
+            var timeout = setTimeout(function() {
+                var currentState = document.getElementById('current-state');
+                var evaluationComplete = document.getElementById('evaluation-complete');
+                currentState.innerText = '共100份样本';
+                evaluationComplete.style.display = 'flex';
+                console.dir(currentState);
+            }, 3000)
         }
 
         /*重新抽取*/
         function toDraw() {
+            var currentState = document.getElementById('current-state');
+            var evaluationComplete = document.getElementById('evaluation-complete');
+            currentState.innerText = '样本抽取中…';
+            evaluationComplete.style.display = 'none';
 
+            var timer = setTimeout(function() {
+                extractionOf();
+            }, 3000);
         }
 
         /*样本入库*/
         function sampleStorage() {
+            var currentState = document.getElementById('current-state');
+            var result = document.getElementById('result');
+            currentState.innerText = '样本入库中…';
+            result.style.display = 'none';
 
+            var timer = setTimeout(function() {
+                currentState.innerText = '共100份样本';
+                result.style.display = 'block';
+
+                var formBar = document.getElementById('formBar');
+                formBar.style.display = 'none';
+            }, 3000);
         }
 
         /*查看样本*/
@@ -152,7 +178,7 @@
             <div>
                 <b>项目类型：</b>门诊处方/ 住院医嘱
             </div>
-            <div class="current-state">
+            <div class="current-state" id="current-state">
                 <!-- <c:choose>
                 <c:when test="${project.status eq 1}">样本抽取中…</c:when>
                 <c:when test="${project.status eq 2}">共100份样本</c:when>
@@ -161,8 +187,8 @@
             </c:choose> -->
                 样本抽取中…
             </div>
-            <div class="evaluation-complete">
-                <div class="result">
+            <div class="evaluation-complete" id="evaluation-complete">
+                <div class="result" id="result">
                     <div><b>机评合理：</b>30份</div>
                     <div><b>项目类型：</b>70份</div>
                 </div>
@@ -172,7 +198,7 @@
                 </div>
             </div>
         </div>
-        <div class="formBar">
+        <div class="formBar" id="formBar">
             <button type="button" onclick="toDraw()">重新抽取</button>
             <button type="button" onclick="sampleStorage()">样本入库</button>
         </div>
