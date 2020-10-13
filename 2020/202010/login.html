@@ -270,7 +270,7 @@
          * 轮询获取 授权状态
          */
         function pollingStatus() {
-            timer = setTimeout(function() {
+            timer = setInterval(function() {
                 getAuthorizationStatus();
             }, 2000)
         }
