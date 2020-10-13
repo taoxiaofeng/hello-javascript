@@ -110,16 +110,21 @@
         .test button {
             margin: 20px;
         }
+        
+        .refresh-box {
+            display: inline-block;
+            position: relative;
+        }
+        
+        .refresh-box:hover {
+            opacity: .8;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="wrap">
-        <div class="test">
-            <button class="login-button" onclick="successTest()">模拟扫码成功</button>
-            <button class="login-button" onclick="failTest()">模拟扫码失败</button>
-        </div>
         <div class="login">
             <div class="login-icon">
                 <svg width="160px" height="31px" viewBox="0 0 160 31" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -161,12 +166,19 @@
             </div>
             <span>二维码2分钟内有效</span>
             <div class="qrcode">
-                <img src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAEsAQAAAABRBrPYAAADhklEQVR42u2aWW4bQQxEeQPe/5a8AdP1qgXINgwE+VDlYxRbtmbeBL1wKbJd+zevqQd7sAd7sN+wqartbX2dt+XRma4ubkUxXbxf23pCj7XA4W4SG33c8hSEnMHrx7nuW1nsjF+LecASOczrXP4fML1pXUe73az5WeDOY2z9mYOwY5QMvHnwp4V8Gjv7PL+8vnnWxzFedTe7z0ofqzwmeW71j4j0aexcOT/PP8WZ48qFG8uxx7EniZ0LMkiZYsmh5dbDBGScWczj3pcz4zj6WCaTmN5HwydCz/VmhUGeyWLyCyNa3MY6C5M4UXuymGyP5TyOgq9cG2AGHcUUUhyenWz1m/zFQmHCWMuVb/6wDyttMIXtKCZ/bnSAr58Z2QL0H7xtfQRTPClPRXsvd8Fj8KKKYkpg0nQITlnmogo0E13NYggAPijaIPeIi4uRZrG1IxMGm613CCwbaxSTDCBIt7Tokt50hyyXxspqYJzWJDz9gaQXxbTZRSlhHyH5WiEQD6MYdVextMhRfPsm45ksRmW4kMg9Wem46nnPgBHMuUKDbwLiWN0NqXey2CII5vYByvGFytatgCA2kijSUQrQ7QIIP6LiqShmAyyN1zpFsdCSb99CdAbzirqFs9T8Zb3Hr1mM6p84XVeAIo0dbiaLWQr0XmVQ1sZuU0wWG4S7VtfyGBe+JrpvUiqCbblRUo7ReM3iN7WTxRguulgxhznQm2i7SxZzIit3w5AD6+zWvV9aOp/HuEvV48pMGq9cBnEjio07ct58CjInNcrYimJrCeV1ZuSEbAqf6TA2NObKjS916rgrkOIsi23f2pDDB1VhbVFVqJUgRgv4Fv44zaDuJAfkSFFMpofGm9sIwIslB+ZbKyyCKbaMa2onDoRC036KYldyupNDT5NNR0+9t14z2Pg8CQEPURwr6YhkJopRP9gKX/NBJhChN4wVvQiaJO5ROJ8gQ9/NMoGNu6/DNxmOE00k1nsLMYK50V806Mqh2Z2w6i8lz+exVxVLx6ksAm4XQOE6jDUxeayTi3H73OSLdE9grxVm++d1IuGQM53F3Mah2UrVOLU32tgYotg9Ba6yBKVUdPjZ2c1i4xNgok3dUpEm2A2Nacx+QpPCTTBP4N16Y5glAVU23Zx+VbJhzAbpc2r1nHyGg5P/+MuET2NoPB+Q0CR+SSlJ+K4o9vzx2IM92IP9K/YHCp5EF4on7I8AAAAASUVORK5CYII="
-                    alt="登录AC认证">
+                <img id="imgBase64" src="" alt="登录AC认证">
             </div>
             <div class="btn-box">
                 <!-- <button class="login-button">登 录</button> -->
                 <span>请使用手机扫码登录</span>
+                <div class="refresh-box" onclick="refresh()">
+                    <svg style="position: absolute;cursor: pointer;" t="1602560267871" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9563" width="20" height="20">
+                        <path
+                            d="M981.314663 554.296783a681.276879 681.276879 0 0 1-46.986468 152.746388q-105.706098 230.734238-360.983096 242.19829a593.06288 593.06288 0 0 1-228.689008-33.853939v-1.022615l-31.808709 79.979258a55.759429 55.759429 0 0 1-20.506122 22.551352 40.043451 40.043451 0 0 1-21.04434 5.382184 51.076928 51.076928 0 0 1-19.483507-5.382184 95.210839 95.210839 0 0 1-13.347817-7.158305 52.314831 52.314831 0 0 1-5.382184-4.628679L71.671707 731.908862a57.427906 57.427906 0 0 1-7.158305-21.528737 46.932646 46.932646 0 0 1 1.022615-17.438277 35.952991 35.952991 0 0 1 7.158305-13.347816 74.435608 74.435608 0 0 1 10.279972-10.279972 60.495751 60.495751 0 0 1 11.248765-7.373593 50.431066 50.431066 0 0 1 8.18092-3.606063 6.189512 6.189512 0 0 0 3.067845-1.776121l281.003839-74.866183a91.497132 91.497132 0 0 1 35.899168-2.583448 122.337047 122.337047 0 0 1 22.174599 6.404799 21.528737 21.528737 0 0 1 12.325202 12.325202 76.157907 76.157907 0 0 1 4.628679 14.854829 47.63233 47.63233 0 0 1 0 14.370431 55.167388 55.167388 0 0 1-2.04523 10.764369 10.764368 10.764368 0 0 0-1.022615 3.606063l-32.831324 79.979258a677.50935 677.50935 0 0 0 164.264262 39.505232q77.395809 7.696523 131.809692-3.606063a358.507291 358.507291 0 0 0 101.023598-36.921784 381.27393 381.27393 0 0 0 73.951211-50.753997 352.64071 352.64071 0 0 0 48.708767-55.382676 410.391547 410.391547 0 0 0 26.910921-41.550462c3.767529-7.481236 6.673908-13.616926 8.719139-18.460892zM40.885614 449.667121a685.69027 685.69027 0 0 1 63.563595-176.427998q118.0313-212.273346 374.330913-207.160271a571.803252 571.803252 0 0 1 207.160271 39.989629l33.853939-78.956643A75.619688 75.619688 0 0 1 735.187378 9.189165a37.67529 37.67529 0 0 1 15.393047-8.234742 42.303968 42.303968 0 0 1 14.854829-0.538219 47.578509 47.578509 0 0 1 13.347817 3.606064 102.907362 102.907362 0 0 1 11.302586 6.13569 49.569917 49.569917 0 0 1 6.673909 4.628678l3.067845 3.067845 154.84544 276.913379a81.970666 81.970666 0 0 1 6.13569 22.712817 46.986468 46.986468 0 0 1-1.022615 17.438277 32.293105 32.293105 0 0 1-7.696523 13.347817 69.322533 69.322533 0 0 1-10.764369 9.741753 92.142994 92.142994 0 0 1-11.302587 6.673909l-8.18092 4.09046a7.104483 7.104483 0 0 1-3.067845 1.022615l-283.049068 67.546412a112.003254 112.003254 0 0 1-46.125319-1.022615c-11.571696-3.390776-19.160576-8.019454-22.551352-13.832214a41.173709 41.173709 0 0 1-5.382184-21.04434 97.256069 97.256069 0 0 1 1.291724-17.438277 24.381295 24.381295 0 0 1 3.067845-8.234742L600.632773 296.81309a663.730958 663.730958 0 0 0-164.102797-43.057474q-77.987849-9.203535-131.809692 0a348.227319 348.227319 0 0 0-101.292707 33.853938 368.571976 368.571976 0 0 0-75.350579 49.246986 383.31916 383.31916 0 0 0-50.269601 54.360061 408.507783 408.507783 0 0 0-28.740863 41.012244A113.025869 113.025869 0 0 0 40.885614 449.667121z m0 0"
+                            fill="#38adff" p-id="9564"></path>
+                    </svg>
+                    <span style="color: #38adff;margin-left: 21px;cursor: pointer;">刷新</span>
+                </div>
             </div>
             <div class="success-masking" id="success-masking">
                 <svg t="1602236782182" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3156" width="88" height="88">
@@ -186,62 +198,94 @@
             </div>
 
             <div class="lose-efficacy-masking" id="lose-efficacy-masking" onclick="loseEfficacy()">
-                <svg t="1602239313320" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3636" width="88" height="88">
+                <svg t="1602239313320" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3636" width="66" height="66">
                     <path
                         d="M980.949037 530.566288c-10.860076 52.126224-26.368832 98.918742-46.840014 140.378222-69.787059 141.334182-189.054562 215.486946-357.791136 222.327175-80.031013 3.14684-155.557844-7.24897-226.744391-31.058319v-0.956628l-31.481778 73.469745c-6.331811 11.652807-11.511654 15.436507-18.373289 20.125994-5.413314 3.700079-14.85584 6.258224-21.184307 6.912478-6.466943 0.668971-11.14974 0.222767-19.622927-2.229681-6.703759-1.940685-9.492699-5.052069-11.818712-6.68971-2.325343-1.644331-7.67845-7.690491-8.919391-8.919391L79.092447 693.519607c-4.029213-6.841567-6.354556-13.408856-7.134576-19.841681-0.771993-6.29368-0.310403-11.630731 1.090422-16.007808 1.392798-4.37574 3.71881-8.483891 7.134577-12.312413a78.55058 78.55058 0 0 1 10.231912-9.440519c3.414428-2.598953 7.133907-4.650687 11.16914-6.567289 4.029213-1.916602 6.823505-3.011708 8.065115-3.285985 1.394136-0.273609 2.325343-0.68235 3.098005-1.36537l278.546164-68.683258c14.889289-3.14684 29.13971-4.187759 37.982838-2.544765 8.839114 1.642993 10.767758 2.185528 16.501509 4.236593 5.74111 2.190211 12.264246 7.581449 15.150187 12.945259 2.758168 5.126994 3.877356 9.853275 4.657376 13.682465 0.771993 3.833204 0.771993 8.210282 0 13.133908-0.779351 4.924965-1.400156 8.345414-2.020961 9.854613-0.773331 1.637641-1.083733 2.597615-1.083733 3.280634l-32.570193 73.475766c57.697415 19.562051 111.97438 31.602192 163.15401 36.256892 51.185651 4.650687 94.761087 3.555581 130.589838-3.285986s69.324131-18.198688 100.184434-33.932887c30.866993-15.732861 55.216201-31.331928 73.208847-46.652703 17.987293-15.325458 34.117523-32.288556 48.233481-50.901338 14.266477-18.606092 23.105591-31.327245 26.983616-38.168143 3.722824-6.705766 6.668972-12.452227 8.684582-16.829304zM48.542546 487.902659c14.889289-61.569419 35.828751-115.612245 62.969576-162.131153C189.521504 195.795115 313.12996 132.313107 482.639864 135.459947c75.222449 1.230238 143.615373 13.408856 205.343339 36.799428l33.496718-72.508433c4.707549-7.897872 9.581672-13.355338 14.853833-17.458807 5.429369-4.107482 10.894193-5.663509 15.543542-6.62482 4.808564-0.956629 9.900103-1.392129 14.866544-0.705765 5.112946 0.68235 7.442303 1.003457 11.73509 2.425021 3.865315 1.280411 4.692163 1.460364 8.417662 3.512098 3.71881 2.19088 7.107817 4.738322 10.536294 8.083177l6.243507 7.358681 150.592741 249.407792c3.413759 7.522579 5.429369 14.364146 6.050174 20.796303 0.778013 6.29368 0.310403 11.630731-1.083733 16.007808-1.392798 4.37574-3.877356 8.483891-7.602187 12.178618-3.720148 3.827852-7.285764 6.841567-10.70153 8.892632a86.290575 86.290575 0 0 1-11.163119 6.153196l-8.065115 3.833204c-1.394136 0.68235-2.325343 0.956629-3.104026 0.956629l-280.561105 62.253107c-19.075709 2.597615-34.26938 2.190211-45.748923-0.956628-11.47486-3.14684-19.273725-10.712233-22.530944-16.049954-3.408407-5.332368-4.844688-8.837108-5.463487-16.334266-0.541198-6.557254-0.111049-9.56361 0.668971-12.71045 0.771993-3.14684 2.66585-8.539415 4.059985-10.456017l34.585803-72.515123c-56.919401-20.657826-111.043842-33.931549-162.691082-39.537527-51.490032-5.611329-95.067475-5.611329-130.583817 0-35.518349 5.605977-69.172275 16.00647-100.654052 31.058319-31.481777 15.046497-56.457142 30.098345-74.754839 45.284657-18.303048 15.185643-34.895537 31.740669-49.784825 49.939357-14.889289 18.19735-24.347201 30.78471-28.535629 37.626276-3.875349 6.702421-6.668972 12.040141-8.063108 15.734199z m0-13.380089"
                         p-id="3637" fill="#cdcdcd"></path>
                 </svg>
+                <span style="color: #e74c3c;font-size: 14px;">二维码超时失效,请点击刷新</span>
             </div>
         </div>
     </div>
 
     <script>
-        (function() {
-            var xmlhttp;
-            if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            } else { // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
+        var xmlhttp;
+        if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else { // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
 
+        var requestId = '';
+        var timer = null;
+
+        /*
+         * 初始化函数 获取二维码等相关逻辑处理
+         */
+        (function() {
+            getQrCode();
+        })();
+
+        /*
+         * 获取二维码
+         */
+        function getQrCode() {
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    xmlDoc = xmlhttp.responseXML;
-                    debugger
+                    if (xmlhttp.response) {
+                        var response = JSON.parse(xmlhttp.response);
+                        var imgBase64 = document.getElementById('imgBase64');
+                        if (Object.prototype.toString.call(response) == '[object Object]') {
+                            imgBase64.setAttribute('src', "data:image/jpeg;base64," + response.imgBase64);
+                            requestId = response.requestId;
+                            if (requestId) {
+                                pollingStatus();
+                            }
+                        }
+                    }
                 }
             }
 
-            xmlhttp.open("GET",
-                "https://test.51trust.com/gateway/oauth/authorize?responseType=code&clientId=2017070411003376" +
-                Math.random(), true);
+            xmlhttp.open("GET", "/api/v1/login?t=" + new Date().getTime(), true);
             xmlhttp.send();
-        })();
-
-
-        function successTest() {
-            var failMasking = document.getElementById('fail-masking');
-            var successMasking = document.getElementById('success-masking');
-            failMasking.style.visibility = 'hidden';
-            successMasking.style.visibility = 'visible';
-
-            setTimeout(() => {
-                successMasking.style.visibility = 'hidden';
-            }, 3000);
         }
 
-        function failTest() {
-            var successMasking = document.getElementById('success-masking');
-            var failMasking = document.getElementById('fail-masking');
-            successMasking.style.visibility = 'hidden';
-            failMasking.style.visibility = 'visible';
+        /*
+         * 获取授权状态
+         */
+        function getAuthorizationStatus() {
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    if (xmlhttp.response == '0') {
+                        clearTimeout(timer);
+                    }
+                }
+            }
 
-            setTimeout(() => {
-                failMasking.style.visibility = 'hidden';
-            }, 3000);
+            xmlhttp.open("GET", "/api/v1/send?requestId=" + requestId, true);
+            xmlhttp.send();
+        }
+
+        /*
+         * 轮询获取 授权状态
+         */
+        function pollingStatus() {
+            timer = setTimeout(function() {
+                getAuthorizationStatus();
+            }, 2000)
+        }
+
+        /*
+         * 刷新
+         */
+        function refresh() {
+            loseEfficacy();
         }
 
         function loseEfficacy() {
-            location.reload();
+            var loseEfficacyMasking = document.getElementById('lose-efficacy-masking');
+            loseEfficacyMasking.style.visibility = 'hidden';
+            getQrCode();
         }
 
         setTimeout(function() {

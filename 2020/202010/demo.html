@@ -91,6 +91,27 @@
         .evaluation-complete .result>div {
             padding-top: 10px;
         }
+        
+        @supports (display:none) {
+            dot {
+                display: inline-block;
+                width: 3ch;
+                text-indent: -1ch;
+                vertical-align: bottom;
+                overflow: hidden;
+                animation: dot 3s infinite step-start both;
+                font-family: Consolas, Monaco, monospace;
+            }
+        }
+        
+        @keyframes dot {
+            33% {
+                text-indent: 0;
+            }
+            66% {
+                text-indent: -2ch;
+            }
+        }
     </style>
 </head>
 
@@ -185,7 +206,8 @@
                 <c:when test="${project.status eq 3}">样本入库中…</c:when>
                 <c:when test="${project.status eq 3}">共100份样本</c:when>
             </c:choose> -->
-                样本抽取中…
+                样本抽取中
+                <dot>...</dot>
             </div>
             <div class="evaluation-complete" id="evaluation-complete">
                 <div class="result" id="result">
