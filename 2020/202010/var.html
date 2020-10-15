@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>变量测试</title>
+</head>
+<body>
+  <script>
+      localStorage.setItem('TEMP', JSON.stringify({temp:'123'}));
+
+
+      var _temp = localStorage.getItem('TEMP');
+
+      (function() {
+          console.log(JSON.parse(_temp));
+
+          setTimeout(function() {
+            console.log(JSON.parse(_temp));
+          },1000)
+      })()
+
+
+  </script>
+    
+    
+</body>
+</html>
