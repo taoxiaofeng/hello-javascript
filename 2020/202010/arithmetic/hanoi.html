@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汉诺塔</title>
+</head>
+<body>
+    <script>
+
+        /*
+        *   n个盘子时：
+        *   1、把n-1个圆盘从A 经过 C 移动到 B
+        *   2、把第n个圆盘从A移动到C
+        *   3、把n-1个小圆盘从B经过A移动到C 
+        */
+
+        function hanoi(n, a, b, c) {
+            if(n>0) {
+                hanoi(n-1, a, c, b);
+                console.log("moving from %s to %s" , a, c);
+                hanoi(n-1, b, a, c);
+            }
+        }
+
+        hanoi(3,'A', 'B', 'C');
+
+        // 汉诺塔移动次数的递推式： h(x) = 2h(x-1)+1
+        // h(64) = 18446744073709551615
+        // 假设婆罗门每秒钟搬一个盘子，则总共需要 5800亿年
+
+
+    </script>
+    
+</body>
+</html>
