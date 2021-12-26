@@ -96,7 +96,7 @@ var PriorityQueue = function () {
     // 如果没有插入成功，就放最后
     if (!added) {
       items.push(queueItem);
-    }
+    } 
   }
 
   this.getItems = function() {
