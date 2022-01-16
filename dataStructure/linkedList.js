@@ -31,6 +31,9 @@ var LinkedList = function () {
         length++;
     }
 
+    // 链表的某一个位置添加元素
+    
+
     // 获取一下头部
     this.getHead = function() {
         return head;
