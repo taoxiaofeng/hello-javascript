@@ -1,12 +1,10 @@
-# 日常工作知识点汇总
-
-### 一、10个JS结构赋值相关的知识点
+### 一、10个JS解构赋值相关的知识点
 
 ES6 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。为开发人员节省了大量时间和代码。
 
 ##### 1、忽略值
 
-数组通常携带大量数据。很多时候，只需要部分数据进行进一步处理。因此，在解构数组时，可以有选择地解压缩值，忽略不需要的值。如果希望值保持不变，只需写一个逗号。
+数组通常携带大量数据。很多时候，只需要部分数据进行进一步处理。因此，在解构数组时，可以有选择地解构值，忽略不需要的值。如果希望值保持不变，只需写一个逗号。
 
 ```javascript
 /**
@@ -48,9 +46,9 @@ console.log(`aa1 -- `, aa1, ' cc1 -- ', cc1);
 
 大多数开发人员都会知道 rest 参数。一个函数的参数以 3 个点为前缀，接受无数个参数并将它们解析为一个数组。
 
-同样这种模式可以用于结构，通过在变量前加上 3 个点，就可以将所有剩余的值解构到其中。
+同样这种模式可以用于解构，通过在变量前加上 3 个点，就可以将所有剩余的值解构到其中。
 
-这适用于对象和数组解构。尽管知道对于对象的提案目前处于第 4 阶段，这意味着它将正式包含在 ECMAScript 的下一次迭代中。
+这适用于对象和数组解构。
 
 ```javascript
  /**
@@ -58,17 +56,17 @@ console.log(`aa1 -- `, aa1, ' cc1 -- ', cc1);
  */
 	// 示例2-1
 	const list = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
-  const [a, b, ...residue] = list;
+  const [a, b, ...rest] = list;
   console.log('a -- ', a);
   console.log('b -- ', b);
-  console.log('residue -- ', residue);
+  console.log('rest -- ', rest);
 
   // 示例2-2
  const obj1 = { one: 'one', two: 'two', three: 'three', four: 'four', five: 'five', six: 'six', seven: 'seven', nine: 'nine', ten: 'ten' };
-  const { one, two, ...residueItem } = obj1;
+  const { one, two, ...restItem } = obj1;
   console.log('one -- ', one);
   console.log('two -- ', two);
-  console.log('residueItem -- ', residueItem);
+  console.log('restItem -- ', restItem);
 ```
 
 ##### 3、组合数组和对象结构

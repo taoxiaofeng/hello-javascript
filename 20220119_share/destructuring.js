@@ -7,11 +7,11 @@ import { list, list2, list3, list4, obj1 } from './mock.js';
 const demo1 = () => {
   // 示例1-1
   const [aa, , cc] = list;
-  console.log(`aa -- `, aa, ' cc -- ', cc);
+  // console.log(`aa -- `, aa, ' cc -- ', cc);
 
   // 示例1-2
-  const [aa1, , cc1] = list2;
-  console.log(`aa1 -- `, aa1, ' cc1 -- ', cc1);
+  const [aa1, bb1, , dd1] = list2;
+  // console.log(`aa1 -- `, aa1, ' bb1 -- ', bb1, ` dd1 -- `, dd1);
 }
 
 // demo1();
@@ -21,16 +21,23 @@ const demo1 = () => {
  */
 const demo2 = () => {
   // 示例2-1
-  const [a, b, ...residue] = list;
-  console.log('a -- ', a);
-  console.log('b -- ', b);
-  console.log('residue -- ', residue);
+  const [a, b, ...rest] = list;
+  // console.log('a -- ', a);
+  // console.log('b -- ', b);
+  // console.log('rest -- ', rest);
 
   // 示例2-2
-  const { one, two, ...residueItem } = obj1;
-  console.log('one -- ', one);
-  console.log('two -- ', two);
-  console.log('residueItem -- ', residueItem);
+  const { three, four, ...restItem } = obj1;
+  // console.log('one -- ', one);
+  // console.log('two -- ', two);
+  console.log('three -- ', three);
+  console.log('four -- ', four);
+  console.log('restItem -- ', restItem);
+
+  // 忽略值 和 reset 结合使用
+  // 比如获取一个列表中 除去前两位以外的所有数据
+  const [, , ...rest1] = list;
+  // console.log(rest1);
 }
 // demo2();
 
@@ -95,10 +102,11 @@ const demo5 = () => {
 
 const demo6 = () => {
   const props = { banana: '🍌', apple: undefined, orange: '🍊' };
-  const { banana, apple = '🍎🍏' } = props;
+  const { banana, apple:apple2 = '🍎🍏' } = props;
 
-  // console.log(`banana -- `, banana);
+  console.log(`banana -- `, banana);
   // console.log(`apple -- `, apple);
+  console.log(`apple2 -- `, apple2);
   // 需要注意 如果需要结构的对象中的属性值是 ‘’ 空字符串 或者 null 时，解构赋的初始值是被覆盖的。
   const props2 = { one: '壹', two: null, three: '' };
   const { one = '1', two = '贰', three = '叁' } = props2;
@@ -109,7 +117,7 @@ const demo6 = () => {
 
   // ---------------- 数组
   const [ten, twenty, thirty = 30] = [10, 20, undefined];
-  console.log(`thirty -- `, thirty)
+  // console.log(`thirty -- `, thirty)
 }
 // demo6();
 
@@ -117,8 +125,14 @@ const demo6 = () => {
  * 7、解构正则表达式
  */
 
+/**
+ * RegExp.prototype.exec()
+ * https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec
+ * exec() 方法在一个指定字符串中执行一个搜索匹配。返回一个结果数组或 null。
+ */
+
 const demo7 = () => {
-  const email = `youxiangzhurenmigncheng@163.com`;
+  const email = `taoxiaofeng@mchz.com.cn`;
   // const email = `qqhao@qq.com`;
   const [originalString, username, address, tld] = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.exec(email);
 
@@ -154,7 +168,7 @@ const demo9 = () => {
     cherry: "I'm a cherry 🍒"
   };
 
-  const key = 'banana';
+  const key = 'cherry';
   const { [key]: curFruits } = fruits;
 
   console.log(curFruits)
@@ -174,9 +188,9 @@ const demo10 = () => {
     orange: "I'm a orange 🍊",
   };
 
-  const getFruits = ({ apple, banana }) => {
-    console.log(`apple -- `, apple);
-    console.log(`banana -- `, banana);
+  const getFruits = ({ orange }) => {
+    console.log(`orange -- `, orange);
+    // console.log(`banana -- `, banana);
   }
 
   getFruits(fruits);
