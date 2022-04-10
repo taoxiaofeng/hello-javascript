@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BFC</title>
+  <style>
+    .floatDiv {
+      width: 100px;
+      height: 100px;
+      background: blue;
+      float: left;
+    }
+    .normalDiv {
+      width: 200px;
+      height: 200px;
+      background: red;
+      overflow: hidden;  /** 增加 overflow: hidden 触发BFC; **/
+    }
+  </style>
+</head>
+<body>
+    <div class="floatDiv"></div>
+    <div class="normalDiv"></div>
+</body>
+</html>
