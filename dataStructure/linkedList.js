@@ -11,14 +11,14 @@ var LinkedList = function () {
     }
 
     // 链表尾部添加元素
-    this.append = function(element) {
-        var node  = new Node(element);
+    this.append = function (element) {
+        var node = new Node(element);
         // node = {
         //  element: element
         //  next: null    
         // }
 
-        if(head == null) {
+        if (head == null) {
             head = node;
         } else {
             var current = head;
@@ -32,10 +32,41 @@ var LinkedList = function () {
     }
 
     // 链表的某一个位置添加元素
-    
+    this.insert = function (position, element) {
+        // 规避越界问题
+        if (position > -1 && position < length) {
+            var node = new Node(element);
+            if (position == 0) {
+                var current = head;
+                head = node;
+                head.next = current;
+            } else {
+                var index = 0;
+                var current = head;
+                var previous = null;
+                while (index < position) {
+                    previous = current;
+                    current = current.next;
+                    index++;
+                }
+
+                previous.next = node;
+                node.next = current;
+            }
+            length++;
+        }
+    }
 
     // 获取一下头部
-    this.getHead = function() {
+    this.getHead = function () {
         return head;
     }
 }
+
+// 测试
+var l = new LinkedList();
+l.append(1);
+l.append(2);
+l.append(3);
+
+l.insert(1, 10);
