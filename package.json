@@ -16,7 +16,7 @@
     },
     "homepage": "https://github.com/taoxiaofeng/hello-javascript#readme",
     "dependencies": {
-        "axios": "^0.19.2",
+        "axios": "^0.21.2",
         "babel-core": "^6.26.3",
         "babel-preset-env": "^1.7.0",
         "express": "^4.17.1",
