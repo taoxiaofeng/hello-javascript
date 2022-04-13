@@ -58,6 +58,8 @@ var LinkedList = function () {
     }
 
     // 链表的每一位置删除元素
+    // 类似于数组的splice
+    // 数据结构中没有移除的概念，需要用的时候拿出来用 使用 return
     this.removeAt = function (position) {
         if (position > -1 && position < length) {
             if (position == 0) {
@@ -76,8 +78,9 @@ var LinkedList = function () {
                 previous.next = current.next;
             }
             length--;
-
+            return current;
         }
+        return null;
     }
 
     // 获取一下头部
