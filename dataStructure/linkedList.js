@@ -57,6 +57,29 @@ var LinkedList = function () {
         }
     }
 
+    // 链表的每一位置删除元素
+    this.removeAt = function (position) {
+        if (position > -1 && position < length) {
+            if (position == 0) {
+                var current = head;
+                head = current.next;
+            } else {
+                var current = head;
+                var previous = null;
+                var index = 0;
+                while (index < position) {
+                    previous = current;
+                    current = current.next;
+                    index++;
+                }
+                // 跳出循环的时候 index == position
+                previous.next = current.next;
+            }
+            length--;
+
+        }
+    }
+
     // 获取一下头部
     this.getHead = function () {
         return head;
