@@ -13,6 +13,7 @@ var arr = [
 // 3、 排序
 
 // 1、数组扁平化
+// 方法一 使用递归
 Array.prototype.flat = function () {
   const result = this.map(item => {
     if (Array.isArray(item)) {
@@ -21,6 +22,16 @@ Array.prototype.flat = function () {
     return [item];
   });
   return [].concat(...result);
+}
+
+// 方法二 使用while循环
+Array.prototype.flat2 = function() {
+   let result = this;
+   // 寻找数组中有数组元素的值
+   while (result.some(item => Array.isArray(item))) {
+     result = [].concat(...result);
+   }
+   return result;
 }
 
 // 2、去重
@@ -36,5 +47,5 @@ Array.prototype.unique = function () {
  */
 const sortFn = (a, b) => a - b;
 
-console.log(arr.flat().unique().sort(sortFn));
+console.log(arr.flat2().unique().sort(sortFn));
 
