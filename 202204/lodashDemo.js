@@ -4,6 +4,14 @@ var getValues = () => {
   return list.map(item => _.pick(item, ['max', 'min', 'targetValue']))
 }
 
+console.log(_.pick({
+  "targetValue": "30.0",
+  "max": "100.0",
+  "min": "90.0",
+  "level": "",
+  "type": ""
+},['max', 'min', 'targetValue']))
+
 // console.log(getValues());
 // console.log(_.isEmpty({  }))
 // console.log(Object.getOwnPropertyNames({ max: '', min: '', targetValue: '' }))
@@ -15,4 +23,4 @@ let hasAnyValue = Object.values({ max: [], min: {}, targetValue: '', a: null, b:
       Array.isArray(e) ? !!e.length :
         e != null
 );
-console.log(hasAnyValue)
+// console.log(hasAnyValue)
