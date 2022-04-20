@@ -15680,6 +15680,78 @@ const cityData = [
   // },
 ];
 
+const dataSource = [
+  {
+    label: '首页',
+    value: 1,
+  },
+  {
+    label: '商品分类',
+    value: 2,
+    child: [
+      {
+        label: '服饰',
+        value: 21,
+        child: [
+          {
+            label: '精美女装',
+            value: 211,
+          },
+        ],
+      },
+      {
+        label: '地方特产',
+        value: 22,
+        child: [
+          {
+            label: '河南特产',
+            value: 221,
+            child: [
+              {
+                label: '方中山胡辣汤',
+                value: 2211,
+              },
+              {
+                label: '烩面',
+                value: 2212,
+              },
+            ],
+          },
+          {
+            label: '上海特产',
+            value: 222,
+          },
+        ],
+      }
+    ]
+  },
+  {
+    label: '我的',
+    value: 3,
+    child: [
+      {
+        label: '基本信息',
+        value: 31,
+      },
+      {
+        label: '我的订单',
+        value: 33,
+        child: [
+          {
+            label: '全部订单',
+            value: 331,
+          },
+          {
+            label: '待收货',
+            value: 332,
+          },
+        ],
+      }
+    ]
+  }
+]
+
+
 function findPathbyId(tree, id, path) {
   if (typeof path == 'undefined') {
     path = []
@@ -15712,14 +15784,71 @@ function findPathbyValue(tree, value, pathList) {
       return tempPath
     }
     if (tree[i].children) {
-      let reuslt = findPathbyValue(tree[i].children, value, tempPath)
-      if (reuslt) {
-        return reuslt
+      let result = findPathbyValue(tree[i].children, value, tempPath)
+      console.log(`result -- `, result)
+      if (result) {
+        return result
       }
     }
   }
 }
 
+// console.log(findPathbyValue(cityData, `330682`));
+
+/**
+ * 获取所有路径
+ */
+const getAllValuePaths = (dataSource) => {
+  let result = [];
+  if (!dataSource || !dataSource.length) {
+    return [];
+  }
+
+  const constructPaths = (data, path) => {
+    data.forEach(({ value, child }) => {
+      path.push(value);
+      if (!child || !child.length) {
+        result.push(JSON.parse(JSON.stringify(path)));
+      } else {
+        constructPaths(child, path);
+      }
+      path.pop();
+    });
+  }
+  constructPaths(dataSource, []);
+  return result;
+}
+
+// console.log(getAllValuePaths(dataSource));
+
+/**
+ * 获取指定 targetValue 路径
+ */
+
+const getValuePathsByTarget = (dataSource, target) => {
+  debugger
+  let result = [];
+  if (!dataSource || !dataSource.length || !target) {
+    return [];
+  }
+
+  const constructPaths = (data, target, path) => {
+    data.forEach(({ value, child }) => {
+      path.push(value);
+      if (value === target) {
+        result = JSON.parse(JSON.stringify(path));
+        return;
+      }
+      if (child && child.length) {
+        constructPaths(child, target, path);
+      }
+      path.pop();
+    });
+  }
+  constructPaths(dataSource,target, []);
+  return result;
+}
+
+console.log(getValuePathsByTarget(dataSource, 332))
 
 
-console.log(findPathbyValue(cityData, `330682`));
