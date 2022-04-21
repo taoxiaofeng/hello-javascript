@@ -50,13 +50,37 @@ function getUniqueArray() {
 
 
   // 方法六 利用排序处理
-  const temp = arr.sort();
+  // const temp = arr.sort();
 
-  for (let i = 0; i < temp.length; i++) {
-    if (temp[i] !== temp[i + 1]) {
-      result.push(arr[i]);
+  // for (let i = 0; i < temp.length; i++) {
+  //   if (temp[i] !== temp[i + 1]) {
+  //     result.push(arr[i]);
+  //   }
+  // }
+
+  // 方法七
+  // let flag;
+  // for (let i = 0; i < arr.length; i++) {
+  //   flag = false;
+  //   for (let j = i + 1; j < arr.length; j++) {
+  //     if (arr[i] === arr[j]) {
+  //       flag = true;
+  //     }
+  //   }
+  //   if (!flag) {
+  //     result.push(arr[i]);
+  //   }
+  // }
+
+  // 方法八
+  loop: for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] === arr[j]) {
+            continue loop;
+        }
     }
-  }
+    result.push(arr[i]);
+}
   console.log(result);
 }
 
