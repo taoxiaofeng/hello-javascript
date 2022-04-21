@@ -38,14 +38,24 @@ function getUniqueArray() {
   // result = Object.keys(obj).map(item => ~~item);
 
   // 方法六 使用双层for循环
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      if(arr[i] === arr[j]) {
-        // 遇到重复的直接跳过
-        i++;
-      }
-    } 
-    result.push(arr[i]);
+  // for (let i = 0; i < arr.length; i++) {
+  //   for (let j = i + 1; j < arr.length; j++) {
+  //     if(arr[i] === arr[j]) {
+  //       // 假如值一样，不再进行内层循环，i++ 直接外层进入下一次循环
+  //       i++;
+  //     }
+  //   } 
+  //   result.push(arr[i]);
+  // }
+
+
+  // 方法六 利用排序处理
+  const temp = arr.sort();
+
+  for (let i = 0; i < temp.length; i++) {
+    if (temp[i] !== temp[i + 1]) {
+      result.push(arr[i]);
+    }
   }
   console.log(result);
 }
