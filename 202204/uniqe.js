@@ -30,13 +30,23 @@ function getUniqueArray() {
 
   //  方法五
   // 利用对象key值唯一的特性
-  let obj = {};
-  arr.forEach((item, index) => {
-    obj[arr[index]] = index;
-  })
+  // let obj = {};
+  // arr.forEach((item, index) => {
+  //   obj[arr[index]] = index;
+  // })
 
-  result = Object.keys(obj).map(item => ~~item);
+  // result = Object.keys(obj).map(item => ~~item);
 
+  // 方法六 使用双层for循环
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if(arr[i] === arr[j]) {
+        // 遇到重复的直接跳过
+        i++;
+      }
+    } 
+    result.push(arr[i]);
+  }
   console.log(result);
 }
 
