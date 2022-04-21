@@ -24,9 +24,19 @@ function getUniqueArray() {
   // })
 
   // 方法四
-  result = arr.reduce((pre, cur) => {
-    return pre.includes(cur) ? pre : [...pre, cur];
-  },[])
+  // result = arr.reduce((pre, cur) => {
+  //   return pre.includes(cur) ? pre : [...pre, cur];
+  // },[])
+
+  //  方法五
+  // 利用对象key值唯一的特性
+  let obj = {};
+  arr.forEach((item, index) => {
+    obj[arr[index]] = index;
+  })
+
+  result = Object.keys(obj).map(item => ~~item);
+
   console.log(result);
 }
 
