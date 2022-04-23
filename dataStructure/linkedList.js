@@ -82,7 +82,7 @@ var LinkedList = function () {
         }
         return null;
     }
-
+    // 获取某个元素的位置
     this.indexOf = function(element) {
         var current = head;
         var index = 0;
@@ -94,6 +94,12 @@ var LinkedList = function () {
             index++;
         }
         return -1;
+    }
+
+    // removeAt(position)  删除某个位置的元素
+    // indexOf(element)    获取某个元素的位置
+    this.remove = function(element) {
+        return this.removeAt(this.indexOf(element));
     }
 
     // 获取一下头部
