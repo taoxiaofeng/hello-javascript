@@ -99,7 +99,18 @@ var LinkedList = function () {
     // removeAt(position)  删除某个位置的元素
     // indexOf(element)    获取某个元素的位置
     this.remove = function(element) {
+        // length--
         return this.removeAt(this.indexOf(element));
+    }
+
+    // 链表是否为空
+    this.isEmpty = function() {
+        return length == 0;
+    }
+
+    // 链表的长度
+    this.size = function() {
+        return length;
     }
 
     // 获取一下头部
