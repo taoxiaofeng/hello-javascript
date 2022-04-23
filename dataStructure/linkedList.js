@@ -83,6 +83,19 @@ var LinkedList = function () {
         return null;
     }
 
+    this.indexOf = function(element) {
+        var current = head;
+        var index = 0;
+        while(current) {
+            if(current.element == element) {
+                return index;
+            }
+            current = current.next;
+            index++;
+        }
+        return -1;
+    }
+
     // 获取一下头部
     this.getHead = function () {
         return head;
