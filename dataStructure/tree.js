@@ -1209,12 +1209,13 @@ let tree = [
 // function treeForeach(tree, func) {
 //   let node, list = [...tree];
 //   while (node = list.shift()) {
+//     console.log(` list.shift() -- `, node)
 //     func(node);
 //     node.children && list.push(...node.children);
 //   }
 // }
 
-
+// treeForeach(tree, node => { console.log(node.title) })
 
 /**
  *  深度优先遍历的递归实现
@@ -1270,49 +1271,49 @@ let tree = [
  * 列表和树结构相互转换
  */
 /**
- * 1. 列表转为树 
+ * 1. 列表转为树
  * 列表结构通常是在节点信息中给定了父级元素的id，然后通过这个依赖关系将列表转换为树形结构，列表结构是类似于：
  */
-let list = [
-  {
-    id: '1',
-    title: '节点1',
-    parentId: '',
-  },
-  {
-    id: '1-1',
-    title: '节点1-1',
-    parentId: '1'
-  },
-  {
-    id: '1-2',
-    title: '节点1-2',
-    parentId: '1'
-  },
-  {
-    id: '2',
-    title: '节点2',
-    parentId: ''
-  },
-  {
-    id: '2-1',
-    title: '节点2-1',
-    parentId: '2'
-  }
-]
+// let list = [
+//   {
+//     id: '1',
+//     title: '节点1',
+//     parentId: '',
+//   },
+//   {
+//     id: '1-1',
+//     title: '节点1-1',
+//     parentId: '1'
+//   },
+//   {
+//     id: '1-2',
+//     title: '节点1-2',
+//     parentId: '1'
+//   },
+//   {
+//     id: '2',
+//     title: '节点2',
+//     parentId: ''
+//   },
+//   {
+//     id: '2-1',
+//     title: '节点2-1',
+//     parentId: '2'
+//   }
+// ]
 
 /**
  * 列表结构转为树结构，就是把所有非根节点放到对应父节点的chilren数组中，然后把根节点提取出来：
  */
 
-function listToTree(list = []) {
-  let info = list.reduce((map, node) => (map[node.id] = node, node.children = [], map), {});
-  // console.log(`info -- `, info)
-  return list.filter(node => {
-    info[node.parentId] && info[node.parentId].children.push(node);
-    return !node.parentId;
-  })
-}
+// function listToTree(list = []) {
+//   let info = list.reduce((map, node) => (map[node.id] = node, node.children = [], map), {});
+//   // console.log(`info -- `, info)
+//   return list.filter(node => {
+//     info[node.parentId] && info[node.parentId].children.push(node);
+//     return !node.parentId;
+//   })
+// }
 /**
  * 这里首先通过info建立了id=>node的映射，因为对象取值的时间复杂度是O(1)，
  * 这样在接下来的找寻父元素就不需要再去遍历一次list了，因为遍历寻找父元素时间复杂度是O(n)，
@@ -1322,8 +1323,8 @@ function listToTree(list = []) {
 // console.log(listToTree(list));
 
 
-const newTree = listToTree(list);
-console.log(`newTree -- `, newTree)
+// const newTree = listToTree(list);
+// console.log(`newTree -- `, newTree)
 /**
  * 树结构转换列表结构
  */
@@ -1359,13 +1360,13 @@ console.log(`newTree -- `, newTree)
  * 树结构筛选
  */
 //  树结构过滤即保留某些符合条件的节点，剪裁掉其它节点。一个节点是否保留在过滤后的树结构中，取决于它以及后代节点中是否有符合条件的节点。可以传入一个函数描述符合条件的节点:
-function treeFilter (tree, func) {
-  // 使用map复制一下节点，避免修改到原树
-  return tree.map(node => ({ ...node })).filter(node => {
-    node.children = node.children && treeFilter(node.children, func)
-    return func(node) || (node.children && node.children.length)
-  })
-}
+// function treeFilter (tree, func) {
+//   // 使用map复制一下节点，避免修改到原树
+//   return tree.map(node => ({ ...node })).filter(node => {
+//     node.children = node.children && treeFilter(node.children, func)
+//     return func(node) || (node.children && node.children.length)
+//   })
+// }
 
 // 来自 https://stackoverflow.com/questions/45289854/how-to-effectively-filter-tree-view-retaining-its-existing-structure
 // function filter(array, text) {
@@ -1386,8 +1387,72 @@ function treeFilter (tree, func) {
 
 // console.log(filter(newTree, '节点1-1'));
 
-console.log(treeFilter(mockList, (node) => {
-  return node.dataSource === '自动采集';
-}))
+// console.log(treeFilter(mockList, (node) => {
+//   return node.dataSource === '自动采集' || node.indicatorType === '定量指标';
+// }))
 
+/**
+ * 树结构查找
+ */
+/**
+ * 查找节点
+ * 查找节点其实就是一个遍历的过程，遍历到满足条件的节点则返回，遍历完成未找到则返回null。
+ * 类似数组的find方法，传入一个函数用于判断节点是否符合条件，代码如下：
+ */
+function treeFind(tree, func) {
+  for (const data of tree) {
+    if (func(data)) { return data };
+    if (data.children) {
+      const res = treeFind(data.children, func);
+      if (res) return res;
+    }
+  }
+  return null;
+}
 
+// console.log(treeFind(tree, (node) => {
+//   return node.title === '节点1-2';
+// }))
+
+/**
+ * 查找节点路径
+ * 略微复杂一点，因为不知道符合条件的节点在哪个子树，
+ * 要用到回溯法的思想。查找路径要使用先序遍历，
+ * 维护一个队列存储路径上每个节点的id，假设节点就在当前分支，
+ * 如果当前分支查不到，则回溯。
+ */
+
+//  function treeFindPath (tree, func, path = []) {
+//   if (!tree) return []
+//   for (const data of tree) {
+//     path.push(data.id)
+//     if (func(data)) return path
+//     if (data.children) {
+//       const findChildren = treeFindPath(data.children, func, path)
+//       if (findChildren.length) return findChildren
+//     }
+//     path.pop()
+//   }
+//   return []
+// }
+
+// let result = treeFindPath(tree, node => node.id === '2-1' || node.id === '1-1');
+// console.log(result);
+
+/**
+ * 查找多条节点路径
+ * 思路与查找节点路径相似，不过代码却更加简单：
+ */
+
+function treeFindPath(tree, func, path = [], result = []) {
+  for (const data of tree) {
+    path.push(data.id)
+    func(data) && result.push([...path])
+    data.children && treeFindPath(data.children, func, path, result)
+    path.pop()
+  }
+  return result
+}
+
+let result = treeFindPath(tree, node => node.id === '2-1' || node.id === '1-1');
+console.log(result);
