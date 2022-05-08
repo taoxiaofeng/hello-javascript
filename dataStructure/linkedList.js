@@ -23,7 +23,7 @@ var LinkedList = function () {
         } else {
             var current = head;
             while (current.next) {
-                current = current.next;
+                current = current.next;  // 向下查找
             }
             // while 循环执行完以后， current 已经是链表最后一项了
             current.next = node;
