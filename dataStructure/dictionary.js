@@ -88,7 +88,6 @@ var HashTable = function () {
     }
     return hash % 37;
   }
-
   // 添加
   this.put = function (key, value) {
     // key = Jobs value = jobs@qq.com
@@ -116,13 +115,13 @@ var HashTable = function () {
 }
 
 // 测试代码
-var ht = new HashTable();
+// var ht = new HashTable();
 // ht.put('Jobs', 'Jobs@qq.com');
 // ht.put('Bob', 'Bob@qq.com');
 
 // 散列冲突 ： key  hashCode 一样 导致值会被存储到相同的位置，导致值覆盖的问题   
-ht.put('Donnie', 'Donnie@qq.com');
-ht.put('Ana', 'Ana@qq.com');
+// ht.put('Donnie', 'Donnie@qq.com');
+// ht.put('Ana', 'Ana@qq.com');
 
 /**
  * 链表
@@ -248,7 +247,95 @@ var LinkedList = function () {
   }
 }
 
+// 分离链接法
 var HashTable_L = function () {
+  var table = [];
+  // 散列函数 key => 散列值的算法
+  var loseloseHashCode = function (key = []) { // Jobs
+    var hash = 0;
+    for (let i = 0; i < key.length; i++) {
+      hash += key[i].charCodeAt();
+    }
+    return hash % 37;
+  }
+
+
+  // 更好的散列函数 -> 解决key冲突 值被覆盖的问题
+  var djb2HashCode = function (key) {
+    var hash = 5381;
+    for (let i = 0; i < key.length; i++) {
+      hash = hash * 33 + key[i].charCodeAt();
+    }
+    return hash % 1013;
+  }
+
+  // 常见辅助类
+  var Node = function (key, value) {
+    this.key = key;
+    this.value = value;
+  }
+
+  this.put = function (key, value) {
+    // var position = loseloseHashCode(key);
+    var position = djb2HashCode(key);
+    if (table[position]) {
+      table[position].append(new Node(key, value));
+    } else {
+      var l = new LinkedList();
+      table[position] = l;
+      table[position].append(new Node(key, value));
+    }
+  }
+
+  this.get = function (key) {
+    // var position = loseloseHashCode(key);
+    var position = djb2HashCode(key);
+    if (table[position]) {
+      // 链表线性查找
+      var current = table[position].getHead();
+      while (current) {
+        if (current.element.key === key) {
+          return current.element.value;
+        }
+        // 如果上述判断不成立 则 继续向下查找
+        current = current.next;
+      }
+    } else {
+      return undefined;
+    }
+  }
+
+  this.remove = function (key) {
+    // var position = loseloseHashCode(key);
+    var position = djb2HashCode(key);
+    if (table[position]) {
+      // 删除
+      // remove(element)
+      var current = table[position].getHead();
+      while (current) {
+        if (current.element.key) {
+          // 查找到对应的key
+          table[position].remove(current.element /* Node */);
+          // 如果链表是空的，就把值置为 undefined
+          if (table[position].isEmpty()) {
+            table[position] = undefined;
+          }
+          return true;
+        }
+        current = current.next;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  this.getTable = function () {
+    return table;
+  }
+}
+
+// 线性探查法
+var HashTable_X = function () {
   var table = [];
   var loseloseHashCode = function (key = []) { // Jobs
     var hash = 0;
@@ -257,20 +344,29 @@ var HashTable_L = function () {
     }
     return hash % 37;
   }
+
+  // 常见辅助类
+  var Node = function (key, value) {
+    this.key = key;
+    this.value = value;
+  }
+
   this.put = function (key, value) {
     var position = loseloseHashCode(key);
-    if (table[position]) {
-      table[position].append(value);
+    if (table[position] === undefined) {
+      table[position] = new Node(key, value);
     } else {
-      var l  = new LinkedList();
-      table[position] = l;
-      table[position].append(value);
+      // 这个位置被占据了
+      var index = position + 1;
+      while (table[index] !== undefined) {
+        index++;
+      }
+      table[index] = new Node(key, value);
     }
   }
 
-  this.getTable = function() {
-    return table;
-  }
+  this.get = function (key) { }
+  this.remove = function (key) { }
 }
 
 // 测试方法
@@ -280,8 +376,16 @@ var hl = new HashTable_L();
 hl.put('Donnie', 'Donnie@qq.com');
 hl.put('Ana', 'Ana@qq.com');
 
-// console.log(hl.getTable());
-console.log(hl.getTable()[13].getHead());
+console.log(hl.getTable());
+// console.log(hl.getTable()[13].getHead());
+// console.log(hl.get(`Ana`));
+// console.log(hl.get(`Donnie`));
+
+// remove() 方法测试
+// hl.remove('Ana');
+// hl.remove('Donnie');
+// console.log(hl.getTable()[13].getHead());
+
 
 
 
