@@ -1176,24 +1176,29 @@ let tree = [
   {
     id: '1',
     title: '节点1',
+    checked: false,
     children: [
       {
         id: '1-1',
-        title: '节点1-1'
+        title: '节点1-1',
+        checked: true,
       },
       {
         id: '1-2',
-        title: '节点1-2'
+        title: '节点1-2',
+        checked: true,
       }
     ]
   },
   {
     id: '2',
     title: '节点2',
+    checked: false,
     children: [
       {
         id: '2-1',
-        title: '节点2-1'
+        title: '节点2-1',
+        checked: true,
       }
     ]
   }
@@ -1215,18 +1220,28 @@ let tree = [
 //   }
 // }
 
-// treeForeach(tree, node => { console.log(node.title) })
+const list = [];
+treeForeach(tree, node => {
+  if (node.checked) {
+    list.push(node.title);
+  }
+});
+console.log(`list -- `, list)
 
 /**
  *  深度优先遍历的递归实现
  */
 // 先序遍历
-// function treeForeach(tree, func) {
-//   tree.forEach(data => {
-//     func(data);
-//     data.children && treeForeach(data.children, func); // 遍历子树
-//   })
-// }
+function treeForeach(tree, func) {
+  tree.forEach(data => {
+    func(data);
+    data.children && treeForeach(data.children, func); // 遍历子树
+  })
+}
+
+console.log(treeForeach(tree, (node) => {
+  return node.title
+}))
 
 // 后序遍历，与先序遍历思想一致，代码也及其相似，只不过调换一下节点遍历和子树遍历的顺序：
 // function treeForeach(tree, func) {
@@ -1360,9 +1375,9 @@ let tree = [
  * 树结构筛选
  */
 //  树结构过滤即保留某些符合条件的节点，剪裁掉其它节点。一个节点是否保留在过滤后的树结构中，取决于它以及后代节点中是否有符合条件的节点。可以传入一个函数描述符合条件的节点:
-function treeFilter (tree, func) {
+function treeFilter(tree, func) {
   // 使用map复制一下节点，避免修改到原树
-  console.log(`tree.map(node => ({ ...node }))`, tree.map(node => ({ ...node })))
+  // console.log(`tree.map(node => ({ ...node }))`, tree.map(node => ({ ...node })))
   return tree.map(node => ({ ...node })).filter(node => {
     node.children = node.children && treeFilter(node.children, func)
     return func(node) || (node.children && node.children.length)
@@ -1388,12 +1403,12 @@ function treeFilter (tree, func) {
 
 // console.log(filter(newTree, '节点1-1'));
 
-console.log(treeFilter(mockList, (node) => {
-  // console.count()
-  // console.log(node.indicatorType)
-  // return node.dataSource === '自动采集' || node.indicatorType === '定量指标';
-  return node.indicatorType === '定性指标'
-}))
+// console.log(treeFilter(mockList, (node) => {
+//   // console.count()
+//   // console.log(node.indicatorType)
+//   // return node.dataSource === '自动采集' || node.indicatorType === '定量指标';
+//   return node.indicatorType === '定性指标'
+// }))
 
 /**
  * 树结构查找
@@ -1448,15 +1463,15 @@ function treeFind(tree, func) {
  * 思路与查找节点路径相似，不过代码却更加简单：
  */
 
-function treeFindPath(tree, func, path = [], result = []) {
-  for (const data of tree) {
-    path.push(data.id)
-    func(data) && result.push([...path])
-    data.children && treeFindPath(data.children, func, path, result)
-    path.pop()
-  }
-  return result
-}
+// function treeFindPath(tree, func, path = [], result = []) {
+//   for (const data of tree) {
+//     path.push(data.id)
+//     func(data) && result.push([...path])
+//     data.children && treeFindPath(data.children, func, path, result)
+//     path.pop()
+//   }
+//   return result
+// }
 
-let result = treeFindPath(tree, node => node.id === '2-1' || node.id === '1-1');
+// let result = treeFindPath(tree, node => node.id === '2-1' || node.id === '1-1');
 // console.log(result);
