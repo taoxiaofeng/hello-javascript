@@ -1239,9 +1239,9 @@ function treeForeach(tree, func) {
   })
 }
 
-console.log(treeForeach(tree, (node) => {
-  return node.title
-}))
+// console.log(treeForeach(tree, (node) => {
+//   return node.title
+// }))
 
 // 后序遍历，与先序遍历思想一致，代码也及其相似，只不过调换一下节点遍历和子树遍历的顺序：
 // function treeForeach(tree, func) {
