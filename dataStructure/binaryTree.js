@@ -102,6 +102,7 @@ var Tree = function () {
 
 
   var findMinNode = function (node) {
+    if (node === null) { return null; }
     while (node && node.left) {
       node = node.left;
     }
@@ -109,35 +110,44 @@ var Tree = function () {
   }
 
   // 删除节点(内部方法)
-  var removeNode = function (node, key) {
+  var removeNode = function (node, value) {
     if (node === null) {
       return null;
     }
-    if (node.key < key) {
-      node.right = removeNode(node.right, key);
+    if (value > node.value) {
+      // 继续向右查找
+      node.right = removeNode(node.right, value);
       return node;
-    } else if (node.key > key) {
-      node.left = removeNode(node.left, key);
+    } else if (value < node.value) {
+      // 向左查找
+      node.left = removeNode(node.left, value);
       return node;
     } else {
-      // 删除节点
-      // 1、叶子节点
+      // value = node.value;
+      // 执行删除过程
       if (node.left === null && node.right === null) {
+        // 1、叶节点条件
         node = null;
         return node;
       }
-      // 2、只有一个子节点
-      if (node.left === null) {
-        node = node.right;
-        return node;
-      } else if (node.right === null) {
-        node = node.left;
-        return node;
+      // 2、只有一个子节点条件
+      // if (node.left === null) {
+      //   node = node.right;
+      //   return node;
+      // } else if (node.right === null) {
+      //   node = node.left;
+      //   return node;
+      // }
+      if (node.left === null && node.right) {
+        return node.right;
+      } else if (node.right === null && node.left) {
+        return node.left;
       }
 
-      var aux = findMinNode(node.right);
-      node.key = aux.key;
-      node.right = removeNode(node.right, aux.key);
+      // 3、有两个子节点条件
+      var aux = findMinNode(node.right);  // aux 查找到的最小的子节点
+      node.value = aux.value;
+      node.right = removeNode(node.right, aux.value);
       return node;
     }
   }
@@ -175,11 +185,19 @@ var Tree = function () {
 
 var t = new Tree();
 
+// t.insert(11);
+// t.insert(8);
+// t.insert(6);
+// t.insert(9);
+// t.insert(12);
+
 t.insert(11);
 t.insert(8);
-t.insert(6);
+t.insert(4);
 t.insert(9);
-t.insert(12);
+t.insert(3);
+t.insert(5);
+t.insert(10);
 
 
 var print = function (value) {

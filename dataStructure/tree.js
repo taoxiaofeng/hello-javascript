@@ -1224,6 +1224,7 @@ const list = [];
 treeForeach(tree, node => {
   if (node.checked) {
     list.push(node.title);
+    // return node.title;
   }
 });
 console.log(`list -- `, list)
@@ -1429,9 +1430,9 @@ function treeFind(tree, func) {
   return null;
 }
 
-// console.log(treeFind(tree, (node) => {
-//   return node.title === '节点1-2';
-// }))
+console.log(treeFind(tree, (node) => {
+  return node.title === '节点1-2';
+}))
 
 /**
  * 查找节点路径
