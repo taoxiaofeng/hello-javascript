@@ -108,3 +108,5 @@ var pq = new PriorityQueue();
 pq.enqueue('小黑', 10);
 pq.enqueue('小明', 12);
 
+export default Queue;
+
