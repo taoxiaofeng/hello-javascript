@@ -36,78 +36,56 @@ var Queue = function () {
   }
 }
 
-// 击鼓传花
-// var chuanhua = function (names, number) {
-//   var q = new Queue();
-//   // 把玩家放入队列
-//   for (let i = 0; i < names.length; i++) {
-//     q.enqueue(names[i]);
-//   }
+/**
+ * stack 先进后出
+ * push 栈顶添加元素
+ * pop 栈顶移除元素
+ * peek 查看栈顶
+ * isEmpty 检查栈是否未为空
+ * clear 移除全部元素
+ * size 获取栈长度  
+ */
+// 函数： 函数， 构造器
+// tish 指向要创建的对象
+var Stask = function () {
+  var items = []; // 私有的
+  // this.items = []; // 公有的
+  // push 栈顶添加元素
+  this.push = function (element) {
+    items.push(element);
+  }
 
-//   // 重要部分
-//   var taotai;
-//   while (q.size() > 1) {
-//     // 2 
-//     for (let i = 0; i < number - 1; i++) {
-//       q.enqueue(q.dequeue());
-//     }
-//     taotai = q.dequeue();
-//     console.log(`淘汰的玩家是 - `, taotai)
-//   }
-//   return q.dequeue();
-// }
+  // pop 移除栈顶元素
+  this.pop = function () {
+    return items.pop();
+  }
 
-// 玩家列表
-// var names = ['a', 'b', 'c', 'd', 'e', 'f']; // 一直传 => 直到剩下最后一名
-// 游戏规则
-// var number = 3;
+  // peek 检查栈顶
+  this.peek = function () {
+    return items[items.length - 1];
+  }
 
-// 队列 => 优先队列
-// 例如: 飞机  高级会员  优先登记
-// 优先级 priorityQueue 
-// ’小黑‘ 3
-// Object {
-//    name: '小黑',
-//    priority: 3
-// }
-// ’小明‘ 5
+  // 检查栈是否为空
+  this.isEmpty = function () {
+    return items.length === 0;
+  }
 
-// var PriorityQueue = function () {
-//   var items = [];
+  // 清除栈
+  this.clear = function () {
+    items = [];
+  }
 
-//   // 辅助类
-//   var QueueItem = function (element, priority) {
-//     this.element = element;
-//     this.priority = priority;
-//   }
+  // 获取栈的大小
+  this.size = function () {
+    return items.length;
+  }
 
-//   this.enqueue = function (element, priority) {
-//     var queueItem = new QueueItem(element, priority);
 
-//     // 定义一个变量来区分是否插入成功
-//     var added = false;
-//     for (let i = 0; i < items.length; i++) {
-//       if (queueItem.priority > items[i].priority) {
-//         items.splice(i, 0, queueItem);
-//         added = true;
-//         break;
-//       }
-//     }
-//     // 如果没有插入成功，就放最后
-//     if (!added) {
-//       items.push(queueItem);
-//     } 
-//   }
-
-//   this.getItems = function() {
-//     return items;
-//   }
-// }
-
-// var pq = new PriorityQueue();
-// pq.enqueue('小黑', 10);
-// pq.enqueue('小明', 12);
-
+  // 向外部暴露方法 让外部可以访问 items
+  this.getItems = function () {
+    return items;
+  }
+}
 
 
 /**
@@ -273,6 +251,15 @@ var graph = function () {
       d,
     }
   }
+
+  /**
+   * 深度优先遍历
+   * 1、从某一节点开始查找，并且将自己标志为已发现
+   * 2、从此节点继续探索其全部节点，并且跳过已发现节点
+   * 3、遍历完此节点后， 将此节点标志为已探索
+   * 4、递归返回，继续探索下一路径的最深节点
+   */
+  
 }
 
 // 测试代码
@@ -291,3 +278,37 @@ g.addEdge('A', 'D');
 g.addEdge('C', 'D');
 g.addEdge('B', 'E');
 g.addEdge('F', 'B');
+
+// 添加新的路径
+g.addEdge('D', 'F');
+
+// 广度优先算法 能解决  保证每个点的回溯是最近的
+var s = g.BFS('A');  // s.pred 和 s.d  回溯路径和距离
+
+console.log(s);
+
+// 最短路径算法
+var shortestPath = function (from, to) {  // from 和 to 是起点和终点  'A' => 'F'
+  var v = to;  // 设置当前点
+  // v 作用是不断的寻找回溯点
+  // 通过 while 循环不断的寻找回溯点
+
+  var path = new Stask();
+
+  while (v !== from) {
+    path.push(v);
+    v = s.pred[v];
+  }
+  path.push(v);
+
+  var str = '';
+  while (!path.isEmpty()) {
+    str += path.pop() + '-';
+  }
+
+  str = str.slice(0, str.length - 1);
+  console.log(str);
+
+}
+
+shortestPath('A', 'F');
