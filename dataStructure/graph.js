@@ -7,7 +7,7 @@
  * size 获取队列长度
  */
 
- var Queue = function () {
+var Queue = function () {
   var items = [];
 
   // 入队
@@ -37,30 +37,30 @@
 }
 
 // 击鼓传花
-var chuanhua = function (names, number) {
-  var q = new Queue();
-  // 把玩家放入队列
-  for (let i = 0; i < names.length; i++) {
-    q.enqueue(names[i]);
-  }
+// var chuanhua = function (names, number) {
+//   var q = new Queue();
+//   // 把玩家放入队列
+//   for (let i = 0; i < names.length; i++) {
+//     q.enqueue(names[i]);
+//   }
 
-  // 重要部分
-  var taotai;
-  while (q.size() > 1) {
-    // 2 
-    for (let i = 0; i < number - 1; i++) {
-      q.enqueue(q.dequeue());
-    }
-    taotai = q.dequeue();
-    console.log(`淘汰的玩家是 - `, taotai)
-  }
-  return q.dequeue();
-}
+//   // 重要部分
+//   var taotai;
+//   while (q.size() > 1) {
+//     // 2 
+//     for (let i = 0; i < number - 1; i++) {
+//       q.enqueue(q.dequeue());
+//     }
+//     taotai = q.dequeue();
+//     console.log(`淘汰的玩家是 - `, taotai)
+//   }
+//   return q.dequeue();
+// }
 
 // 玩家列表
-var names = ['a', 'b', 'c', 'd', 'e', 'f']; // 一直传 => 直到剩下最后一名
+// var names = ['a', 'b', 'c', 'd', 'e', 'f']; // 一直传 => 直到剩下最后一名
 // 游戏规则
-var number = 3;
+// var number = 3;
 
 // 队列 => 优先队列
 // 例如: 飞机  高级会员  优先登记
@@ -72,37 +72,37 @@ var number = 3;
 // }
 // ’小明‘ 5
 
-var PriorityQueue = function () {
-  var items = [];
+// var PriorityQueue = function () {
+//   var items = [];
 
-  // 辅助类
-  var QueueItem = function (element, priority) {
-    this.element = element;
-    this.priority = priority;
-  }
+//   // 辅助类
+//   var QueueItem = function (element, priority) {
+//     this.element = element;
+//     this.priority = priority;
+//   }
 
-  this.enqueue = function (element, priority) {
-    var queueItem = new QueueItem(element, priority);
+//   this.enqueue = function (element, priority) {
+//     var queueItem = new QueueItem(element, priority);
 
-    // 定义一个变量来区分是否插入成功
-    var added = false;
-    for (let i = 0; i < items.length; i++) {
-      if (queueItem.priority > items[i].priority) {
-        items.splice(i, 0, queueItem);
-        added = true;
-        break;
-      }
-    }
-    // 如果没有插入成功，就放最后
-    if (!added) {
-      items.push(queueItem);
-    } 
-  }
+//     // 定义一个变量来区分是否插入成功
+//     var added = false;
+//     for (let i = 0; i < items.length; i++) {
+//       if (queueItem.priority > items[i].priority) {
+//         items.splice(i, 0, queueItem);
+//         added = true;
+//         break;
+//       }
+//     }
+//     // 如果没有插入成功，就放最后
+//     if (!added) {
+//       items.push(queueItem);
+//     } 
+//   }
 
-  this.getItems = function() {
-    return items;
-  }
-}
+//   this.getItems = function() {
+//     return items;
+//   }
+// }
 
 // var pq = new PriorityQueue();
 // pq.enqueue('小黑', 10);
@@ -180,6 +180,15 @@ var graph = function () {
     return color;
   }
 
+  /**
+   * 广度优先遍历流程如下：
+   * 1、发现未发现阶段后放在队列中，等待查找， 并且标志位已发现
+   * 2、在队列中拿出已发现节点开始探索全部节点，并且跳过已发现节点
+   * 3、遍历完此节点后，将此节点标志位改为已探索
+   * 4、开始在队列中探索下一个节点  
+   * @param {*} v 遍历的顶点
+   * @param {*} callback  操作的回调函数
+   */
   // 例如 遍历 v = ‘A’; 
   this.bfs = function (v, callback) {
     /**
@@ -192,8 +201,8 @@ var graph = function () {
     queue.enqueue(v);
 
     while (!queue.isEmpty()) {
-      var now = queue.dequeue();
-      var edges = adjList[now];
+      var now = queue.dequeue(); // 把节点冲队列中取出
+      var edges = adjList[now]; // 拿到节点的边 
       for (let i = 0; i < edges.length; i++) {
         var next = edges[i];
         if (color[next] === 'white') {  // 颜色 === white 的就是未发现的节点 
@@ -206,6 +215,62 @@ var graph = function () {
       if (callback) {
         callback(now);
       }
+    }
+  }
+
+  // 广度优先算法
+  // d 距离值
+  // pred 回溯点 
+  /**
+   * 广度优先遍历和最短路径问题
+   * 假设从A开始
+   * 1、记录d(distance) = {A : 0, B : 1, E : 3 , ...}，记录从A到其他节点的距离
+   * 2、记录回溯路径 pred = [A: null, B: 'A', E: 'B', F: 'B', ...]
+   */
+  this.BFS = function (v, callback) {
+    /**
+     * color 以对象形式存储每个顶点的颜色
+     * color = {  A: 'white', B: 'white', ... }
+     */
+    var color = initColor();
+
+    var queue = new Queue();
+    queue.enqueue(v);
+
+    // 初始化操作
+    var d = {};
+    var pred = {};
+
+    for (let i = 0; i < vertices.length; i++) {
+      d[vertices[i]] = 0;
+      pred[vertices[i]] = null;
+
+    }
+
+    while (!queue.isEmpty()) {
+      var now = queue.dequeue(); // 把节点冲队列中取出
+      var edges = adjList[now]; // 拿到节点的边 
+      for (let i = 0; i < edges.length; i++) {
+        var next = edges[i];
+        if (color[next] === 'white') {  // 颜色 === white 的就是未发现的节点 
+          // 未发现的全部入列， 并且标识为已发现
+          color[next] = 'grey';
+
+          // 设置回溯点
+          pred[next] = now;
+          d[next] = d[now] + 1;
+
+          queue.enqueue(next);
+        }
+      }
+      color[now] = 'black';
+      if (callback) {
+        callback(now);
+      }
+    }
+    return {
+      pred,
+      d,
     }
   }
 }

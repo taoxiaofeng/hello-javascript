@@ -1227,7 +1227,7 @@ treeForeach(tree, node => {
     // return node.title;
   }
 });
-console.log(`list -- `, list)
+// console.log(`list -- `, list)
 
 /**
  *  深度优先遍历的递归实现
@@ -1419,20 +1419,20 @@ function treeFilter(tree, func) {
  * 查找节点其实就是一个遍历的过程，遍历到满足条件的节点则返回，遍历完成未找到则返回null。
  * 类似数组的find方法，传入一个函数用于判断节点是否符合条件，代码如下：
  */
-function treeFind(tree, func) {
-  for (const data of tree) {
-    if (func(data)) { return data };
-    if (data.children) {
-      const res = treeFind(data.children, func);
-      if (res) return res;
-    }
-  }
-  return null;
-}
+// function treeFind(tree, func) {
+//   for (const data of tree) {
+//     if (func(data)) { return data };
+//     if (data.children) {
+//       const res = treeFind(data.children, func);
+//       if (res) return res;
+//     }
+//   }
+//   return null;
+// }
 
-console.log(treeFind(tree, (node) => {
-  return node.title === '节点1-2';
-}))
+// console.log(treeFind(tree, (node) => {
+//   return node.title === '节点1-2';
+// }))
 
 /**
  * 查找节点路径
@@ -1464,15 +1464,15 @@ console.log(treeFind(tree, (node) => {
  * 思路与查找节点路径相似，不过代码却更加简单：
  */
 
-// function treeFindPath(tree, func, path = [], result = []) {
-//   for (const data of tree) {
-//     path.push(data.id)
-//     func(data) && result.push([...path])
-//     data.children && treeFindPath(data.children, func, path, result)
-//     path.pop()
-//   }
-//   return result
-// }
+function treeFindPath(tree, func, path = [], result = []) {
+  for (const data of tree) {
+    path.push(data.id)
+    func(data) && result.push([...path])
+    data.children && treeFindPath(data.children, func, path, result)
+    path.pop()
+  }
+  return result
+}
 
 // let result = treeFindPath(tree, node => node.id === '2-1' || node.id === '1-1');
 // console.log(result);
