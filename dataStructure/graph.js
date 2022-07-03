@@ -259,7 +259,34 @@ var graph = function () {
    * 3、遍历完此节点后， 将此节点标志为已探索
    * 4、递归返回，继续探索下一路径的最深节点
    */
-  
+  /**
+   * 
+   * @param {*} v 从哪个节点开始遍历
+   * @param {*} callback 调用的回调函数
+   */
+
+  // 辅助函数
+  var dfsVisite = function (v, color, callback) {
+    color[v] = 'grey'; // 标记为已发现
+    if (callback) {
+      callback(v);
+    } // 调用回调函数
+    var edges = adjList[v];
+    for (let i = 0; i < edges.length; i++) {
+      var next = edges[i];
+      if (color[next] === 'white') {
+        dfsVisite(next, color, callback);
+      }
+    }
+    color[v] = 'black';
+  }
+
+  this.dfs = function (v, callback) {
+    // 初始化颜色的值
+    var color = initColor();
+    dfsVisite(v, color, callback);
+  }
+
 }
 
 // 测试代码
