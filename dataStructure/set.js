@@ -137,11 +137,11 @@ B.add(3);
 B.add(4);
 
 // var res = A.union(B); // 并集
-// var res = A.intersection(B); // 交集
-var res = A.difference(B); // 差集
-var res2 = B.difference(A); // 差集
+var res = A.intersection(B); // 交集
+// var res = A.difference(B); // 差集
+// var res2 = B.difference(A); // 差集
 
-console.log(res.value(), res2.value())
+console.log(res.value())
 
 // var s = new Set2();
 // s.add(1);
