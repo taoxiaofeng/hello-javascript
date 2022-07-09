@@ -56,3 +56,14 @@ linkList.append(3);
 linkList.append(4);
 linkList.print();
 console.log(linkList.length);
+
+// 3 -> 1 -> 2 -> 4 .next
+// 使用 Map 模拟链表
+let cache = new Map();
+cache.set('a', 1);
+cache.set('b', 2);
+cache.set('c', 3);
+cache.set('d', 4);
+cache.set('e', 5);
+cache.set('f', 6);
+console.log(cache.keys().next().value);
