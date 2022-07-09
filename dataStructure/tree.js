@@ -1349,15 +1349,15 @@ function treeForeach(tree, func) {
  * 使用先序遍历将树结构转为列表结构
  */
 // 递归实现
-// function treeToList(tree, result = [], level = 0) {
-//   tree.forEach(node => {
-//     result.push(node);
-//     node.level = level + 1;
-//     console.log(`node -- `, node);
-//     node.children && treeToList(node.children, result, level + 1);
-//   });
-//   return result;
-// }
+function treeToList(tree, result = [], level = 0) {
+  tree.forEach(node => {
+    result.push(node);
+    node.level = level + 1;
+    console.log(`node -- `, node);
+    node.children && treeToList(node.children, result, level + 1);
+  });
+  return result;
+}
 
 // 循环实现
 // function treeToList (tree) {
