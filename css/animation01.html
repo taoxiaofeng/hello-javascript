@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css - animation</title>
+    <style>
+        body {}
+
+        .main {
+            width: 100vw;
+            height: 100vh;
+            background: #2c3e50;
+            transform: scale(0);
+            animation-name: scale,background;
+            animation-duration: 2s;
+            animation-fill-mode: forwards; /*填充模式*/
+        }
+
+        
+        @keyframes scale {
+            25% {
+                transform: scale(0.5);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+
+
+            75% {
+                transform: scale(0.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes background {
+            25% {
+               background: #2ecc71;
+               /* transform: translateX(300px);   */
+               /* 出现重复属性，后面的权重高一些*/
+            }
+
+            50% {
+               background: #2980b9;
+            }
+
+
+            75% {
+                background: #8e44ad;
+            }
+
+            100% {
+                background: #e74c3c;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="main">
+    </div>
+</body>
+
+</html>
