@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css 动画 - animation</title>
+    <style>
+        html,
+        body {
+            background: #2c3e50;
+        }
+
+        .main {
+            width: 400px;
+            height: 400px;
+            border: 1px solid #bdc3c7;
+
+        }
+
+        .child {
+            width: 100px;
+            height: 100px;
+            background: #f1c40f;
+            animation-name: translate, background, radius;
+            animation-duration: 4s, 2s, 1s;
+        }
+
+        @keyframes translate {
+            25% {
+                transform: translateX(300px);
+            }
+
+            50% {
+                transform: translate(300px, 300px);
+            }
+
+
+            75% {
+                transform: translateY(300px);
+            }
+        }
+
+        
+        @keyframes background {
+            25% {
+               background: #2ecc71;
+               /* transform: translateX(300px);   */
+               /* 出现重复属性，后面的权重高一些*/
+            }
+
+            50% {
+               background: #2980b9;
+            }
+
+
+            75% {
+                background: #8e44ad;
+            }
+        }
+
+        @keyframes radius {
+            from ,to {
+                background: #bdc3c7;
+            }
+            25% {
+               border-radius: 10%;
+            }
+
+            50% {
+                border-radius: 50%;
+            }
+
+
+            75% {
+                border-radius: 10%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="child">
+
+        </div>
+    </div>
+</body>
+
+</html>

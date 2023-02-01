@@ -21,7 +21,8 @@
         "express": "^4.17.1",
         "jquery": "^3.5.1",
         "jsonp": "^0.2.1",
-        "lodash": "^4.17.21"
+        "lodash": "^4.17.21",
+        "nrm": "^1.2.5"
     },
     "description": "",
     "type": "module",
