@@ -12,11 +12,19 @@
 
   <h1>Hello!!</h1>
   <!-- 构成跨域 -->
-  <script>
+  <!-- <script>
     fetch('http://localhost:91')
       .then(res => res.text())
       .then(res => console.log(res))
+  </script> -->
+
+  <script>
+    function fc(data) {
+      console.log(`data -- `, data)
+    }
   </script>
+  <!-- 通过 jsonp 引用接口  实现跨域 -->
+  <script src="http://localhost:91?callback=fc"></script>
 </body>
 
 </html>
