@@ -1,25 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>数据结构测试</title>
-  <!-- <script src="./linkedList.js"></script> -->
-  <!-- <script src="./tree.js"></script> -->
-  <!-- <script src="../dist/bundle.js"></script> -->
-  <!-- <script src="./set.js"></script> -->
-  <!-- <script src="./es6_set.js"></script> -->
-  <!-- <script src="./dictionary.js"></script> -->
-  <!-- <script src="./binaryTree.js"></script> -->
-  <!-- <script src="./graph.js"></script> -->
-  <!-- <script src="../leetcode/twoSum.js"></script> -->
-  <script src="../javascript-algorithms/LinkList.js"></script>
-  <!-- <script src="../leetcode/hasCycle.js"></script> -->
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据结构测试</title>
+    <!-- <script src="./linkedList.js"></script> -->
+    <!-- <script src="./tree.js"></script> -->
+    <!-- <script src="../dist/bundle.js"></script> -->
+    <!-- <script src="./set.js"></script> -->
+    <!-- <script src="./es6_set.js"></script> -->
+    <!-- <script src="./dictionary.js"></script> -->
+    <!-- <script src="./binaryTree.js"></script> -->
+    <!-- <script src="./graph.js"></script> -->
+    <!-- <script src="../leetcode/twoSum.js"></script> -->
+    <!-- <script src="../javascript-algorithms/LinkList.js"></script> -->
+    <!-- <script src="../leetcode/hasCycle.js"></script> -->
+  </head>
+  <body>
+    <script>
+      // function foo(obj) {
+      //   with(obj) {
+      //     a = 2;
+      //   }
+      //   console.log(`obj -- `, obj); 
+      // }
+
+      // foo({})
+      // console.log(`a -- `, a);
+      function foo(a) {
+        console.log(`this -- `, this)
+        this.a = a;   
+        return this;
+      }
+
+      // var obj = {
+      //   a: 2,
+      //   foo: foo,
+      // };
+
+      var obj2 = {
+        a: 5,
+        foo: foo,
+      };
+
+      // var bar = new foo(2);
+      var bar = foo.call(obj2);
+      console.log(bar);
+
+      // function foo(num) {
+      //   console.log(`foo: ` + num);
+
+      //   // 记录count 被调用的次数
+      //   this.count++;
+      // }
+
+      // foo.count = 0;
+      // var i;
+
+      // for (i = 0; i < 10; i++) {
+      //   if (i > 5) {
+      //     foo(i);
+      //   }
+      // }
+
+      // console.log(foo.count);
+      // console.log(window);
+    </script>
+  </body>
 </html>
-
-

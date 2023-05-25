@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吸顶</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+      height: 150px;
+    }
+
+    .nav {
+      height: 50px;
+      width: 100%;
+      background-color: #eee;
+    }
+
+    .item {
+      width: 150px;
+      height: 49px;
+      float: left;
+      list-style: none;
+      text-align: center;
+      line-height: 50px;
+      transition: background 1s;
+    }
+
+    .active {
+      border-top: 1px solid green;
+      background-color: #4179f7;
+      color: #fff;
+    }
+
+    .fixed {
+      position: fixed;
+      top: 0;
+    }
+
+    section {
+      width: 100%;
+    }
+
+    section:nth-child(1) {
+      height: 600px;
+      background-color: red;
+    }
+
+    section:nth-child(2) {
+      height: 700px;
+      background-color: green;
+    }
+
+    section:nth-child(3) {
+      height: 700px;
+      background-color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <ul class="nav">
+    <li class="item active">1</li>
+    <li class="item">2</li>
+    <li class="item">3</li>
+  </ul>
+  <div class="container">
+    <section>1</section>
+    <section>2</section>
+    <section>3</section>
+  </div>
+
+  <script>
+    var newPos = undefined
+    var myReq = undefined
+    var nav = document.querySelector('.nav')
+    var navTop = nav.offsetTop
+
+    var navList = document.getElementsByTagName('li')
+    var list = document.getElementsByTagName('section')
+
+    //滚动事件
+
+    window.addEventListener('scroll', function () {
+      var scrollTop = document.documentElement.scrollTop
+      if (scrollTop >= navTop) {
+        if (nav.className.indexOf('fixed') === -1) {
+          nav.className += ' fixed'
+        }
+      } else {
+        nav.className = 'nav'
+      }
+
+      Array.from(list).forEach(function (item, index) {
+        navList[index].className = 'item'
+        if (scrollTop >= item.offsetTop && scrollTop < item.offsetTop + item.clientHeight) {
+          navList[index].className += ' active'
+        }
+        if (scrollTop <= list[0].offsetTop) {
+          navList[0].className += ' active'
+        }
+      })
+    })
+
+    //点击tab项跳转到相应内容
+
+    Array.from(navList).forEach(function (item, index) {
+      item.addEventListener('click', function () {
+        Array.from(navList).forEach(function (liItem) {
+          liItem.className = 'item'
+        })
+        item.className += ' active'
+        newPos = list[index].offsetTop
+        window.cancelAnimationFrame(myReq)
+        move()
+      })
+    })
+
+    function move() {
+      if (Math.abs(document.documentElement.scrollTop - newPos) < 20) {
+        document.documentElement.scrollTop = newPos
+        return
+      }
+      if (document.documentElement.scrollTop > newPos) {
+        document.documentElement.scrollTop -= 20
+      } else {
+        document.documentElement.scrollTop += 20
+      }
+      myReq = requestAnimationFrame(move)
+    }
+  </script>
+</body>
+
+</html>

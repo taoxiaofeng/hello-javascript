@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Leaflet Example</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    // 初始化 Leaflet 地图
+    var map = L.map('map').setView([28.373, 121.373], 10);
+
+    // 添加底图
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+      maxZoom: 18,
+    }).addTo(map);
+
+    // 加载 GeoJSON 数据
+    fetch('温岭市.geojson')
+      .then(response => response.json())
+      .then(data => {
+        // 将 GeoJSON 数据添加到地图上
+        L.geoJSON(data, {
+          onEachFeature: function (feature, layer) {
+            console.log(feature.properties.name, feature.geometry);
+          }
+        }).addTo(map);
+      })
+      .catch(error => console.error(error));
+  </script>
+</body>
+</html>

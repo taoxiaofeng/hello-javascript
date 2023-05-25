@@ -1349,15 +1349,15 @@ function treeForeach(tree, func) {
  * 使用先序遍历将树结构转为列表结构
  */
 // 递归实现
-function treeToList(tree, result = [], level = 0) {
-  tree.forEach(node => {
-    result.push(node);
-    node.level = level + 1;
-    console.log(`node -- `, node);
-    node.children && treeToList(node.children, result, level + 1);
-  });
-  return result;
-}
+// function treeToList(tree, result = [], level = 0) {
+//   tree.forEach(node => {
+//     result.push(node);
+//     node.level = level + 1;
+//     console.log(`node -- `, node);
+//     node.children && treeToList(node.children, result, level + 1);
+//   });
+//   return result;
+// }
 
 // 循环实现
 // function treeToList (tree) {
@@ -1376,14 +1376,14 @@ function treeToList(tree, result = [], level = 0) {
  * 树结构筛选
  */
 //  树结构过滤即保留某些符合条件的节点，剪裁掉其它节点。一个节点是否保留在过滤后的树结构中，取决于它以及后代节点中是否有符合条件的节点。可以传入一个函数描述符合条件的节点:
-function treeFilter(tree, func) {
-  // 使用map复制一下节点，避免修改到原树
-  // console.log(`tree.map(node => ({ ...node }))`, tree.map(node => ({ ...node })))
-  return tree.map(node => ({ ...node })).filter(node => {
-    node.children = node.children && treeFilter(node.children, func)
-    return func(node) || (node.children && node.children.length)
-  })
-}
+// function treeFilter(tree, func) {
+//   // 使用map复制一下节点，避免修改到原树
+//   // console.log(`tree.map(node => ({ ...node }))`, tree.map(node => ({ ...node })))
+//   return tree.map(node => ({ ...node })).filter(node => {
+//     node.children = node.children && treeFilter(node.children, func)
+//     return func(node) || (node.children && node.children.length)
+//   })
+// }
 
 // 来自 https://stackoverflow.com/questions/45289854/how-to-effectively-filter-tree-view-retaining-its-existing-structure
 // function filter(array, text) {
@@ -1442,37 +1442,37 @@ function treeFilter(tree, func) {
  * 如果当前分支查不到，则回溯。
  */
 
-//  function treeFindPath (tree, func, path = []) {
-//   if (!tree) return []
-//   for (const data of tree) {
-//     path.push(data.id)
-//     if (func(data)) return path
-//     if (data.children) {
-//       const findChildren = treeFindPath(data.children, func, path)
-//       if (findChildren.length) return findChildren
-//     }
-//     path.pop()
-//   }
-//   return []
-// }
+ function treeFindPath (tree, func, path = []) {
+  if (!tree) return []
+  for (const data of tree) {
+    path.push(data.uuid)
+    if (func(data)) return path
+    if (data.children) {
+      const findChildren = treeFindPath(data.children, func, path)
+      if (findChildren.length) return findChildren
+    }
+    path.pop()
+  }
+  return []
+}
 
-// let result = treeFindPath(tree, node => node.id === '2-1' || node.id === '1-1');
-// console.log(result);
+let result = treeFindPath(mockList, node => node.uuid === '3');
+console.log(`result -- `, result);
 
 /**
  * 查找多条节点路径
  * 思路与查找节点路径相似，不过代码却更加简单：
  */
 
-function treeFindPath(tree, func, path = [], result = []) {
-  for (const data of tree) {
-    path.push(data.id)
-    func(data) && result.push([...path])
-    data.children && treeFindPath(data.children, func, path, result)
-    path.pop()
-  }
-  return result
-}
+// function treeFindPath(tree, func, path = [], result = []) {
+//   for (const data of tree) {
+//     path.push(data.id)
+//     func(data) && result.push([...path])
+//     data.children && treeFindPath(data.children, func, path, result)
+//     path.pop()
+//   }
+//   return result
+// }
 
 // let result = treeFindPath(tree, node => node.id === '2-1' || node.id === '1-1');
 // console.log(result);
