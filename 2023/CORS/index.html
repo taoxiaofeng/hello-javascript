@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CORS 测试</title>
+</head>
+
+<body>
+
+  <h1>Hello!!</h1>
+  <!-- 构成跨域 -->
+  <!-- <script>
+    fetch('http://localhost:91')
+      .then(res => res.text())
+      .then(res => console.log(res))
+  </script> -->
+
+  <script>
+    function fc(data) {
+      console.log(`data -- `, data)
+    }
+  </script>
+  <!-- 通过 jsonp 引用接口  实现跨域 -->
+  <script src="http://localhost:91?callback=fc"></script>
+</body>
+
+</html>
