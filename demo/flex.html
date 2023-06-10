@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>弹性布局</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .bigbox {
+      width: 100vw;
+      height: 100vh;
+      background-color: cadetblue;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .row {
+      flex: 1;
+      display: flex;
+      /* margin-bottom: 10px; */
+    }
+
+    .box0 {
+      flex: 1;
+    }
+
+    .box1 {
+      flex: 2;
+      /* margin: 0 10px; */
+    }
+
+    .box2 {
+      flex: 1;
+    }
+
+    .box3 {
+      flex: 3;
+      /* margin-right: 10px; */
+    }
+
+    .box4 {
+      flex: 1;
+    }
+
+    .box5 {
+      flex: 1;
+      /* margin-right: 10px; */
+    }
+
+    .box6 {
+      flex: 3;
+    }
+
+    .inner {
+      margin: 5px;
+      height: calc(100% - 10px);
+      background: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bigbox">
+    <div class="row">
+      <div class="box0">
+        <div class="inner" style="background-color: #FE978E ">0</div>
+      </div>
+      <div class="box1">
+        <div class="inner" style="background-color: #2AA9D6 ">1</div>
+      </div>
+      <div class="box2">
+        <div class="inner" style="background-color: #18FBBE ">2</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="box3">
+        <div class="inner" style="background-color: #4534AC ">3</div>
+      </div>
+      <div class="box4">
+        <div class="inner" style="background-color: #3BC5E5 ">4</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="box5">
+        <div class="inner" style="background-color: #53156C ">5</div>
+      </div>
+      <div class="box6">
+        <div class="inner" style="background-color: #D317DF ">6</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
