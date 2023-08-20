@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>两栏布局</title>
+  <style>
+    /* 清除浏览器默认设置的边距 */
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,body {
+      width: 100vw;
+      height: 100vh;
+      color: #fff;
+      font-weight: 600;
+      background-color: #34495e;
+    }
+
+    .container {
+      overflow: hidden;
+    }
+
+    .left {
+      float: left;
+      width: 200px;
+      height: 400px;
+      background-color: #e67e22;
+    }
+
+    .right {
+      margin-left: 210px;
+      height: 300px;
+      background-color: #8e44ad;
+    }
+
+    /* 这时发现其他内容出现在了两栏布局右侧的区域，
+    这是因为浮动元素脱离了文档流，
+    其他内容会占据浮动元素原来的位置，
+    所以需要清除浮动元素对其他内容的影响
+    ，可以在其他内容的样式中添加 clear: both; 
+    或者父元素中添加 overflow: hidden;
+    来清除浮动元素对其他内容的影响。 */
+
+    /* 清除浮动的方式是创建一个 BFC， overlfow: hidden; 会创建一个 BFC. */
+
+
+  </style>
+</head>
+<body>
+  <!-- 两栏布局结构 -->
+  <div class="container">
+    <div class="left">左侧内容左侧内容左侧内容</div>
+    <div class="right">右侧内容右侧内容右侧内容</div>
+  </div>
+  其他内容其他内容其他内容
+</body>
+</html>

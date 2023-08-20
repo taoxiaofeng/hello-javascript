@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 垂直居中</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      background-color: #34495e;
+    }
+
+    .parent {
+      width: 100%;
+      height: 100%;
+      /* 1、使用flex实现垂直居中 */
+      /* display: flex;
+      justify-content: center;
+      align-items: center; */
+      /* 2、使用grid实现垂直居中 */
+      /* display: grid;
+      place-items: center; */
+      /* 3、使用position实现垂直居中 */
+      /* position: relative; */
+    }
+
+    .child {
+      width: 200px;
+      height: 200px;
+      background-color: #fff;
+      border-radius: 40px;
+      /* position: absolute;
+      top: 50%;
+      left: 50%; */
+      /* transform: translate(-50%, -50%); */
+      /* 4、使用margin实现垂直居中 */
+      /* margin: -100px 0 0 -100px; */
+      /* 5、使用calc()实现垂直居中 */
+      margin: calc(50vh - 100px) auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="parent">
+    <div class="child"></div>
+  </div>
+  
+</body>
+</html>
