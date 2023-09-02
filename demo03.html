@@ -1,0 +1,97 @@
+<!-- HTML 文件 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>环形动画</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      border: 2px solid #333;
+      border-radius: 50%;
+    }
+
+    .element {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #3498db;
+      border-radius: 50%;
+      transition: transform 0.5s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out;
+      /* 添加过渡效果 */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container" id="container">
+    <!-- 这里放置11个元素 -->
+  </div>
+  <script>
+    // JavaScript 文件 (script.js)
+    document.addEventListener("DOMContentLoaded", function () {
+      const container = document.getElementById("container");
+      const elementCount = 11;
+      const radius = 100; // 环形的半径
+      const duration = 1000; // 每1秒换一次位置
+      const angleIncrement = (2 * Math.PI) / elementCount;
+      const elements = [];
+
+      // 创建并添加元素到容器中
+      for (let i = 0; i < elementCount; i++) {
+        const angle = i * angleIncrement;
+        const x = Math.cos(angle) * radius;
+        const y = Math.sin(angle) * radius;
+
+        const element = document.createElement("div");
+        element.className = "element";
+        element.style.transform = `translate(${x}px, ${y}px)`;
+        container.appendChild(element);
+        elements.push(element);
+      }
+
+      // 每秒换一次位置
+      let currentIndex = 0;
+      setInterval(() => {
+        const previousIndex = currentIndex;
+        currentIndex = (currentIndex + 1) % elementCount;
+        const angle = currentIndex * angleIncrement;
+
+        // 更新元素位置
+        for (let i = 0; i < elementCount; i++) {
+          const element = elements[i];
+          const x = Math.cos(angle + i * angleIncrement) * radius;
+          const y = Math.sin(angle + i * angleIncrement) * radius;
+
+          element.style.transition = `transform ${duration / 1000}s ease-in-out, width 0.5s ease-in-out, height 0.5s ease-in-out`;
+          element.style.transform = `translate(${x}px, ${y}px)`;
+
+          // 如果是当前移动的元素，将其放大
+          if (i === currentIndex) {
+            element.style.width = "30px";
+            element.style.height = "30px";
+          } else {
+            element.style.width = "20px";
+            element.style.height = "20px";
+          }
+        }
+      }, duration);
+    });
+
+  </script>
+</body>
+
+</html>
