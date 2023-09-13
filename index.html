@@ -22,6 +22,7 @@
     </style>
     <!-- <script src="./jquery.min-1.10.1.js"></script>
     <script src="./modal-dialog.js" defer></script> -->
+    <script src="./toolsFn/debounce.js"></script>
 </head>
 
 <body>
@@ -131,7 +132,7 @@
 
     <!-- <iframe src="./demo.html" frameborder="0"  width="400" height="300"></iframe> -->
     <!-- 测试节流函数 -->
-    <script src="./2020/202009/_js防抖节流.js"></script>
+    <!-- <script src="./2020/202009/_js防抖节流.js"></script>
     <div>
         <ul>
             <li></li>
@@ -235,7 +236,9 @@
             <li></li>
             <li></li>
         </ul>
-    </div>
+    </div> -->
+
+    <input type="text" id="input">
 
     <script>
         // oDiv = document.getElementById('div2');
@@ -280,6 +283,14 @@
         //     }
         // });
         // console.log(a); 
+        const inputEl = document.querySelector('#input');
+        inputEl.addEventListener('input', debounce(onHandleInput, 1000));
+
+       function onHandleInput (e) {
+            console.log(e.target.value);
+        }
+
+        
     </script>
     <!-- <script src="./2020/202007/object-oriented.js"></script> -->
 
