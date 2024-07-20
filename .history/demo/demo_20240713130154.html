@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 600px;
+            height: 300px;
+            position: relative;
+            margin: 100px auto;
+            border: 1px solid #000;
+        }
+        .item {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+            top: 50%;
+            left: 50px;
+            transform: translate(-50%, -50%);
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            50% {
+                /* calc(父元素的宽度 - 自身的宽度)*/
+                transform: translateX();
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item"></div>
+    </div>
+</body>
+</html>
