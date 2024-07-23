@@ -117,22 +117,5 @@ label {
   cursor: pointer;
 }
 
-/* ~ 号选中input兄弟节点的所有 span    + 号选中input兄弟的第一个span*/
-label input~span {
-  color: #aaa;
-}
-
-/* 单选或者多选被选中的状态 */
-label input:checked~span {
-  color: #333;
-}
-
-/*额外知识*/
-.txt::placeholder {
-  color: #CCC;
-  /* background: #5f8be8; */
-}
-
-.txt:focus::placeholder {
-  color: #333;
-}
+label span {
+  color: #aaa;}

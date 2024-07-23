@@ -121,18 +121,3 @@ label {
 label input~span {
   color: #aaa;
 }
-
-/* 单选或者多选被选中的状态 */
-label input:checked~span {
-  color: #333;
-}
-
-/*额外知识*/
-.txt::placeholder {
-  color: #CCC;
-  /* background: #5f8be8; */
-}
-
-.txt:focus::placeholder {
-  color: #333;
-}

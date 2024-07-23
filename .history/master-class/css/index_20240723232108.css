@@ -126,13 +126,3 @@ label input~span {
 label input:checked~span {
   color: #333;
 }
-
-/*额外知识*/
-.txt::placeholder {
-  color: #CCC;
-  /* background: #5f8be8; */
-}
-
-.txt:focus::placeholder {
-  color: #333;
-}
