@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>css定位</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* .bg {
+      width: 100%;
+      height: 100dvh;
+    }
+
+    .modal {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0; 
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 5;
+    }
+
+    .dog {
+      width: 200px;
+      height: 200px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      margin-left: -100px;
+      margin-top: -100px;
+    } 
+
+    .cat {
+      width: 200px; 
+      height: 200px;
+      position: fixed;
+      top: 50%;
+      right: 0;
+      margin-top: -100px;
+      background: url('./images/cat.jpg') no-repeat;
+      padding-top: 50px;
+      text-align: center;
+    }
+
+   .cat .qrcode {
+    width: 100px;
+    height: 100px;
+  } */
+
+    .item {
+      outline: 1px solid #000;
+      width: 230px;
+      height: 140px;
+      margin: 30px auto;
+      position: relative;
+    }
+
+    .item img {
+      width: 230px;
+      height: 140px;
+    }
+
+    .aside {
+      width: 100%;
+      height: 20px;
+      font-size: 12px;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 0 10px;
+      line-height: 20px;
+    }
+
+    .aside .number .icon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background: url('./images/play.webp') no-repeat;
+      background-size: 100%;
+      margin-right: 5px;
+    }
+
+    .aside .number {
+      float: left;
+    }
+
+    .aside .number span {
+     line-height: 20px;
+    }
+
+    .aside .date {
+      float: right;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- <img class="bg" src="./images/bg.jpg" alt="">
+  <div class="modal">
+    <img class="dog" src="./images/dog.jpg" alt="">
+  </div>
+
+  <div class="cat">
+    <img class="qrcode" src="./images/qr-code.webp" alt="">
+  </div> -->
+
+  <div class="item">
+    <a href="">
+      <img src="./images/dog.jpg" alt="">
+    </a>
+    <div class="aside">
+      <div class="number">
+        <span class="icon"></span>
+        <span>118万</span>
+      </div>
+      <div class="date">2021-11-23</div>
+    </div>
+    <div class="modal">
+      <a href="" class="play">
+        <img src="./images/play.webp" alt="">
+      </a>
+    </div>
+  </div>
+</body>
+
+</html>
