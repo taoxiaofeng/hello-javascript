@@ -15,3 +15,5 @@ dist
 *.epub
 *.mobi
 *.pdf
+
+.history
