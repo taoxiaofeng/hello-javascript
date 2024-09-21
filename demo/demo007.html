@@ -1,0 +1,115 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>测试布局</title>
+  <style>
+    .container {
+      width: 500px;
+      height: 500px;
+      background: green;
+    }
+
+    .box1 {
+      width: 100px;
+      height: 100px;
+      background: red;
+    }
+
+    span {
+      margin-right: 10px;
+    }
+
+    .box2 {
+      width: 100px;
+      height: 100px;
+      background: blue;
+      position: relative;
+      left: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="box1"></div>
+    <span>2222</span>
+    <div class="box2"></div>
+    <div class="box3"></div>
+  </div>
+</body>
+
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sticky Position Example</title>
+  <style>
+    .header {
+      background-color: lightblue;
+      padding: 10px;
+      position: sticky;
+      top: 0;
+    }
+
+    .content {
+      height: 1500px;
+      background-color: lightgray;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    I will stick to the top when you scroll!
+  </div>
+  <div class="content">
+    Scroll down to see the effect.
+  </div>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .container {
+      display: flex;
+    }
+
+    .left,
+    .right {
+      flex: 1;
+      /* 使两边等宽 */
+      padding: 20px;
+    }
+
+    .left {
+      background-color: lightblue;
+    }
+
+    .right {
+      background-color: lightgreen;
+    }
+  </style>
+  <title>Equal Height Layout</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left">
+      左边内容，字少的部分
+    </div>
+    <div class="right">
+      右边内容，这里有很多很多很多很多很多很多很多很多的文字，使右侧内容较高。
+    </div>
+  </div>
+</body>
+
+</html>

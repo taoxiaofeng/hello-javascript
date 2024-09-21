@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab B</title>
+  <script>
+    // 注册 Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').then(() => {
+        console.log('Service Worker Registered');
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Tab B</h1>
+
+  <script>
+    // 1、通过 localStorage + storage 事件
+    // window.addEventListener('storage', (event) => {
+    //   if (event.key === 'message') {
+    //     console.log('Received message from Tab A:', event.newValue);
+    //     alert('Message from Tab A: ' + event.newValue);
+    //   }
+    // });
+    // 2、通过 BroadcastChannel AP
+    // const channel = new BroadcastChannel('my_channel');
+
+    // channel.onmessage = (event) => {
+    //   console.log('Received message from Tab A:', event.data);
+    //   alert('Message from Tab A: ' + event.data);
+    // };
+
+    // 3、Service Worker
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      console.log('Received message from Service Worker:', event.data);
+    });
+
+  </script>
+</body>
+
+</html>

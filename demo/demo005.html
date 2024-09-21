@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab A</title>
+  <script>
+    // 注册 Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').then(() => {
+        console.log('Service Worker Registered');
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Tab A</h1>
+  <button id="sendMessage">Send Message to Tab B</button>
+
+  <script>
+    // 1、通过 localStorage + storage 事件
+    // document.getElementById('sendMessage').addEventListener('click', () => {
+    //   localStorage.setItem('message', 'Hello from Tab A');
+    // });
+    // 2、通过 BroadcastChannel AP
+    // const channel = new BroadcastChannel('my_channel');
+
+    // document.getElementById('sendMessage').addEventListener('click', () => {
+    //   channel.postMessage('Hello from Tab A');
+    // });
+    // 3、Service Worker
+
+    navigator.serviceWorker.controller.postMessage('Hello from Tab A');
+  </script>
+</body>
+
+</html>
