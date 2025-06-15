@@ -482,31 +482,85 @@ function createPerson(name: string, age: number): Person {
 let newPerson = createPerson("Charlie", 25);
 newPerson.greet(); // 输出 "Hello, my name is Charlie and I am 25 years old."
 ```
-> **总结：何时使用接口？**
->
-> 1. **定义对象的格式**：描述数据模型、API 响应格式、配置对象……等等，是开发中用的最多的场景。
-> 2. **类的契约**：规定一个类需要实现哪些属性和方法。
-> 3. **自动合并**：一般用于扩展第三方库的类型，这种特性在大型项目中可能会用到。
+**总结：何时使用接口？**
+1. **定义对象的格式**：描述数据模型、API 响应格式、配置对象……等等，是开发中用的最多的场景。
+2. **类的契约**：规定一个类需要实现哪些属性和方法。
+3. **自动合并**：一般用于扩展第三方库的类型，这种特性在大型项目中可能会用到。
 
-### 14.1. interface 与 type 的区别
+**interface 与 type 的区别**
+- **相同点**：`interface` 和 `type` 都可以用于定义**对象结构**，两者在许多场景中是可以互换的。
+- **不同点**：
+  1. `interface`：更专注于定义**对象**和**类**的结构，支持**继承、合并**。
+  2. `type`：可以定义**类型别名**、**联合类型**、**交叉类型**，但不支持继承和自动合并。
 
-> - **相同点**：`interface` 和 `type` 都可以用于定义**对象结构**，两者在许多场景中是可以互换的。
->
-> - **不同点**：
->   1. `interface`：更专注于定义**对象**和**类**的结构，支持**继承、合并**。
->   2. `type`：可以定义**类型别名**、**联合类型**、**交叉类型**，但不支持继承和自动合并。
+**interface 与 抽象类的区别**
+- **相同点**：都用于定义一个**类的格式**（应该遵循的契约）
+- **不同**：
+  1. `接口`：**只能描述结构，不能有任何实现代码**，一个类可以实现多个接口。
+  2. `抽象类`：既可以包含**抽象方法**，也可以包含**具体方法**，一个类只能继承一个抽象类。
 
-### 4.2. interface 与 抽象类的区别
+**总结：何时使用抽象类？**
+1. **定义通用接口**：为一组相关的类定义通用的行为（方法或属性）时。
+2. **提供基础实现**：在抽象类中提供某些方法或为其提供基础实现，这样派生类就可以继承这些实现。
+3. **确保关键实现**：强制派生类实现一些关键行为。
+4. **共享代码和逻辑**：当多个类需要共享部分代码时，抽象类可以避免代码重复。
 
-> - **相同点**：都用于定义一个**类的格式**（应该遵循的契约）
->
-> - **不同**：
->   1. `接口`：**只能描述结构，不能有任何实现代码**，一个类可以实现多个接口。
->   2. `抽象类`：既可以包含**抽象方法**，也可以包含**具体方法**，一个类只能继承一个抽象类。
+**泛型**
+泛型允许我们在定义函数、类或接口时，使用类型参数来表示**未指定的类型**，这些参数在具体**使用时**，才被指定**具体的类型**。  
+泛型能让同一段代码适用于多种类型，同时仍然保持类型的安全性。
 
-> **总结：何时使用抽象类？**
->
-> 1. **定义通用接口**：为一组相关的类定义通用的行为（方法或属性）时。
-> 2. **提供基础实现**：在抽象类中提供某些方法或为其提供基础实现，这样派生类就可以继承这些实现。
-> 3. **确保关键实现**：强制派生类实现一些关键行为。
-> 4. **共享代码和逻辑**：当多个类需要共享部分代码时，抽象类可以避免代码重复。
+```typescript
+// TypeScript 泛型函数
+function identity<T>(arg: T): T {
+  return arg; // 返回传入的参数
+}
+let result1 = identity<string>("Hello"); // 使用 string 类型
+let result2 = identity<number>(42); // 使用 number 类型
+// TypeScript 泛型类
+class GenericBox<T> {
+  private value: T;
+
+  constructor(value: T) {
+    this.value = value; // 存储传入的值
+  }
+
+  getValue(): T {
+    return this.value; // 返回存储的值
+  }
+}
+let box1 = new GenericBox<string>("Hello"); // 使用 string 类型
+let box2 = new GenericBox<number>(42); // 使用 number 类型
+console.log(box1.getValue()); // 输出 "Hello"
+console.log(box2.getValue()); // 输出 42
+// TypeScript 泛型接口
+interface Pair<K, V> {
+  key: K; // 键的类型
+  value: V; // 值的类型
+}
+function createPair<K, V>(key: K, value: V): Pair<K, V> {
+  return { key, value }; // 返回一个键值对
+}
+let pair1 = createPair<string, number>("age", 30); // 使用 string 和 number 类型
+let pair2 = createPair<number, string>(1, "one"); // 使用 number 和 string 类型
+console.log(pair1); // 输出 { key: "age", value: 30 }
+console.log(pair2); // 输出 { key: 1, value: "one" }
+// TypeScript 泛型约束
+interface Lengthwise {
+  length: number; // 定义一个具有 length 属性的接口
+}
+function logLength<T extends Lengthwise>(arg: T): void {
+  console.log(`Length: ${arg.length}`); // 输出传入参数的长度
+}
+let array = [1, 2, 3]; // 数组具有 length 属性
+let str = "Hello"; // 字符串具有 length 属性
+logLength(array); // 输出 "Length: 3"
+logLength(str); // 输出 "Length: 5"
+// TypeScript 泛型默认类型  
+function defaultIdentity<T = string>(arg: T): T {
+  return arg; // 返回传入的参数，默认类型为 string
+}
+let defaultResult = defaultIdentity(42); // 使用默认类型 string
+let customResult = defaultIdentity<number>(100); // 使用自定义类型 number
+console.log(defaultResult); // 输出 42
+console.log(customResult); // 输出 100
+```

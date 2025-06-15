@@ -76,39 +76,48 @@
 // const student = new Student("小明", 20, 12345);
 // console.log(student.speak()); // 输出: 我叫 小明，今年 20 岁。 我的学号是 12345
 
-class Person {
-  public name: string; // 公有属性，可以在类外部访问
-  private age: number; // 私有属性，只能在类内部访问
-  protected address: string; // 受保护属性，可以在类及其子类中访问
+// class Person {
+//   public name: string; // 公有属性，可以在类外部访问
+//   private age: number; // 私有属性，只能在类内部访问
+//   protected address: string; // 受保护属性，可以在类及其子类中访问
 
-  constructor(name: string, age: number, address: string) {
-    this.name = name;
-    this.age = age;
-    this.address = address;
-  }
+//   constructor(name: string, age: number, address: string) {
+//     this.name = name;
+//     this.age = age;
+//     this.address = address;
+//   }
 
-  public getAge(): number {
-    return this.age; // 可以在类内部访问私有属性
-  }
+//   public getAge(): number {
+//     return this.age; // 可以在类内部访问私有属性
+//   }
+// }
+// class Employee extends Person {
+//   private position: string; // 私有属性，只能在 Employee 类内部访问
+
+//   constructor(name: string, age: number, address: string, position: string) {
+//     super(name, age, address);
+//     this.position = position;
+//   }
+
+//   public getPosition(): string {
+//     // 访问父类中受保护的属性
+//     console.log(`Address: ${this.address}`); // 可以访问受保护属性
+//     return this.position; // 可以在子类中访问私有属性
+//   }
+// }
+// // 使用属性修饰符
+// let person = new Person("Alice", 30, "Wonderland");
+// console.log(person.name); // 可以访问公有属性
+// console.log(person.getAge()); // 可以通过公有方法访问私有属性
+// let employee = new Employee("Bob", 25, "Wonderland", "Developer");
+// console.log(employee.name); // 可以访问公有属性
+// console.log(employee.getPosition());
+
+/**
+ * 泛型函数
+ */
+function logData<T>(data: T): void {
+    console.log(data);
 }
-class Employee extends Person {
-  private position: string; // 私有属性，只能在 Employee 类内部访问
-
-  constructor(name: string, age: number, address: string, position: string) {
-    super(name, age, address);
-    this.position = position;
-  }
-
-  public getPosition(): string {
-    // 访问父类中受保护的属性
-    console.log(`Address: ${this.address}`); // 可以访问受保护属性
-    return this.position; // 可以在子类中访问私有属性
-  }
-}
-// 使用属性修饰符
-let person = new Person("Alice", 30, "Wonderland");
-console.log(person.name); // 可以访问公有属性
-console.log(person.getAge()); // 可以通过公有方法访问私有属性
-let employee = new Employee("Bob", 25, "Wonderland", "Developer");
-console.log(employee.name); // 可以访问公有属性
-console.log(employee.getPosition());
+logData<string>("Hello, TypeScript!"); // 输出: Hello, TypeScript!
+logData<number>(42); // 输出: 42
