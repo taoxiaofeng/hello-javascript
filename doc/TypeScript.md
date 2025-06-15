@@ -388,3 +388,17 @@ console.log(employee.getPosition()); // 可以通过公有方法访问私有属�
 | `protected` | 受保护的 | 可以被：类内部、子类访问。                 |
 | `private` | 私有的   | 可以被：类内部访问。                       |
 | `readonly`| 只读属性 | 属性无法修改。                             |
+
+```typescript
+// TypeScript Class 的简写形式
+class Person {
+  constructor(public name: string, private age: number) {}
+
+  public getAge(): number {
+    return this.age; // 可以访问私有属性
+  }
+}
+let person = new Person("Alice", 30);
+console.log(person.name); // 可以访问公有属性
+console.log(person.getAge()); // 可以通过公有方法访问私有属性
+```
