@@ -343,3 +343,48 @@ function f1(): LogFunc {
  * •	而不是 “必须什么都不返回”。
  */
 ```
+```typescript
+// TypeScript 中的属性修饰符
+class Person {
+  public name: string; // 公有属性，可以在类外部访问
+  private age: number; // 私有属性，只能在类内部访问
+  protected address: string; // 受保护属性，可以在类及其子类中访问
+
+  constructor(name: string, age: number, address: string) {
+    this.name = name;
+    this.age = age;
+    this.address = address;
+  }
+
+  public getAge(): number {
+    return this.age; // 可以在类内部访问私有属性
+  }
+}
+class Employee extends Person {
+  private position: string; // 私有属性，只能在 Employee 类内部访问
+
+  constructor(name: string, age: number, address: string, position: string) {
+    super(name, age, address);
+    this.position = position;
+  }
+
+  public getPosition(): string {
+    return this.position; // 可以在子类中访问私有属性
+  }
+}
+// 使用属性修饰符
+let person = new Person("Alice", 30, "Wonderland");
+console.log(person.name); // 可以访问公有属性
+console.log(person.getAge()); // 可以通过公有方法访问私有属性
+let employee = new Employee("Bob", 25, "Wonderland", "Developer");
+console.log(employee.name); // 可以访问公有属性
+console.log(employee.getPosition()); // 可以通过公有方法访问私有属性
+// console.log(employee.age); // 错误：不能访问私有属性
+// console.log(employee.address); // 错误：不能访问受保护属性
+```
+| 修饰符    | 含义     | 具体规则                                   |
+|-----------|----------|--------------------------------------------|
+| `public`  | 公开的   | 可以被：类内部、子类、类外部访问。         |
+| `protected` | 受保护的 | 可以被：类内部、子类访问。                 |
+| `private` | 私有的   | 可以被：类内部访问。                       |
+| `readonly`| 只读属性 | 属性无法修改。                             |
