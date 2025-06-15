@@ -402,3 +402,104 @@ let person = new Person("Alice", 30);
 console.log(person.name); // 可以访问公有属性
 console.log(person.getAge()); // 可以通过公有方法访问私有属性
 ```
+```typescript
+// TypeScript 抽象类
+abstract class Animal {
+  constructor(public name: string) {}
+
+  abstract makeSound(): void; // 抽象方法，子类必须实现
+}
+class Dog extends Animal {
+  makeSound(): void {
+    console.log(`${this.name} says Woof!`);
+  }
+}
+class Cat extends Animal {
+  makeSound(): void {
+    console.log(`${this.name} says Meow!`);
+  }
+}
+let dog = new Dog("Buddy");
+let cat = new Cat("Whiskers");
+dog.makeSound(); // 输出 "Buddy says Woof!"
+cat.makeSound(); // 输出 "Whiskers says Meow!"
+// 使用抽象类
+let animals: Animal[] = [dog, cat];
+animals.forEach((animal) => {
+  animal.makeSound(); // 调用每个动物的 makeSound 方法
+});
+```
+> **总结：何时使用抽象类？**
+>
+> 1. **定义通用接口**：为一组相关的类定义通用的行为（方法或属性）时。
+> 2. **提供基础实现**：在抽象类中提供某些方法或为其提供基础实现，这样派生类就可以继承这些实现。
+> 3. **确保关键实现**：强制派生类实现一些关键行为。
+> 4. **共享代码和逻辑**：当多个类需要共享部分代码时，抽象类可以避免代码重复。
+```typescript
+// TypeScript 接口
+interface Person {
+  name: string; // 属性
+  age: number; // 属性
+  greet(): void; // 方法
+}
+class Student implements Person {
+  constructor(public name: string, public age: number) {}
+
+  greet(): void {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+let student = new Student("Alice", 20);
+student.greet(); // 输出 "Hello, my name is Alice and I am 20 years old."
+// 使用接口作为函数参数
+function printPerson(person: Person): void {
+  console.log(`Name: ${person.name}, Age: ${person.age}`);
+}
+printPerson(student); // 输出 "Name: Alice, Age: 20"
+// 接口继承
+interface Employee extends Person {
+  position: string; // 新增属性
+}
+class Teacher implements Employee {
+  constructor(public name: string, public age: number, public position: string) {}
+
+  greet(): void {
+    console.log(`Hello, I am ${this.name}, a ${this.position} and I am ${this.age} years old.`);
+  }
+}
+let teacher = new Teacher("Bob", 35, "Math Teacher");
+teacher.greet(); // 输出 "Hello, I am Bob, a Math Teacher and I am 35 years old."
+// 使用接口作为函数返回值
+function createPerson(name: string, age: number): Person {
+  return {
+    name,
+    age,
+    greet() {
+      console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+    },
+  };
+}
+let newPerson = createPerson("Charlie", 25);
+newPerson.greet(); // 输出 "Hello, my name is Charlie and I am 25 years old."
+```
+> **总结：何时使用接口？**
+>
+> 1. **定义对象的格式**：描述数据模型、API 响应格式、配置对象……等等，是开发中用的最多的场景。
+> 2. **类的契约**：规定一个类需要实现哪些属性和方法。
+> 3. **自动合并**：一般用于扩展第三方库的类型，这种特性在大型项目中可能会用到。
+
+### 14.1. interface 与 type 的区别
+
+> - **相同点**：`interface` 和 `type` 都可以用于定义**对象结构**，两者在许多场景中是可以互换的。
+>
+> - **不同点**：
+>   1. `interface`：更专注于定义**对象**和**类**的结构，支持**继承、合并**。
+>   2. `type`：可以定义**类型别名**、**联合类型**、**交叉类型**，但不支持继承和自动合并。
+
+### 4.2. interface 与 抽象类的区别
+
+> - **相同点**：都用于定义一个**类的格式**（应该遵循的契约）
+>
+> - **不同**：
+>   1. `接口`：**只能描述结构，不能有任何实现代码**，一个类可以实现多个接口。
+>   2. `抽象类`：既可以包含**抽象方法**，也可以包含**具体方法**，一个类只能继承一个抽象类。
