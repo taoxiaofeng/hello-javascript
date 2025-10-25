@@ -116,8 +116,147 @@
 /**
  * 泛型函数
  */
-function logData<T>(data: T): void {
-    console.log(data);
+// function logData<T, U>(data1: T, data2: U): T | U {
+//   return Date.now() % 2 === 0 ? data1 : data2; // 返回 data1 或 data2，取决于当前时间戳的奇偶性
+// }
+// logData<string, boolean>("Hello, TypeScript!", true); // 输出: Hello, TypeScript!
+// logData<number, string>(42, '42'); // 输出: 42
+
+// interface PersonInterface<T> {
+//   name: string;
+//   age: number;
+//   data: T; // 泛型属性
+// }
+
+// type JobInfo = { 
+//   title: string;
+//   company: number;
+// };
+
+// let p: PersonInterface<JobInfo> = {
+//   name: "Alice",
+//   age: 30,
+//   data: {
+//     title: "Software Engineer",
+//     company: 12345
+//   }
+// };
+
+// 泛型类
+// class GenericClass<T> {
+//   private items: T[] = [];
+
+//   addItem(item: T): void {
+//     this.items.push(item);
+//   }
+
+//   getItems(): T[] {
+//     return this.items;
+//   }
+// }
+// let stringClass = new GenericClass<string>();
+// stringClass.addItem("Hello");
+// let numberClass = new GenericClass<number>();
+// numberClass.addItem(42);
+// console.log(stringClass.getItems()); // 输出: ["Hello"]
+// console.log(numberClass.getItems()); // 输出: [42]
+// 泛型接口
+// interface GenericInterface<T> {
+//   value: T;
+//   getValue(): T;
+// }
+// class GenericImplementation<T> implements GenericInterface<T> {
+//   constructor(public value: T) {}
+
+//   getValue(): T {
+//     return this.value;
+//   }
+// }
+// let stringImpl = new GenericImplementation<string>("Hello, World!");
+// let numberImpl = new GenericImplementation<number>(42);
+// let objectImpl = new GenericImplementation<object>({ key: "one", value: 1 });
+// console.log(stringImpl.getValue()); // 输出: "Hello, World!"
+// console.log(numberImpl.getValue()); // 输出: 42
+// console.log(objectImpl.getValue()); // 输出: { key: "one", value: 1 }
+
+/**
+ * 装饰器
+ */
+
+// function CustomString(target: Function) {
+//   // 装饰器函数
+//   target.prototype.toString = function () {
+//     // 重写 toString 方法
+//     return JSON.stringify(this);
+//   }
+
+//   // 针对对象添加封锁
+//   Object.seal(target.prototype);
+// }
+// @CustomString
+ 
+// class Person {
+//   name: string;
+//   age: number;
+//   constructor(name: string, age: number) {
+//     this.name = name;
+//     this.age = age;
+//   }
+// }
+
+// const p1 = new Person("张三", 30);
+// console.log(p1.toString()); // 输出: {"name":"张三","age":30}
+
+// interface Person {
+//   x: number; // 定义一个新的属性
+// }
+
+// Person.prototype.x = 99; // 添加一个新的属性
+// console.log(p1.x); // 输出: x
+
+/**
+ * 装饰器返回值会把所装饰的类替换为装饰器返回的类
+ * 这意味着原来的类会被新的类替换
+ * 所以在使用装饰器时要注意这一点
+ */
+
+// function Demo(target: Function) {
+//   return class {
+//     test() {
+//       console.log(200);
+//       console.log(300);
+//       console.log(400);
+//     }
+//   }
+// }
+
+// // @Demo
+// class Person {
+//   test() {
+//     console.log(100);
+//   }
+// }
+// console.log(Person)
+
+/**
+ * new  表示: 该类型是可以用new操作符调用
+ * ...args 表示: 构造器可以接受【任意数量】的参数
+ * any[] 表示: 构造器可以接受【任意类型】的参数
+ * {} 表示: 返回类型是对象(非null、非undefined的对象)。
+ */
+
+// type Constructor = new (...args: any[]) => {};
+
+type Constructor = {
+  new (...args: any[]): {};
+  wife: string
 }
-logData<string>("Hello, TypeScript!"); // 输出: Hello, TypeScript!
-logData<number>(42); // 输出: 42
+
+// 需求是fn是一个类
+function test(fn: Constructor) {}
+
+class Person {
+  static wife = "小红"; // 静态属性
+}
+
+test(Person); // 正常

@@ -564,3 +564,70 @@ let customResult = defaultIdentity<number>(100); // 使用自定义类型 number
 console.log(defaultResult); // 输出 42
 console.log(customResult); // 输出 100
 ```
+```typescript
+// TypeScript 装饰器
+// 装饰器是 TypeScript 的实验性特性，用于在类、方法、属性或参数上添加元数据。
+// 使用装饰器需要在 tsconfig.json 中启用 experimentalDecorators 选项
+// 类装饰器
+function classDecorator(target: Function) {
+  console.log(`Class Decorator: ${target.name}`); // 输出类名
+}
+@classDecorator
+class MyClass {
+  constructor(public name: string) {}
+}
+// 方法装饰器
+function methodDecorator(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  console.log(`Method Decorator: ${propertyKey}`); // 输出方法名
+}
+class MyClassWithMethod {
+  @methodDecorator
+  greet() {
+    console.log(`Hello, ${this.name}`); // 输出问候语
+  }
+}
+// 属性装饰器
+function propertyDecorator(target: any, propertyKey: string) {
+  console.log(`Property Decorator: ${propertyKey}`); // 输出属性名
+}
+class MyClassWithProperty {
+  @propertyDecorator
+  public age: number; // 属性装饰器
+  constructor(public name: string, age: number) {
+    this.age = age;
+  }
+}
+// 参数装饰器
+function parameterDecorator(target: any, propertyKey: string, parameterIndex: number) {
+  console.log(`Parameter Decorator: ${propertyKey}, Parameter Index: ${parameterIndex}`); // 输出参数信息
+}
+class MyClassWithParameter {
+  greet(@parameterDecorator name: string) {
+    console.log(`Hello, ${name}`); // 输出问候语
+  }
+}
+// 装饰器工厂
+function logDecorator(message: string) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log(`Log Decorator: ${message}, Method: ${propertyKey}`); // 输出日志信息
+  };
+}
+class MyClassWithLog {
+  @logDecorator("This is a log message")
+  sayHello() {
+    console.log("Hello!"); // 输出问候语
+  }
+}
+// 使用装饰器
+let myClassInstance = new MyClass("Alice");
+let myClassWithMethodInstance = new MyClassWithMethod();
+myClassWithMethodInstance.greet(); // 调用方法，触发方法装饰器
+let myClassWithPropertyInstance = new MyClassWithProperty("Bob", 30);
+let myClassWithParameterInstance = new MyClassWithParameter();
+myClassWithParameterInstance.greet("Charlie"); // 调用方法，触发参数装饰器
+let myClassWithLogInstance = new MyClassWithLog();
+myClassWithLogInstance.sayHello(); // 调用方法，触发日志装饰器
+```
+**装饰器返回值**
+- **类装饰器有返回值**：若类装饰器返回**一个新的类**，那这个新类将**替换**掉被装饰的类。
+- **类装饰器无返回值**：若类装饰器无返回值或返回 `undefined`，那被装饰的类**不会**被替换。 
