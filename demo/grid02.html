@@ -28,6 +28,10 @@
       grid-template-rows: repeat(2, 50px) 1fr;
       grid-template-columns: 150px 1fr;
       gap: 10px;
+      grid-template-areas:
+        "header header"
+        "aside tab"
+        "aside main";
     }
 
     .container .item {
@@ -40,6 +44,8 @@
 
     .main {
       background-color: aqua;
+      /* grid-area: 3 / 2 / 4 / 3; */
+      grid-area: main;
     }
 
     .header {
@@ -51,21 +57,25 @@
       grid-row-end: 2; */
       /* grid-row: 1; */
       /* grid-area: 1 / 1 / 2 / 3; */
-      grid-area: 1 / 1 / span 1 / span 2;
+      /* grid-area: 1 / 1 / span 1 / span 2; */
+      grid-area: header;
     }
 
     .aside {
       background-color: violet;
-      grid-area: 2 / 1 / span 2 / span 1;
+      /* grid-area: 2 / 1 / span 2 / span 1; */
+      grid-area: aside;
     }
 
     .tab {
       background-color: pink;
-      grid-area: 2 / 2;
+      /* grid-area: 2 / 2; */
+      grid-area: tab;
     }
 
     .main {
-      grid-area: 3 / 2;
+      /* grid-area: 3 / 2; */
+      grid-area: 'main';
     }
   </style>
 </head>
