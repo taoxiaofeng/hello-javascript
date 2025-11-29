@@ -6,27 +6,34 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>grid 网格布局</title>
-  <link rel="stylesheet" href="./style.css">
+  <!-- <link rel="stylesheet" href="./style¬.css"> -->
   <style>
     html,
     body {
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
+      /* width: 100%;
+      height: 100%; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .layout {
+      width: 80%;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      /* grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); */
+      /* grid-template-columns: repeat(4, 1fr); */
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 20px;
-      padding: 24px;
+      padding: 30px;
       /* height: 100vh; */
     }
 
     .layout .box {
-      height: 200px;
+      /* height: 200px; */
       background-color: #4CAF50;
       border-radius: 8px;
       padding: 10px;
@@ -35,26 +42,31 @@
       align-items: center;
       color: white;
       font-size: 24px;
+      /** CSS 属性 aspect-ratio 为盒子规定了首选纵横比，这个纵横比可以用于计算 auto 尺寸以及其他布局函数。*/
+      aspect-ratio: 1 / 1;
     }
 
-    .layout .box1 {
-      height: 440px;
-      grid-row: 1 / 3;
-      grid-column: 1 / 3;
-    }
+    /* .layout .box2 {
+      order: 5;
+    } */
   </style>
 </head>
 
 <body>
   <div class="layout">
-    <div class="box box1">box方块</div>
-    <div class="box box2">box方块</div>
-    <div class="box box3">box方块</div>
-    <div class="box box4">box方块</div>
-    <div class="box box5">box方块</div>
-    <div class="box box6">box方块</div>
-    <div class="box box">box方块</div>
-    <div class="box box8">box方块</div>
+    <div class="box box1">box方块1</div>
+    <div class="box box2">box方块2</div>
+    <div class="box box3">box方块3</div>
+    <div class="box box4">box方块4</div>
+    <div class="box box5">寒雨连江夜入吴，平明送客楚山孤。
+      洛阳亲友如相问，一片冰心在玉壶。</div>
+    <div class="box box6">box方块6</div>
+    <div class="box box7">box方块7</div>
+    <div class="box box8">box方块8</div>
+    <div class="box box9">box方块9</div>
+    <div class="box box10">box方块10</div>
+    <div class="box box11">box方块11</div>
+    <div class="box box12">box方块12</div>
   </div>
 
 </body>
