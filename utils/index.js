@@ -105,27 +105,27 @@
   方式七： 使用状态管理库
   方式八： 使用第三方库如 async.js
  */
-const requestA = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('Request A completed');
-      resolve('A');
-    }, 1000);
-  });
-};
+// const requestA = () => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       console.log('Request A completed');
+//       resolve('A');
+//     }, 1000);
+//   });
+// };
 
-const requestB = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('Request B completed');
-      resolve('B');
-    }, 1500);
-  });
-};
+// const requestB = () => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       console.log('Request B completed');
+//       resolve('B');
+//     }, 1500);
+//   });
+// };
 
-const requestC = () => {
-  console.log('Request C executed after A and B');
-};
+// const requestC = () => {
+//   console.log('Request C executed after A and B');
+// };
 
 // 方式一： 使用 Promise.all
 // Promise.all([requestA(), requestB()]).then(() => {
@@ -206,4 +206,91 @@ const requestC = () => {
 // 略
 
 // 方式八： 使用第三方库如 async.js
-// 略     
+// 略
+
+/**
+ * 发布订阅
+ */
+// class EventEmitter {
+//   on(event, listener) {
+//     if (!this.events) {
+//       this.events = {};
+//     }
+//     if (!this.events[event]) {
+//       this.events[event] = [];
+//     }
+//     this.events[event].push(listener);
+//   }
+
+//   emit(event, ...args) {
+//     if (this.events && this.events[event]) {
+//       this.events[event].forEach(listener => listener(...args));
+//     }
+//   }
+
+//   off(event, listener) {
+//     if (this.events && this.events[event]) {
+//       this.events[event] = this.events[event].filter(l => l !== listener);
+//     }
+//   }
+// }
+
+// const emitter = new EventEmitter();
+
+// const listener = (data) => {
+//   console.log('Event received with data:', data);
+// };
+
+// emitter.on('myEvent', listener); // 订阅事件
+// emitter.emit('myEvent', { key: 'value' }); // 发布事件
+// emitter.off('myEvent', listener); // 取消订阅
+// emitter.emit('myEvent', { key: 'value' });  
+
+class EventEmitter {
+  handlers = {};
+
+  on(type, handler, once = false) {
+    if (!this.handlers[type]) {
+      this.handlers[type] = [];
+    }
+    if (!this.handlers[type].includes(handler)) {
+      this.handlers[type].push({ handler });
+      handler.once = once;
+    }
+  }
+
+  once(type, handler) {
+    this.on(type, handler, true);
+  }
+
+  off(type, handler) {
+    if (this.handlers[type]) {
+      this.handlers[type] = this.handlers[type].filter(h => h.handler !== handler);
+    }
+  }
+
+  trigger(type) {
+    if (this.handlers[type]) {
+      this.handlers[type].forEach(handler => {
+        handler.call(this);
+        if (handler.once) {
+          this.off(type, handler);
+        }
+      });
+    }
+  }
+}
+
+const ev = new EventEmitter();
+
+function handler1() {
+  console.log('Handler 1 executed');
+}
+
+function handler2() {
+  console.log('Handler 2 executed');
+}
+
+ev.on('event1', handler1);
+ev.on('event1', handler2);
+ev.trigger('event1');
